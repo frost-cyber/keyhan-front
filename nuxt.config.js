@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'Keyhan',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
@@ -17,12 +17,16 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'vuesax/dist/vuesax.css'
+    '@/assets/css/iconfont.css',
+    '@/assets/scss/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/vuesax'
+    {src:"@/plugins/plugins.client.js" , mode:'client'},
+    {src:'@/plugins/vuesax.config.js'},
+    {src:'@/plugins/themeConfig.js'},
+    {src:'@/plugins/filters.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -30,6 +34,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/tailwindcss'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -48,5 +53,14 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+    transplite:[
+      'BackToTop',
+      'VuePerfectScrollbar',
+      'draggable',
+    ]
+  },
+
+  serverMiddleware: [
+    '~/serverMiddleware/selectiveSSR.js'
+  ]
 }

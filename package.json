@@ -12,8 +12,31 @@
     "@nuxt/content": "^1.11.1",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
+    "material-icons": "^0.5.3",
     "nuxt": "^2.14.12",
-    "vuesax": "^3.8.61"
+    "perfect-scrollbar": "^1.5.0",
+    "vee-validate": "^3.4.5",
+    "vue-apexcharts": "^1.6.0",
+    "vue-backtotop": "^1.6.1",
+    "vue-feather-icons": "^5.1.0",
+    "vue-perfect-scrollbar": "^0.2.1",
+    "vue-prism-component": "^2.0.0",
+    "vue-select": "^3.11.2",
+    "vue2-hammer": "^2.1.2",
+    "vuedraggable": "^2.24.3",
+    "vuesax": "^3.8.61",
+    "xlsx": "^0.16.9"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "@nuxtjs/tailwindcss": "^3.4.2",
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9",
+    "fibers": "^5.0.0",
+    "postcss": "^7",
+    "postcss-rtl": "^1.7.3",
+    "sass": "^1.32.8",
+    "sass-loader": "10",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  }
 }
