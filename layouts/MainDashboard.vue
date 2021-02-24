@@ -1,109 +1,67 @@
 <template>
-    <div class="layout--main" :class="[vueAppClasses , layoutTypeClass, navbarClasses, footerClasses, {'no-scroll': isAppPage}]">
+  <div class="layout--main" :class="[vueAppClasses , layoutTypeClass, navbarClasses, footerClasses, {'no-scroll': isAppPage}]">
+    <v-nav-menu :navMenuItems="navMenuItems" title="Vuexy" parent=".layout--main"/>
+    <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
+      <div id="content-overlay"/>
 
-      <v-nav-menu
-        :navMenuItems="navMenuItems"
-        title="Vuexy"
-        parent=".layout--main"/>
+      <!-- Navbar -->
+      <template v-if="mainLayoutType === 'horizontal' && windowWidth >= 1200">
+        <the-navbar-horizontal :navbarType="navbarType" :class="[ {'text-white' : isNavbarDark  && !isThemeDark}, {'text-base'  : !isNavbarDark && isThemeDark} ]"/>
 
-      <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
-        <div id="content-overlay"/>
+        <div style="height: 62px" v-if="navbarType === 'static'"></div>
 
-        <!-- Navbar -->
-        <template v-if="mainLayoutType === 'horizontal' && windowWidth >= 1200">
-          <the-navbar-horizontal
-            :navbarType="navbarType"
-            :class="[
+        <h-nav-menu :class="[ {'text-white' : isNavbarDark  && !isThemeDark}, {'text-base'  : !isNavbarDark && isThemeDark}]" :navMenuItems="navMenuItems"/>
+      </template>
+
+      <template v-else>
+        <the-navbar-vertical
+          :navbarColor="navbarColor"
+          :class="[
           {'text-white' : isNavbarDark  && !isThemeDark},
           {'text-base'  : !isNavbarDark && isThemeDark}
         ]"/>
+      </template>
+      <!-- /Navbar -->
 
-          <div style="height: 62px" v-if="navbarType === 'static'"></div>
+      <div class="content-wrapper">
 
-          <h-nav-menu
-            :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]"
-            :navMenuItems="navMenuItems"/>
-        </template>
+        <div class="router-view">
+          <div class="router-content">
 
-        <template v-else>
-          <the-navbar-vertical
-            :navbarColor="navbarColor"
-            :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]"/>
-        </template>
-        <!-- /Navbar -->
+            <transition :name="routerTransition">
 
-        <div class="content-wrapper">
-
-          <div class="router-view">
-            <div class="router-content">
-
-              <transition :name="routerTransition">
-
-                <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
-                     class="router-header flex flex-wrap items-center mb-6">
-                  <div
-                    class="content-area__heading"
-                    :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
-                    <h2 class="mb-1">{{ routeTitle }}</h2>
-                  </div>
-
-                  <!-- BREADCRUMB -->
-                  <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route"
-                                 :isRTL="$vs.rtl"/>
-
-                  <!-- DROPDOWN -->
-                  <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button radius icon="icon-settings" icon-pack="feather"/>
-
-                    <vs-dropdown-menu class="w-32">
-                      <vs-dropdown-item>
-                        <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
-                          <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                          <span>Profile</span>
-                        </div>
-                      </vs-dropdown-item>
-                      <vs-dropdown-item>
-                        <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
-                          <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                          <span>Tasks</span>
-                        </div>
-                      </vs-dropdown-item>
-                      <vs-dropdown-item>
-                        <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
-                          <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                          <span>Inbox</span>
-                        </div>
-                      </vs-dropdown-item>
-                    </vs-dropdown-menu>
-
-                  </vs-dropdown>
-
+              <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
+                   class="router-header flex flex-wrap items-center mb-6">
+                <div
+                  class="content-area__heading"
+                  :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
+                  <h2 class="mb-1">{{ routeTitle }}</h2>
                 </div>
-              </transition>
 
-              <div class="content-area__content">
+                <!-- BREADCRUMB -->
+                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route"
+                               :isRTL="$vs.rtl"/>
 
-                <back-to-top bottom="5%" :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'" visibleoffset="500"
-                             v-if="!hideScrollToTop">
-                  <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg btn-back-to-top"/>
-                </back-to-top>
-
-                <transition :name="routerTransition" mode="out-in">
-                  <Nuxt @changeRouteTitle="changeRouteTitle" @setAppClasses="setAppClasses"/>
-                </transition>
               </div>
+            </transition>
+
+            <div class="content-area__content">
+
+              <back-to-top bottom="5%" :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'" visibleoffset="500"
+                           v-if="!hideScrollToTop">
+                <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg btn-back-to-top"/>
+              </back-to-top>
+
+              <transition :name="routerTransition" mode="out-in">
+                <Nuxt @changeRouteTitle="changeRouteTitle" @setAppClasses="setAppClasses"/>
+              </transition>
             </div>
           </div>
         </div>
-        <the-footer/>
       </div>
+      <the-footer/>
     </div>
+  </div>
 </template>
 
 <script>
@@ -251,17 +209,36 @@ export default {
     }
   },
   async created() {
+
+    if (process.client) {
+    document.documentElement.setAttribute('dir', dir)
+
+    window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('scroll', this.handleScroll)
+  }
     const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
     this.updateNavbarColor(color)
     this.setNavMenuVisibility(this.$store.state.mainLayoutType)
     const dir = this.$vs.rtl ? 'rtl' : 'ltr'
-    if (process.client) {
-      console.log(process)
-      document.documentElement.setAttribute('dir', dir)
 
-      window.addEventListener('resize', this.handleWindowResize)
-      window.addEventListener('scroll', this.handleScroll)
-    }
+
+  },
+  mounted() {
+    this.toggleClassInBody(themeConfig.theme)
+    this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
+
+    const vh = window.innerHeight * 0.01
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+    this.handleWindowResize()
+    this.handleScroll()
+
+
+    this.toggleClassInBody(themeConfig.theme)
+    this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
+
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
   },
   destroyed() {
     if (process.client) {
