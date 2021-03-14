@@ -1,22 +1,3 @@
-/*=========================================================================================
-  File Name: firstStore.js
-  Description: Vuex store
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-/*========================================State============================================
-/*=========================================================================================
-File Name: state.js
-Description: Vuex Store - state
-----------------------------------------------------------------------------------------
-Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-Author: Pixinvent
-Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 // import navbarSearchAndPinList from "~/layouts/components/navbar/navbarSearchAndPinList"
 import themeConfig from "~/plugins/themeConfig.js"
 import colors from "~/plugins/themeConfig.js"
@@ -93,21 +74,8 @@ const stateA = {
 }
 
 export const state = ()=>stateA
-//===================================================================================
 
 //======================================Getters======================================
-
-/*=========================================================================================
-  File Name: getters.js
-  Description: Vuex Store - getters
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-// added so later we can keep breakpoint in sync automatically using this config file
-// import tailwindConfig from "../../tailwind.config.js"
 
 export const getters = {
 
@@ -129,18 +97,7 @@ export const getters = {
   }
 }
 
-//=====================================================================
-
 //==============================Mutations===========================
-/*=========================================================================================
-File Name: mutations.js
-Description: Vuex Store - mutations
-----------------------------------------------------------------------------------------
-Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-Author: Pixinvent
-Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 
 export const mutations = {
 
@@ -250,17 +207,8 @@ export const mutations = {
     localStorage.setItem("userInfo", JSON.stringify(userInfo))
   },
 }
-//=============================================================================
-
 //=================================Actionts===================================
-/*=========================================================================================
-File Name: actions.js
-Description: Vuex Store - actions
-----------------------------------------------------------------------------------------
-Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-Author: Pixinvent
-Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+
 
 export const actions = {
 

@@ -262,6 +262,7 @@ export default{
       setTimeout(() => {
         this.cardMaxHeight = '0px'
       }, 50)
+
       this.$emit('remove')
     },
     toggleCode () {

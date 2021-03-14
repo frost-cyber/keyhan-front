@@ -30,10 +30,10 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
-            <logo class="w-10 mr-4 fill-current text-primary" />
+          <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
+            <logo class="w-10 fill-current text-primary" :class="{'mr-4':!$vs.rtl , 'ml-4':$vs.rtl }" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
-          </router-link>
+          </NuxtLink>
           <!-- /Logo -->
 
           <!-- Menu Buttons -->

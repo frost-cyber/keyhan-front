@@ -3,32 +3,35 @@ export default {
   head: {
     title: 'Keyhan',
     htmlAttrs: {
-      lang: 'en',
-      dir:'rtl'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/css/iconfont.css',
     'material-icons/iconfont/material-icons.css', //Material Icons
-    '@/assets/scss/main.scss'
+    'vuesax/dist/vuesax.css',
+    '@/assets/scss/main.scss',
+    '@/assets/css/main.css', //Tailwind
+    '@/assets/css/iconfont.css',
+
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src:"@/plugins/plugins.js" , mode:'client'},
-    {src:'@/plugins/vuesax.config.js'},
-    {src:'@/plugins/themeConfig.js'},
-    {src:'@/plugins/filters.js'},
+    {src: "@/plugins/plugins.js", mode: 'client'},
+    {src: "@/plugins/Api.js"},
+    {src: "@/plugins/veeValidate.js"},
+    {src: '@/plugins/vuesax.config.js'},
+    {src: '@/plugins/themeConfig.js'},
+    {src: '@/plugins/filters.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -45,10 +48,35 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/auth-next',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseUrl: 'http://server.keyhan.p',
+    proxy: true,
+    credentials: true
+  },
+  proxy: {
+    '/laravel': {
+      target: 'https://laravel-auth.nuxtjs.app',
+      pathRewrite: { '^/laravel': '/' }
+    }
+  },
+  auth: {
+    strategies: {
+      'laravelSanctum': {
+        provider: 'laravel/sanctum',
+        url: 'http://server.keyhan.p'
+      },
+    },
+    redirect: {
+      login: '/auth/checkusername',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    }
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
@@ -60,17 +88,15 @@ export default {
       // Install them before as dependencies with npm or yarn
       plugins: {
         // Disable a plugin by passing false as value
-        'postcss-rtl': require('postcss-rtl')
+        // tailwindcss :require('tailwindcss'),
+        autoprefixer: require('autoprefixer'),
+        'postcss-rtl': require('postcss-rtl'),
       },
       preset: {
         // Change the postcss-preset-env settings
-        autoprefixer: {
-          add: true,
-          grid: false
-        }
       }
     },
-    transplite:[
+    transplite: [
       'BackToTop',
       'VuePerfectScrollbar',
       'draggable',

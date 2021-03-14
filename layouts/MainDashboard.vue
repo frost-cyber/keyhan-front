@@ -5,21 +5,11 @@
       <div id="content-overlay"/>
 
       <!-- Navbar -->
-      <template v-if="mainLayoutType === 'horizontal' && windowWidth >= 1200">
-        <the-navbar-horizontal :navbarType="navbarType" :class="[ {'text-white' : isNavbarDark  && !isThemeDark}, {'text-base'  : !isNavbarDark && isThemeDark} ]"/>
-
-        <div style="height: 62px" v-if="navbarType === 'static'"></div>
-
-        <h-nav-menu :class="[ {'text-white' : isNavbarDark  && !isThemeDark}, {'text-base'  : !isNavbarDark && isThemeDark}]" :navMenuItems="navMenuItems"/>
-      </template>
-
-      <template v-else>
+      <template>
         <the-navbar-vertical
           :navbarColor="navbarColor"
-          :class="[
-          {'text-white' : isNavbarDark  && !isThemeDark},
-          {'text-base'  : !isNavbarDark && isThemeDark}
-        ]"/>
+          :class="[{'text-white' : isNavbarDark  && !isThemeDark},{'text-base'  : !isNavbarDark && isThemeDark}]"
+        />
       </template>
       <!-- /Navbar -->
 
@@ -30,25 +20,24 @@
 
             <transition :name="routerTransition">
 
-              <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
-                   class="router-header flex flex-wrap items-center mb-6">
-                <div
-                  class="content-area__heading"
-                  :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
+              <div v-if="$route.meta.breadcrumb || $route.meta.pageTitle" class="router-header flex flex-wrap items-center mb-6">
+                <div class="content-area__heading" :class="{'pr-4 border-0 md:border-r border-solid border-grey-light' : $route.meta.breadcrumb}">
                   <h2 class="mb-1">{{ routeTitle }}</h2>
                 </div>
 
                 <!-- BREADCRUMB -->
-                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route"
-                               :isRTL="$vs.rtl"/>
+                <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" :isRTL="$vs.rtl"/>
 
+              </div>
+              <div v-else-if="/^\/admin(\/.*)$/i.test(this.$route.path)">
+                <NuxtLink to=".">
+                  <feather-icon icon="ArrowRightIcon"/>
+                </NuxtLink>
               </div>
             </transition>
 
             <div class="content-area__content">
-
-              <back-to-top bottom="5%" :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'" visibleoffset="500"
-                           v-if="!hideScrollToTop">
+              <back-to-top bottom="5%" :right="$vs.rtl ? 'calc(100% - 2.2rem - 38px)' : '30px'" visibleoffset="500" v-if="!hideScrollToTop">
                 <vs-button icon-pack="feather" icon="icon-arrow-up" class="shadow-lg btn-back-to-top"/>
               </back-to-top>
 
@@ -59,14 +48,13 @@
           </div>
         </div>
       </div>
-      <the-footer/>
     </div>
   </div>
 </template>
 
 <script>
 import HNavMenu from '@/layouts/components/horizontal-nav-menu/HorizontalNavMenu.vue'
-import navMenuItems from '@/layouts/components/vertical-nav-menu/navMenuItems.js'
+import navMenuItems from '@/plugins/navMenuItems.js'
 import TheNavbarHorizontal from '@/layouts/components/navbar/TheNavbarHorizontal.vue'
 import TheNavbarVertical from '@/layouts/components/navbar/TheNavbarVertical.vue'
 import TheFooter from '@/layouts/components/TheFooter.vue'
@@ -209,21 +197,18 @@ export default {
     }
   },
   async created() {
-
-    if (process.client) {
-    document.documentElement.setAttribute('dir', dir)
-
-    window.addEventListener('resize', this.handleWindowResize)
-    window.addEventListener('scroll', this.handleScroll)
-  }
     const color = this.navbarColor === '#fff' && this.isThemeDark ? '#10163a' : this.navbarColor
     this.updateNavbarColor(color)
     this.setNavMenuVisibility(this.$store.state.mainLayoutType)
-    const dir = this.$vs.rtl ? 'rtl' : 'ltr'
 
 
   },
   mounted() {
+    document.documentElement.setAttribute('dir', this.$vs.rtl ? 'rtl' : 'ltr')
+
+    window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('scroll', this.handleScroll)
+
     this.toggleClassInBody(themeConfig.theme)
     this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
 
@@ -232,7 +217,6 @@ export default {
     document.documentElement.style.setProperty('--vh', `${vh}px`)
     this.handleWindowResize()
     this.handleScroll()
-
 
     this.toggleClassInBody(themeConfig.theme)
     this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)

@@ -1,6 +1,6 @@
-import Vue from 'vue'
+import vue from 'vue'
 
-Vue.filter('title', function (value, replacer = '_') {
+vue.filter('title', function (value, replacer = '_') {
   if (!value) return ''
   value = value.toString()
 

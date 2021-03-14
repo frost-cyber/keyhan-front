@@ -1,16 +1,8 @@
-<!-- =========================================================================================
-  File Name: App.vue
-  Description: Main vue file - APP
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <div id="app" :class="vueAppClasses">
-    <Nuxt @setAppClasses="setAppClasses"/>
+      <div class="layout--full-page">
+        <Nuxt @setAppClasses="setAppClasses"/>
+      </div>
   </div>
 </template>
 
@@ -18,6 +10,7 @@
 import themeConfig from '@/plugins/themeConfig.js'
 
 export default {
+  name:'FullPage',
   data() {
     return {
       vueAppClasses: []
@@ -66,6 +59,10 @@ export default {
     }
   },
   mounted() {
+    document.documentElement.setAttribute('dir', this.$vs.rtl ? 'rtl' : 'ltr')
+
+    window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('scroll', this.handleScroll)
     this.toggleClassInBody(themeConfig.theme)
     this.$store.commit('UPDATE_WINDOW_WIDTH', window.innerWidth)
 
@@ -74,15 +71,6 @@ export default {
     document.documentElement.style.setProperty('--vh', `${vh}px`)
     this.handleWindowResize()
     this.handleScroll()
-  },
-  async created() {
-    const dir = this.$vs.rtl ? 'rtl' : 'ltr'
-
-      document.documentElement.setAttribute('dir', dir)
-
-      window.addEventListener('resize', this.handleWindowResize)
-      window.addEventListener('scroll', this.handleScroll)
-
   },
   destroyed() {
     if (process.client) {

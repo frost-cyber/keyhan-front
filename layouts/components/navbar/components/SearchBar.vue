@@ -22,7 +22,7 @@
         <!-- Pages Suggestion -->
         <template v-slot:pages="{ suggestion }">
           <div class="flex items-end leading-none py-1">
-            <feather-icon :icon="suggestion.icon" svgClasses="h-5 w-5" class="mr-4" />
+            <feather-icon :icon="suggestion.icon" svgClasses="h-5 w-5" :class="{'mr-4':!$vs.rtl,'ml-4':$vs.rtl,}" />
             <span class="mt-1">{{ suggestion.title }}</span>
           </div>
         </template>
@@ -30,7 +30,7 @@
         <!-- No Items Slot -->
         <template v-slot:noResult="{ group_name }">
           <div class="flex items-center">
-            <feather-icon icon="InfoIcon" svgClasses="h-5 w-5" class="mr-4" />
+            <feather-icon icon="InfoIcon" svgClasses="h-5 w-5" :class="{'mr-4':!$vs.rtl,'ml-4':$vs.rtl,}" />
             <span>No results found.</span>
           </div>
         </template>
