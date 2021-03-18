@@ -150,7 +150,7 @@ export default {
     isGroupActive () {
       return (item) => {
         const path        = this.$route.fullPath
-        const routeParent = this.$route.meta ? this.$route.meta.parent : undefined
+        const routeParent = this.$route.meta ? this.$route.meta.parent??'NotHaveParentMeta' : undefined
         let open          = false
 
         const func = (item) => {

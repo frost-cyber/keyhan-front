@@ -60,14 +60,9 @@ function createTree(cats, disabled, id = null) {
   })
   return catsFiltered
 }
-// import the component
-import TreeSelect from '@riophae/vue-treeselect'
-// import the styles
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: "save-store-category",
-  components: {TreeSelect},
   props: {
     category: {
       required: true,
