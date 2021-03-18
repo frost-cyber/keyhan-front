@@ -33,6 +33,20 @@ export default [
     i18n: 'Apps',
     items: [
       {
+        name: 'محصولات',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/store/products',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/store/products/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
+      {
         name: 'ویژگی ها',
         icon: 'ShoppingCartIcon',
         submenu: [
@@ -45,7 +59,8 @@ export default [
             name: 'ایجاد',
           },
         ]
-      },{
+      },
+      {
         name: 'دسته ها',
         icon: 'ShoppingCartIcon',
         submenu: [
