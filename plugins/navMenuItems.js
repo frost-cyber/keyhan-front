@@ -61,5 +61,43 @@ export default [
       },
     ]
   },
+  {
+    header: 'وبلاگ',
+    icon: 'FileTextIcon',
+    i18n: 'Others',
+    items: [
+      {
+        name: 'مقالات',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/article/blogs',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/article/blogs/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
+      {
+        name: 'دسته ها',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/article/categories',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/article/categories/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
+
+
+    ]
+
+  },
 ]
 
