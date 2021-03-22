@@ -17,12 +17,13 @@
           <vs-td>
             <p class="">{{ tr.title }}</p>
           </vs-td>
-          <vs-td>{{tr.status}}</vs-td>
+          <vs-td v-if="tr.status === 'active'">فعال</vs-td>
+          <vs-td v-else> غیر فعال</vs-td>
           <vs-td>
-            <p class="">{{ tr.publish_at }}</p>
+            <p class="">{{ tr.created_at }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
-            <NuxtLink :to="{name:'admin-article-blogs-id' , params:{id:tr.id}}">
+            <NuxtLink :to="{name:'admin-article-blogs-id' , params:{id:tr.id}}" >
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current"/>
             </NuxtLink>
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteArticle(tr)"/>
@@ -74,7 +75,7 @@
       }
     },
     mounted() {
-      this.$store.dispatch('article/getArticle')
+      this.$store.dispatch('article/getArticles')
     }
   }
 </script>

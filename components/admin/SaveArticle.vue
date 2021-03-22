@@ -11,7 +11,7 @@
               <span>دسته:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <v-select :closeOnSelect="true" v-validate="'required'" name="category" v-model="category" :options="categories" data-vv-as="دسته"
+              <v-select :closeOnSelect="true" label="name" v-validate="'required'" name="category" @input="log" v-model="article.categories" :options="categories" data-vv-as="دسته"
                         :dir="$vs.rtl ? 'rtl' : 'ltr'"/>
               <span class="text-danger text-sm" v-show="errors.has('category')">{{ errors.first('category') }}</span>
 
@@ -22,7 +22,7 @@
               <span>تگ:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <v-select v-model="article.tags" name="tag" v-validate="'required'" taggable multiple :options="tags"  data-vv-as="تگ"/>
+              <v-select v-model="article.tags" name="tag" v-validate="'required'" taggable multiple :options="tags" data-vv-as="تگ"/>
               <span class="text-danger text-sm" v-show="errors.has('tag')">{{ errors.first('tag') }}</span>
 
             </div>
@@ -32,12 +32,14 @@
               <span>وضعیت:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <v-select v-validate="'required'" v-model="article.status" name="condition" :options="conditions" data-vv-as="وضعیت"/>
+              <vs-select v-model="article.status" class="w-full select-large"  v-validate="'required'" name="status" data-vv-as="وضعیت">
+                <vs-select-item :key="index" :value="item.code" :text="item.label" v-for="(item,index) in status" class="w-full"/>
+              </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>
 
             </div>
-            <vs-upload action="http://keyhan/api/upload/img" @on-success="successUpload" :data="{type:'featherImage'}"
-                       fileName="file" :single-upload="true" limit="1" accept="image/jpeg,image/png,image/jpg"/>
+<!--            <vs-upload action="http://keyhan/api/upload/img" @on-success="successUpload" :data="{type:'featherImage'}"-->
+<!--                       fileName="file" :single-upload="true" limit="1" accept="image/jpeg,image/png,image/jpg"/>-->
           </div>
 
         </vs-card>
@@ -109,9 +111,9 @@
       return {
         tags: [],
         categories: [],
-        conditions: [
-          {label: 'فعال', code: 'active'},
-          {label: 'غیرفعال', code: 'deactive'}
+        status: [
+          { code: 'active',label: 'فعال'},
+          { code: 'deactive',label: 'غیرفعال'}
         ]
       }
     },
@@ -137,15 +139,19 @@
     computed: {
       category: {
         get() {
-          let index = this.categories.findIndex(cat => cat.code === this.article.category_id)
-          return this.categories[index]
-        },
-        set(cat) {
-          this.article.category_id = cat.code
+          let index = this.categories.length
+          let category = []
+          for (let i = 0; i < index; i++) {
+            category.push(this.categories[i].name)
+          }
+          return category
         }
       },
     },
     methods: {
+      log(){
+        console.log(this.article.category)
+      },
       successUpload(event) {
         let response = (JSON.parse(event.currentTarget.response))
         this.article.image_id = response.uploaded.id
@@ -163,11 +169,17 @@
         })
       },
     },
-    created() {
-      this.$store.dispatch('articleCategory/getCategories')
+    async created() {
+      await this.$store.dispatch('articleCategory/getCategories')
+      this.categories = this.$store.getters['articleCategory/getCategories']
+      // let index = categories.length
+      // this.categories = []
+      // for (let i = 0; i < index; i++) {
+      //   this.categories.push({code:categories[i].id , label: categories[i].name})
+      // }
     },
     mounted() {
-      this.categories = this.$store.getters['articleCategory/getCategories']
+      this.tags = this.$store.getters['article/getTags']
     }
   }
 </script>

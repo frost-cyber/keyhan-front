@@ -8,8 +8,14 @@
 <script>
     import SaveArticle from "~/components/admin/SaveArticle";
     export default {
-        name: "create",
+      name: "create",
       components: {SaveArticle},
+      created() {
+        this.article = JSON.parse(JSON.stringify(this.$store.getters["article/getArticle"]))
+      },
+      destroyed() {
+        this.$store.commit('article/SET_ARTICLE')
+      },
       methods:{
         saveArticle() {
           this.disabled = true
@@ -17,7 +23,7 @@
             if (response.status === 200) {
               this.$vs.notify({
                 title: " مقاله با موفقیت ساخته شد",
-                text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
+                text: "چند لحظه دیگر به صفحه مقاله ها هدایت خواهید شد.",
                 time: 2000,
                 color: "success",
                 position: "bottom-center",
@@ -35,17 +41,15 @@
             }
           })
         },
-        created() {
-          this.article = JSON.parse(JSON.stringify(this.$store.getters["article/getArticle"]))
-        },
-        destroyed() {
-          this.$store.commit('article/SET_ARTICLE')
-        }
-
       },
       data(){
           return{
             article:{},
+            categories:[{
+              id:'',
+              name:'',
+              slug:''
+            }],
             disable:false,
           }
       }

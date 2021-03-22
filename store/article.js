@@ -1,8 +1,10 @@
 export const state=()=>({
   articles:[],
+  tags:[],
   errors: [],
   article:{
     image_id:null,
+    created_at:null,
     slug:null,
     title:null,
     status:null,
@@ -11,10 +13,12 @@ export const state=()=>({
     publish_at:null,
     category_id:null,
     file:null,
-    tags:[]
   }
 })
 export const mutations={
+  SET_TAGS(state,tags){
+    state.tags = tags
+  },
   DELETE_ARTICLE(state, article) {
     if (typeof article == "object" && typeof article.id !== "undefined") {
       article = state.articles.findIndex(art => art.id === article.id)
@@ -45,6 +49,10 @@ export const mutations={
   },
 }
 export const actions={
+  async getTags({commit}){
+    const tags = await this.$apiClient.get('api/tags')
+    commit('SET_TAGS',tags.data)
+  },
   async getArticles({commit}) {
     const articles = await this.$apiClient.get('api/articles')
     commit('SET_ARTICLES', articles.data)
@@ -64,6 +72,9 @@ export const actions={
   },
 }
 export const getters={
+  getTags(state){
+    return JSON.parse(JSON.stringify(state.tags))
+  },
   getArticle(state) {
     return JSON.parse(JSON.stringify(state.article))
   },

@@ -15,8 +15,10 @@
     },
     async asyncData({params , store}) {
       await store.dispatch('article/getArticle', params.id)
+      let article = store.getters["article/getArticle"]
+      article.categories = article.categories[0]??null
       return {
-        article: store.getters["article/getArticle"],
+        article: article,
         disabled: false,
       }
     },
@@ -26,7 +28,7 @@
         this.$store.dispatch('article/updateArticle', this.article).then((response) => {
           if (response.status === 200) {
             this.$vs.notify({
-              title: "با موفیت ویژگی آپدیت شد",
+              title: "با موفقیت مقاله آپدیت شد",
               text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
               time: 2000,
               color: "success",
