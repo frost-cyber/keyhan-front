@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TinyMCE api-key="njaj317q8zpesyb5je3znfi3pdzsfcyn11g2c7v8id8dm7df" :init="init"/>
+    <TinyMCE v-model="content" @input="handleInput" :inital="true" inital-value="بررسی خودرا وارد نمایید" api-key="njaj317q8zpesyb5je3znfi3pdzsfcyn11g2c7v8id8dm7df" :init="init"/>
   </div>
 </template>
 
@@ -10,15 +10,18 @@ import TinyMCE from '@tinymce/tinymce-vue'
 export default {
   name: "editor",
   components: {
-    TinyMCE
+    TinyMCE,
+
   },
   data(){
     return {
+      filePicker:null,
+      content: this.value,
       plugins: [
         'paste', 'importcss', 'searchreplace', 'autolink',
         'directionality', 'visualblocks', 'visualchars', 'image',
         'link', 'media', 'table', 'charmap', 'hr', 'anchor', 'toc',
-        'insertdatetime', 'advlist', 'lists', 'wordcount', 'imagetools',
+        'insertdatetime', 'advlist', 'lists', 'wordcount',
         'noneditable', 'help', 'charmap', 'emoticons'],
       toolbar:[
         ['fontselect fontsizeselect formatselect'],
@@ -28,14 +31,19 @@ export default {
         ['outdent indent'],
         ['numlist bullist'],
         ['pagebreak'],
-        ['insertfile image media link anchor'],
+        ['insertfile image link anchor'],
         ['rtl ltr'],
         ['charmap emoticons'],
         ['undo redo'],
       ],
     }
   },
-  props: {},
+  props: {
+    'value':{
+      type: String,
+      required:true,
+    },
+  },
   computed: {
     toolbarGen(){
       let toolbar = []
@@ -43,7 +51,6 @@ export default {
       return toolbar.join(' | ')
     },
     init() {
-      console.log(this.toolbarGen)
       return {
         plugins: this.plugins,
         menubar: 'file edit view insert format tools table help',
@@ -67,15 +74,29 @@ export default {
     }
   },
   methods: {
-    file_picker_callback (callback, value, meta) {
+    handleInput(e){
+      this.$emit('input' , this.content)
+    },
+    selectFile(){
+      let input = document.createElement('input')
+      input.type='file'
+      input.onchange = this.uploadFile
+      input.click()
+    },
+    async uploadFile(event){
+      let file = event.target.files[0]
+      await this.$store.dispatch('files/uploadEditorImage' , file)
+      this.filePicker(this.$store.getters['files/getFile'].link , {alt:'Image'})
+    },
+    async file_picker_callback (callback, value, meta) {
       /* Provide file and text for the link dialog */
       if (meta.filetype === 'file') {
         callback('https://www.google.com/logos/google.jpg', {text: 'My text'});
       }
-
       /* Provide image and alt text for the image dialog */
       if (meta.filetype === 'image') {
-        callback('https://www.google.com/logos/google.jpg', {alt: 'My alt text'});
+        this.filePicker = callback
+        this.selectFile()
       }
 
       /* Provide alternative source and posted for the media dialog */
