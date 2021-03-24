@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 /* eslint-disable */
 /*
 
@@ -24,7 +25,6 @@ View the full documentation at https://tailwindcss.com.
 | values with some of the Tailwind defaults.
 |
 */
-
 // let defaultConfig = require('tailwindcss/defaultConfig')
 
 
@@ -51,6 +51,26 @@ module.exports = {
   // separator: ':',
 
   theme: {
+    extend: {
+      minHeight:{
+        '90' : '90%',
+
+      },
+      gap: {
+        '15': '15px',
+        '30' : '30px',
+      },
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        ff: '#fff',
+        dd: '#ddd',
+      },
+      screens:{
+        xs: '639px',
+        '2xl': '1550px'
+      },
+    },
 
     /*
     |-----------------------------------------------------------------------------
@@ -71,6 +91,11 @@ module.exports = {
       'white': '#ffffff',
       'grey': '#b8c2cc',
       'grey-light': '#dae1e7',
+      orange: colors.orange,
+      cool: colors.coolGray,
+      red: colors.red,
+      blue: colors.lightBlue,
+      green: colors.lime,
     },
 
     /*
@@ -175,7 +200,8 @@ module.exports = {
         'Liberation Mono',
         'Courier New',
         'monospace',
-      ]
+      ],
+      'fd': ['Shabnam'],
     },
 
 
@@ -704,14 +730,22 @@ module.exports = {
 
     boxShadow: {
       default: '0 2px 4px 0 rgba(0,0,0,0.10)',
-      'md': '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
-      'lg': '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)',
+      // 'md': '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
+      // 'lg': '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)',
       'inner': 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
       'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       'outline': '0 0 0 3px rgba(52,144,220,0.5)',
       'none': 'none',
-      'drop': '0 2px 8px 0 rgba(0,0,0,0.14)'
+      'drop': '0 2px 8px 0 rgba(0,0,0,0.14)',
+      my: '0 15px 45px 0px rgb(75 85 99 / 15%)',
+      p: '0 4px 25px 0px rgb(75 85 99 / 10%)',
+      neon :'5px 5px 10px -5px rgba(0, 0, 0, 0.2) , -3px -2px 2px 2px #fff ,-4px -3px 4px 0px #fff',
+      sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
     },
 
 
@@ -876,7 +910,34 @@ module.exports = {
   |
   */
 
-  plugins: [],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        '.container': {
+          width: '100%',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          paddingLeft: '2rem',
+          paddingRight: '2rem',
+          '@screen sm': {
+            maxWidth: '600px',
+          },
+          '@screen md': {
+            maxWidth: '720px',
+          },
+          '@screen lg': {
+            maxWidth: '992px',
+          },
+          '@screen xl': {
+            maxWidth: '1254px',
+          },
+          '@screen 2xl': {
+            maxWidth: '1470px',
+          },
+        }
+      })
+    }
+],
 
   corePlugins: {
     fontFamily: false,
@@ -884,6 +945,7 @@ module.exports = {
     backgroundPosition: false,
     backgroundRepeat: false,
     listStyleType: false,
+    container: false,
   }
 
 }
