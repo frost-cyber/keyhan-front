@@ -1,7 +1,21 @@
 export const state = ()=>{
   return {
     products:[],
-    product:{},
+    product: {
+      name: '',
+      slug: '',
+      sku: '',
+      type: null,
+      review:'46546',
+      published_at: '',
+      attributes: [],
+      images:[],
+      variable: {
+        id: '',
+        values: []
+      },
+      variables: [],
+    },
     errors:{},
   }
 }
