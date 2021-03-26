@@ -1,9 +1,6 @@
 <template>
   <vs-card>
     <form-wizard title="" subtitle="" nextButtonText="بعدی" backButtonText="قبلی" finishButtonText="ارسال" @on-complete="saveProduct">
-      <template slot="footer">
-
-      </template>
       <tab-content title="اطلاعات کلی" :before-change="()=>validateStep('step1')">
         <form data-vv-scope="step1">
           <div class="grid grid-cols-8 gap-5">
@@ -23,9 +20,17 @@
               <editor v-model="product.review" v-validate="'required'" name="review" data-vv-as="بررسی"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.review')">{{ errors.first('step1.review') }}</span>
             </div>
+            <div class="col-span-3 row-start-7 row-end-9">
+              <vs-textarea class="w-full" label="بررسی کوتاه" v-model="product.short_review" v-validate="'required'" name="short_review" data-vv-as="بررسی کوتاه"/>
+              <span class="text-danger text-sm" v-show="errors.has('step1.short_review')">{{ errors.first('step1.short_review') }}</span>
+            </div>
+            <div class="col-span-3 row-start-7 row-end-9">
+              <vs-textarea class="w-full" label="توضیحات" v-model="product.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-show="errors.has('step1.description')">{{ errors.first('step1.description') }}</span>
+            </div>
             <div class="col-span-2 row-start-1 col-start-7">
               <label class="w-full">دسته ها</label>
-              <tree-select v-model="product.categories" :options="categories" :normalizer="normalizer" v-validate="'required'" name="categories" data-vv-as="دسته"/>
+              <tree-select v-model="product.categories" :options="categories" multiple :normalizer="normalizer" v-validate="'required'" name="categories" data-vv-as="دسته"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.categories')">{{ errors.first('step1.categories') }}</span>
             </div>
             <div class="col-span-2 row-start-2 col-start-7">
@@ -222,7 +227,7 @@ export default {
       this.$validator.validateAll().then(validated => {
         if (validated) {
           this.$store.commit('products/SET_PRODUCT' , this.product)
-          this.$emit('save-attribute')
+          this.$emit('save-product')
         }
       })
     },

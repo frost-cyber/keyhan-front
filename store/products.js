@@ -1,45 +1,62 @@
-export const state = ()=>{
+export const state = () => {
   return {
-    products:[],
+    products: [],
     product: {
       name: '',
       slug: '',
       sku: '',
       type: null,
-      review:'46546',
+      review: '',
       published_at: '',
       attributes: [],
-      images:[],
+      images: [],
       variable: {
         id: '',
         values: []
       },
       variables: [],
     },
-    errors:{},
+    errors: {},
   }
 }
 
 export const mutations = {
-  SET_PRODUCTS(state , products){
+  SET_PRODUCTS(state, products) {
     state.products = products
   },
-  ADD_PRODUCT(state , product){
+  ADD_PRODUCT(state, product) {
     state.products.push(product)
   },
   ADD_PRODUCT_TO_FIRST(state, product) {
     state.products.unshift(product)
   },
-  DELETE_PRODUCT(state , product){
+  DELETE_PRODUCT(state, product) {
     if (typeof product == "object" && typeof product.id !== "undefined") {
       product = state.products.findIndex(prod => prod.id === product.id)
     }
     state.products.splice(product, 1)
   },
-  SET_PRODUCT(state , product){
+  SET_PRODUCT(state, product = null) {
+    if (product === null) {
+      product = {
+        name: '',
+        slug: '',
+        sku: '',
+        type: null,
+        review: '',
+        published_at: '',
+        attributes: [],
+        images: [],
+        variable: {
+          id: '',
+          values: []
+        },
+        variables: [],
+      }
+    }
     state.product = product
   },
-  SET_ERRORS(state , errors){
+  SET_ERRORS(state, errors) {
     state.errors = errors
   },
 }
@@ -53,13 +70,13 @@ export const actions = {
     const product = await this.$apiClient.get(`api/products/${productId}`)
     commit('SET_PRODUCT', product.data)
   },
-  async storeProduct({commit , state}, product) {
+  async storeProduct({commit, state}, product) {
     return this.$apiClient.post('api/products', product)
   },
-  async updateProduct({commit , state}, product) {
+  async updateProduct({commit, state}, product) {
     return this.$apiClient.patch(`api/products/${product.id}`, product)
   },
-  async deleteProduct({commit , state}, product) {
+  async deleteProduct({commit, state}, product) {
     return this.$apiClient.delete(`api/products/${product.id}`)
   }
 }
