@@ -249,7 +249,8 @@ export default {
       let file = event.target.files[0]
       await this.$store.dispatch('files/uploadProductImage' , file)
       this.product.images.push({
-        link : this.$store.getters['files/getFile'].link
+        link : this.$store.getters['files/getFile'].link,
+        'file_id' : this.$store.getters['files/getFile'].id,
       })
     },
     validateStep(scope){
