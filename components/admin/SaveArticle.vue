@@ -68,7 +68,7 @@
               <span>مطلب:</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <vs-textarea v-model="article.body" v-validate="'required'" name="body" data-vv-as="مطلب" rows="5"/>
+              <editor v-model="article.body" v-validate="'required'" name="body" data-vv-as="مطلب" rows="5"/>
               <span class="text-danger text-sm" v-show="errors.has('body')">{{ errors.first('body') }}</span>
 
             </div>
@@ -92,10 +92,12 @@
 
 <script>
   import vSelect from 'vue-select'
+  import Editor from "~/components/admin/Editor";
 
   export default {
     name: "save-article",
     components: {
+      Editor,
       'v-select': vSelect
     },
     props: {
