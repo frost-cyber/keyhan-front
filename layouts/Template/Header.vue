@@ -8,7 +8,7 @@
           >
             <div class="logo-area">
               <a class="m-auto" href="">
-                <img src="../assets/img/logo.svg" alt="لوگو کیهان" />
+                <img src="@/assets/img/logo.svg" alt="لوگو کیهان" />
               </a>
             </div>
           </div>

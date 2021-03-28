@@ -1,19 +1,31 @@
 <template>
   <div class="body">
-    <vheader> </vheader>
-    <router-view />
+    <vheader></vheader>
+    <nuxt/>
     <vfooter></vfooter>
 
   </div>
 </template>
 <script>
-import VHeader from "@/components/Header.vue";
-import VFooter from "@/components/Footer.vue";
-export default {
-  name:'Main',
-  components: {
-    vheader: VHeader,
-    vfooter: VFooter,
-  },
-}
+
+  import VHeader from "./Template/Header.vue";
+  import VFooter from "./Template/Footer.vue";
+  import '@/assets/css/style.css' ;//tailwind
+  import '@/assets/css/fontawesome.min.css' //fontawesome
+
+  export default {
+    head: {
+      htmlAttrs: {
+        dir: 'ltr'
+      }
+    },
+    name: 'Main',
+    components: {
+      vheader: VHeader,
+      vfooter: VFooter,
+    },
+    mounted() {
+      //   document.documentElement.setAttribute('dir' , 'ltr')
+    }
+  }
 </script>
