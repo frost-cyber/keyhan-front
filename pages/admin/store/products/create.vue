@@ -1,12 +1,47 @@
 <template>
-  <save-product/>
+  <save-product :product="product" @save-product="saveProduct"/>
 </template>
 
 <script>
 import SaveProduct from "~/components/admin/SaveProduct";
+
 export default {
   name: "create",
-  components: {SaveProduct}
+  components: {SaveProduct},
+  asyncData({store}) {
+    return {
+      product: JSON.parse(JSON.stringify(store.getters["products/getProduct"])),
+      disabled: false,
+    }
+  },
+  methods: {
+    saveProduct() {
+      this.disabled = true
+      this.$store.dispatch('products/storeProduct', this.product).then((response) => {
+        if (response.status === 200) {
+          this.$vs.notify({
+            title: "با موفیت ویژگی ساخته شد",
+            text: "چند لحظه دیگر به صفحه محصولات ها هدایت خواهید شد.",
+            time: 2000,
+            color: "success",
+            position: "bottom-center",
+            icon: 'check_box',
+          })
+          setTimeout(() => {
+            this.$router.push('.')
+          }, 2100)
+        }
+      }).catch(error => {
+        this.disabled = false
+        if (error.response && error.response.status === 422) {
+          this.$store.commit('products/SET_ERRORS', error.response.data.errors)
+        }
+      })
+    }
+  },
+  destroyed() {
+    this.$store.commit('products/SET_PRODUCT')
+  }
 }
 </script>
 
