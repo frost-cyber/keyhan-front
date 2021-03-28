@@ -11,7 +11,9 @@
               <span>نام</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <vs-input class="w-full" v-model="category.name" v-validate="'required'" name="name" data-vv-as="نام ویژکی"/>
+              <vs-input class="w-full" v-model="category.name" v-validate="'required'" name="name" data-vv-as="نام"/>
+              <span class="text-danger text-sm" v-show="errors.has(`name`)">{{ errors.first(`name`) }}</span>
+
             </div>
           </div>
           <div class="vx-row mb-6">
@@ -19,7 +21,8 @@
               <span>نامک</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <vs-input class="w-full" v-model="category.slug" v-validate="'required'" name="name" data-vv-as="نام ویژکی"/>
+              <vs-input class="w-full" v-model="category.slug" v-validate="'required'" name="slug" data-vv-as="نامک"/>
+              <span class="text-danger text-sm" v-show="errors.has(`slug`)">{{ errors.first(`slug`) }}</span>
             </div>
           </div>
           <div class="vx-row mb-6">
@@ -28,6 +31,8 @@
             </div>
             <div class="vx-col sm:w-2/3 w-full">
               <tree-select  v-model="category.parent_id" :options="categories" :normalizer="normalizer"/>
+              <span class="text-danger text-sm" v-show="errors.has(`slug`)">{{ errors.first(`slug`) }}</span>
+
             </div>
           </div>
           <div slot="footer">
