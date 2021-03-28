@@ -57,18 +57,12 @@
             </div>
         </div>
 
-        <div class="vx-card__code-container" ref="codeContainer" v-show="this.$slots.codeContainer" :style="codeContainerStyles" :class="{collapsed: !showCode}">
-            <div class="code-content">
-                <prism :language="codeLanguage" :key="$vs.rtl">
-                        <slot name="codeContainer"></slot>
-                </prism>
-            </div>
-        </div>
+
     </div>
 </template>
 
 <script>
-import Prism from 'vue-prism-component'
+// import Prism from 'vue-prism-component'
 import _color from 'assets/utils/color.js'
 
 export default{
@@ -285,7 +279,7 @@ export default{
     }
   },
   components: {
-    Prism
+    
   }
 }
 </script>
