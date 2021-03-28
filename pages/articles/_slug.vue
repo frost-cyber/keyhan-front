@@ -59,7 +59,7 @@
             <div class="content-info">
               <div class="title-single md:mt-3">
                 <h1 class="text-xl font-bold text-cool-600">
-                {{article.title}}
+                  {{article.title}}
                 </h1>
               </div>
               <div class="breadcumb text-sm">
@@ -76,7 +76,7 @@
                 </vs-breadcrumb>
               </div>
               <div class="des-single mt-3 text-sm text-cool-600 h-28 overflow-hidden">
-               {{article.description}}
+                {{article.description}}
               </div>
               <div class="info-box bg-cool-100 p-2 mt-5 rounded-lg ">
                 <figure class=" text-cool-400 my-auto inline-block ml-6">
@@ -109,9 +109,7 @@
           <div
             class="col-span-12 md:col-span-9 "
           >
-            <div class="content-box p-4 rounded-lg border border-cool-100 text-cool-600 font-normal text-sm md:text-base">
-              {{article.body}}
-            </div>
+            <div class="content-box p-4 rounded-lg border border-cool-100 text-cool-600 font-normal text-sm md:text-base" v-html="article.body"></div>
             <div class="btntocomment mt-5 text-center">
               <vs-button color="#4B5563" type="border">در بحث و گفتگو در رابطه با این مطلب شرکت کنید</vs-button>
             </div>
@@ -155,7 +153,7 @@
         </div>
       </div>
     </section>
-  <comments/>
+    <comments/>
   </div>
 </template>
 <script>
@@ -164,11 +162,11 @@
   import Comments from "~/components/front/blog/comments";
   export default {
     name: "_slug",
-   async asyncData(ctx) {
+    async asyncData(ctx) {
       let slug = ctx.route.params.slug
       await ctx.store.dispatch('article/getArticle',slug)
       return{
-          article: ctx.store.getters['article/getArticle'],
+        article: ctx.store.getters['article/getArticle'],
         blogarray:[
           { img: require('@/assets/img/product/02.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
           { img: require('@/assets/img/product/03.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
