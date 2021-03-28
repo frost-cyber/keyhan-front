@@ -62,7 +62,6 @@ export const actions = {
     return this.$apiClient.delete(`api/attributes/${attribute.id}`)
   }
 }
-
 export const getters = {
   getAttributes(state) {
     return JSON.parse(JSON.stringify(state.attributes))

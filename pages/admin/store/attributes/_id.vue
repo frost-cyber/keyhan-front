@@ -26,7 +26,7 @@ export default {
       this.$store.dispatch('attribute/updateAttribute', this.attribute).then((response) => {
         if (response.status === 200) {
           this.$vs.notify({
-            title: "با موفیت ویژگی آپدیت شد",
+            title: "با موفقیت ویژگی آپدیت شد",
             text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
             time: 2000,
             color: "success",
