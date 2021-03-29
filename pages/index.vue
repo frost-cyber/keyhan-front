@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  layout: 'MainDashboard',
+  layout: 'Main',
   name: 'Index',
 };
 </script>
