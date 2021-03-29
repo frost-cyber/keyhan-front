@@ -18,10 +18,7 @@ export default {
   css: [
     'material-icons/iconfont/material-icons.css', //Material Icons
     'vuesax/dist/vuesax.css',
-    '@/assets/scss/main.scss',
-    '@/assets/css/main.css', //Tailwind
     '@/assets/css/iconfont.css',
-
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -83,6 +80,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    splitChunks: {
+      layouts: true
+    },
+    extractCss : true,
     postcss: {
       // Add plugin names as key and arguments as value
       // Install them before as dependencies with npm or yarn

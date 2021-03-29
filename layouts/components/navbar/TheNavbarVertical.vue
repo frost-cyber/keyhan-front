@@ -12,7 +12,7 @@
 <template>
   <div class="relative">
 
-    <div class="vx-navbar-wrapper left-0" :class="classObj">
+    <div class="vx-navbar-wrapper" :class="classObj" style="left: 0">
 
       <vs-navbar class="vx-navbar navbar-custom navbar-skelton" :color="navbarColorLocal" :class="textColor">
 
