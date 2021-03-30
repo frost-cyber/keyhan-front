@@ -1,7 +1,12 @@
 <template>
   <div>
-    <vs-input label="کلمه عبور" type="password"  v-model="password"></vs-input>
-    <vs-button @click.native="register"></vs-button>
+    <h3 class="font-bold text-cool-700 text-lg">رمز عبور </h3>
+    <p class="text-sm text-cool-500 font-thin mt-3">رمز عبور خود را برای ورود دوباره وارد کنید</p>
+    <form @submit.prevent="register">
+      <vs-input class="contactform mt-6" size="large" label="کلمه عبور" type="password"  v-model="password"></vs-input>
+      <vs-button class="mt-5 mx-auto block" color="#F97316" type="filled"  @click.native="register">ادامــــــــه</vs-button>
+    </form>
+    <p class="text-xs text-cool-500 font-thin mt-8 text-center">با ورود و یا ثبت نام در وبسایت ما شما شرایط و قوانین استفاده از سرویس های سایت ما و قوانین حریم خصوصی آن را می‌پذیرید. </p>
   </div>
 </template>
 
