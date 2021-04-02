@@ -32,16 +32,19 @@
               <span>وضعیت:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <vs-select v-model="article.status" class="w-full select-large"  v-validate="'required'" name="status" data-vv-as="وضعیت">
+              <vs-select v-model="article.status" class="w-full select-large" v-validate="'required'" name="status" data-vv-as="وضعیت">
                 <vs-select-item :key="index" :value="item.code" :text="item.label" v-for="(item,index) in status" class="w-full"/>
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>
 
             </div>
-<!--            <vs-upload action="http://keyhan/api/upload/img" @on-success="successUpload" :data="{type:'featherImage'}"-->
-<!--                       fileName="file" :single-upload="true" limit="1" accept="image/jpeg,image/png,image/jpg"/>-->
-          </div>
+            <div class="w-full m-5">
+              <img class="articleImage" id="images" :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile">
+              <vs-row vs-justify="flex-start">
 
+              </vs-row>
+          </div>
+          </div>
         </vs-card>
       </div>
       <div class="vx-col sm:w-2/3">
@@ -112,10 +115,12 @@
     data() {
       return {
         tags: [],
+        active: 0,
+
         categories: [],
         status: [
-          { code: 'active',label: 'فعال'},
-          { code: 'deactive',label: 'غیرفعال'}
+          {code: 'active', label: 'فعال'},
+          {code: 'deactive', label: 'غیرفعال'}
         ]
       }
     },
@@ -151,7 +156,19 @@
       },
     },
     methods: {
-      log(){
+      selectFile(){
+        let input = document.createElement('input')
+        input.type='file'
+        input.onchange = this.uploadFile
+        input.click()
+      },
+    
+      async uploadFile(event){
+        let file = event.target.files[0]
+        await this.$store.dispatch('files/uploadArticleImage' , file)
+        this.article.thumbnail = this.$store.getters['files/getFile']
+      },
+      log() {
         console.log(this.article.category)
       },
       successUpload(event) {
@@ -172,6 +189,8 @@
       },
     },
     async created() {
+      console.log(this.article.thumbnail)
+
       await this.$store.dispatch('articleCategory/getCategories')
       this.categories = this.$store.getters['articleCategory/getCategories']
       // let index = categories.length
@@ -181,7 +200,16 @@
       // }
     },
     mounted() {
+
       this.tags = this.$store.getters['article/getTags']
     }
   }
 </script>
+<style scoped>
+  .articleImage {
+    border: 2px dashed #636363;
+    height: 200px;
+    width: 100%;
+
+  }
+</style>
