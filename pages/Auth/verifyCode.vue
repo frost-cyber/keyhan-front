@@ -22,7 +22,6 @@ export default {
   methods: {
     checkVerifyCode() {
       this.$apiClient.post('api/auth/check.verify.code', {username: this.username, verifyCode: this.verifyCode}).then(response => {
-        this.$router.push({name: 'Auth-register', query: {username: JSON.parse(response.config.data).username}})
         if (response.status === 200){
           this.$router.push({name: 'Auth-register', query: {username: JSON.parse(response.config.data).username}})
         }
@@ -36,7 +35,8 @@ export default {
           })
         }
       }).catch(error => {
-        if (error.status ===  403){
+
+        if (error.response.status ===  403){
           this.$vs.notify({
             time: 3000,
             title: 'نام کاربری',
@@ -47,6 +47,14 @@ export default {
           setTimeout(() => {
             this.$router.push({name: 'Auth-checkUsername'})
           }, 3500)
+        }
+        if (error.response.status ===  422) {
+          this.$vs.notify({
+            title: 'خطا!!',
+            time: 2000,
+            text: error.response.data.errors.verifyCode[0],
+            color: 'danger'
+          })
         }
       })
     },
