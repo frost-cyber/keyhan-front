@@ -39,9 +39,9 @@
 
             </div>
             <div class="w-full m-5">
-              <img class="articleImage" id="images" :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile">
+              <img class="articleImage"  :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile">
               <vs-row vs-justify="flex-start">
-
+                  <vs-button  @click.native="article.thumbnail = {}" color="danger"> حذف عکس</vs-button>
               </vs-row>
           </div>
           </div>
@@ -162,7 +162,7 @@
         input.onchange = this.uploadFile
         input.click()
       },
-    
+
       async uploadFile(event){
         let file = event.target.files[0]
         await this.$store.dispatch('files/uploadArticleImage' , file)

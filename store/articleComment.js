@@ -19,14 +19,17 @@ export const getters={
 }
 export const actions={
   async getComment({commit}, commentId) {
-    const comment = await this.$apiClient.get(`api/comments/${commentId}`)
+    const comment = await this.$apiClient.get(`api/articleComments/${commentId}`)
     commit('SET_COMMENT', comment.data)
   },
+  async toggleConfirm({commit},commentId){
+    return  this.$apiClient.put(`api/articleComments/${commentId}/toggleConfirm`)
+  },
   async deleteComment({commit , state}, comment) {
-    return this.$apiClient.delete(`api/comments/${comment.id}`)
+    return this.$apiClient.delete(`api/articleComments/${comment.id}`)
   },
   async getComments({commit},query=null) {
-    let url = 'api/comments'
+    let url = 'api/articleComments'
     if(query){
       let params = new URLSearchParams(query)
       url += "?" + params.toString()

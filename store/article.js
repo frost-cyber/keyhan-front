@@ -1,6 +1,7 @@
 export const state=()=>({
   articles:[],
   tags:[],
+  categoriesArticle:[],
   errors: [],
   article:{
     image_id:null,
@@ -29,6 +30,10 @@ export const mutations={
   SET_ERRORS(state, errors) {
     state.errors = errors
   },
+  SET_CategoriesArticle(state, categoriesArticle) {
+    state.categoriesArticle = categoriesArticle
+  },
+
   SET_ARTICLES(state, articles) {
     state.articles = articles
   },
@@ -64,6 +69,16 @@ export const actions={
     commit('SET_ARTICLES', articles.data)
 
   },
+  async getCategoriesArticle({commit},query=null) {
+    let url = 'api/categoryArticle'
+    if(query){
+      let params = new URLSearchParams(query)
+      url += "?" + params.toString()
+    }
+    const categoriesArticle = await this.$apiClient.get(url)
+    commit('SET_CategoriesArticle', categoriesArticle.data)
+
+  },
   async getArticle({commit}, articleId) {
     const article = await this.$apiClient.get(`api/articles/${articleId}`)
     commit('SET_ARTICLE', article.data)
@@ -87,6 +102,9 @@ export const getters={
   },
   getArticles(state){
     return JSON.parse(JSON.stringify(state.articles))
+  },
+  getCategoriesArticle(state){
+    return JSON.parse(JSON.stringify(state.categoriesArticle))
   },
   getErrors(state) {
     return JSON.parse(JSON.stringify(state.errors))

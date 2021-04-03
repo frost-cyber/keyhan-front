@@ -65,6 +65,7 @@ export const getters = {
   getCategories(state) {
     return JSON.parse(JSON.stringify(state.categories))
   },
+
   getCategory(state) {
     return JSON.parse(JSON.stringify(state.category))
   },

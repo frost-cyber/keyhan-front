@@ -169,6 +169,7 @@
     async asyncData(ctx) {
       let slug = ctx.route.params.slug
       await ctx.store.dispatch('article/getArticle', slug)
+      await ctx.store.dispatch('article/getCategoriesArticle' )
       let query = {
         "category" : ctx.store.getters['article/getArticle'].categories[0].id
       }
@@ -176,6 +177,7 @@
       return {
         article: ctx.store.getters['article/getArticle'],
         articles: ctx.store.getters['article/getArticles'],
+        CategoriesArticle: ctx.store.getters['article/getCategoriesArticle'],
       }
     },
     computed: {
