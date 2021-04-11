@@ -47,6 +47,20 @@ export default [
         ]
       },
       {
+        name: 'برند ها',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/store/brands',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/store/brands/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
+      {
         name: 'ویژگی ها',
         icon: 'ShoppingCartIcon',
         submenu: [

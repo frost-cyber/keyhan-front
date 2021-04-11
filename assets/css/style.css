@@ -203,7 +203,7 @@ a, li, img, div,
 
 .link-cat:hover, .brands-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 30px 35px 0px rgb(75 85 99 / 10%);
+  box-shadow: 0 30px 35px 0px rgba(75 , 85 ,99 , 0.1);
 }
 
 /* title-section */
@@ -293,7 +293,7 @@ a, li, img, div,
   @apply text-cool-400;
   @apply rounded-full;
   @apply p-2;
-  @apply w-11/12;
+  @apply w-10;
   @apply h-10;
   @apply grid;
   @apply items-center;
@@ -499,7 +499,7 @@ img.image-comment {
   background-color: #fff;
   border: 1px solid #eee;
   border-radius: 50%;
-  box-shadow: 0 15px 45px 0px rgb(75 85 99 / 15%);
+  box-shadow: 0 15px 45px 0px rgba(75 , 85 , 99 , 0.15);
 }
 
 li.main-share:hover {
@@ -565,6 +565,7 @@ li.main-share:hover > a > span > i {
 .gallery-product .owl-prev {
   position: absolute;
   top: 45%;
+  left: 0;
 }
 
 .gallery-product .owl-next {
@@ -932,7 +933,7 @@ button:focus {
   }
 
   .dynamic-img::after {
-    background: url("@/assets/images/elements/decore-left.png");
+    background: url("~/assets/images/elements/decore-left.png");
   }
 
   .starRating:not(old) > input {

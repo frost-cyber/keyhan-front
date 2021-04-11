@@ -1,5 +1,5 @@
 <template>
-  <div class="layout--main" :class="[vueAppClasses , layoutTypeClass, navbarClasses, footerClasses, {'no-scroll': isAppPage}]">
+  <div class="layout--main min-h-screen" :class="[vueAppClasses , layoutTypeClass, navbarClasses, footerClasses, {'no-scroll': isAppPage}]">
     <v-nav-menu :navMenuItems="navMenuItems" title="Vuexy" parent=".layout--main"/>
     <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
       <div id="content-overlay"/>

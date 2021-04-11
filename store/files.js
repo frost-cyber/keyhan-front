@@ -22,6 +22,16 @@ export const actions = {
     }).then(res => data = res.data).catch(err => console.log(err))
     commit('SET_FILE' , data)
   },
+  uploadBrandLogo({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=BrandLogo', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
   async uploadEditorImage({commit}, file) {
     let fileData = new FormData
     fileData.append('file', file)

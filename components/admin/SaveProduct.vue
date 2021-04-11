@@ -1,7 +1,7 @@
 <template>
   <vs-card>
-    <form-wizard title="" subtitle="" nextButtonText="بعدی" backButtonText="قبلی" finishButtonText="ارسال" @on-complete="saveProduct">
-      <tab-content title="اطلاعات کلی" :before-change="()=>validateStep('step1')">
+    <form-wizard v-if="active" title="" subtitle="" nextButtonText="بعدی" backButtonText="قبلی" finishButtonText="ارسال" @on-complete="saveProduct">
+      <tab-content title="اطلاعات کلی" :before-changee="()=>validateStep('step1')">
         <form data-vv-scope="step1">
           <div class="grid grid-cols-8 gap-5">
             <div class="col-span-2">
@@ -16,37 +16,51 @@
               <vs-input label="نامک" class="w-full" v-model="product.slug" v-validate="'required'" name="slug" data-vv-as="نامک"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.slug')">{{ errors.first('step1.slug') }}</span>
             </div>
-            <div class="col-span-6 row-start-2 row-end-7">
-              <editor v-model="product.review" v-validate="'required'" name="review" data-vv-as="بررسی"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.review')">{{ errors.first('step1.review') }}</span>
-            </div>
-            <div class="col-span-3 row-start-7 row-end-9">
-              <vs-textarea class="w-full" label="بررسی کوتاه" v-model="product.short_review" v-validate="'required'" name="short_review" data-vv-as="بررسی کوتاه"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.short_review')">{{ errors.first('step1.short_review') }}</span>
-            </div>
-            <div class="col-span-3 row-start-7 row-end-9">
-              <vs-textarea class="w-full" label="توضیحات" v-model="product.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.description')">{{ errors.first('step1.description') }}</span>
-            </div>
-            <div class="col-span-2 row-start-1 col-start-7">
+            <div class="col-span-2">
               <label class="w-full">دسته ها</label>
               <tree-select v-model="product.categories" :options="categories" multiple :normalizer="normalizer" v-validate="'required'" name="categories" data-vv-as="دسته"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.categories')">{{ errors.first('step1.categories') }}</span>
             </div>
-            <div class="col-span-2 row-start-2 col-start-7">
-              <label class="w-full">نوع محصول</label>
-              <tree-select v-model="product.type" :disabled="disabledProductType" @input="typeChanged" :options="types" v-validate="'required'" name="type" data-vv-as="نوع"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.type')">{{ errors.first('step1.type') }}</span>
+            <div class="col-span-6 row-start-2 row-end-5">
+              <editor v-model="product.review" v-validate="'required'" name="review" data-vv-as="بررسی"/>
+              <span class="text-danger text-sm" v-show="errors.has('step1.review')">{{ errors.first('step1.review') }}</span>
             </div>
-            <div class="col-span-2 row-start-3 col-start-7">
-              <label class="w-full">وضعیت محصول</label>
-              <tree-select v-model="product.candition" :options="canditions" v-validate="'required'" name="candition" data-vv-as="وضعیت"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.candition')">{{ errors.first('step1.candition') }}</span>
+            <div class="col-span-3 row-start-5 row-end-7">
+              <vs-textarea class="w-full" label="بررسی کوتاه" v-model="product.short_review" v-validate="'required'" name="short_review" data-vv-as="بررسی کوتاه"/>
+              <span class="text-danger text-sm" v-show="errors.has('step1.short_review')">{{ errors.first('step1.short_review') }}</span>
             </div>
-            <div class="col-span-2 row-start-4 col-start-7">
-              <label class="w-full">تاریخ انتشار محصول</label>
-              <persion-date class="w-full" v-model="product.published_at" style="width:100%" v-validate="'required'" name="published_at" data-vv-as="تاریخ انتشار"/>
-              <span class="text-danger text-sm" v-show="errors.has('step1.published_at')">{{ errors.first('step1.published_at') }}</span>
+            <div class="col-span-3 row-start-5 row-end-7">
+              <vs-textarea class="w-full" label="توضیحات" v-model="product.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-show="errors.has('step1.description')">{{ errors.first('step1.description') }}</span>
+            </div>
+            <div class="col-span-2 row-start-2 row-end-7 gap-5">
+              <div class="">
+                <label class="w-full">نوع محصول</label>
+                <tree-select v-model="product.type" :disabled="disabledProductType" @input="typeChanged" :options="types" v-validate="'required'" name="type" data-vv-as="نوع"/>
+                <span class="text-danger text-sm" v-show="errors.has('step1.type')">{{ errors.first('step1.type') }}</span>
+              </div>
+              <div class="mt-2">
+                <label class="w-full">برند</label>
+                <tree-select v-model="product.brand_id" :options="brands" name="brand"/>
+              </div>
+              <div class="mt-2">
+                <label class="w-full">وضعیت محصول</label>
+                <tree-select v-model="product.condition" :options="conditions" v-validate="'required'" name="candition" data-vv-as="وضعیت"/>
+                <span class="text-danger text-sm" v-show="errors.has('step1.candition')">{{ errors.first('step1.candition') }}</span>
+              </div>
+              <div class="mt-2">
+                <label class="w-full">تاریخ انتشار محصول</label>
+                <persion-date class="w-full" v-model="product.published_at" style="width:100%" v-validate="'required'" name="published_at" data-vv-as="تاریخ انتشار"/>
+                <span class="text-danger text-sm" v-show="errors.has('step1.published_at')">{{ errors.first('step1.published_at') }}</span>
+              </div>
+              <div class="mt-2">
+                <vs-input label="متن سفارشی 1" class="w-full" v-model="product.customText1" v-validate="''" name="customText1" data-vv-as="متن سفارشی 1"/>
+                <span class="text-danger text-sm" v-show="errors.has('step1.customText1')">{{ errors.first('step1.customText1') }}</span>
+              </div>
+              <div class="mt-2">
+                <vs-input label="متن سفارشی 2" class="w-full" v-model="product.customText2" v-validate="''" name="customText1" data-vv-as="متن سفارشی 2"/>
+                <span class="text-danger text-sm" v-show="errors.has('step1.customText2')">{{ errors.first('step1.customText2') }}</span>
+              </div>
             </div>
           </div>
         </form>
@@ -54,60 +68,56 @@
       <tab-content title="ویژگی ها" :before-change="()=>validateStep('step2')">
         <form data-vv-scope="step2">
           <div class="grid grid-cols-12 gap-5">
-            <template v-for="(attribute , index) in product.attributes">
+            <template v-for="(attributeGroup , index) in product.attributes">
               <div class="col-span-2">
                 <vs-button icon="delete" @click.native="product.attributes.splice(index, 1)"/>
               </div>
               <div class="col-span-5">
-                <tree-select v-model="attribute.id" :options="attributes" @input="attributeValues(index , attribute.id)" v-validate="'required'" :name="`attribute_id[${index}]`" data-vv-as="ویژگی"/>
-                <span class="text-danger text-sm" v-show="errors.has(`step2.attribute_id[${index}]`)">{{ errors.first(`step2.attribute_id[${index}]`) }}</span>
+                <tree-select v-model="attributeGroup.name" :options="groupAttributes" @input="attributeValues(index , attributeGroup.name)" v-validate="'required'" :name="`attributeGroup[${index}]`" data-vv-as="ویژگی"/>
+                <span class="text-danger text-sm" v-show="errors.has(`step2.attributeGroup[${index}]`)">{{ errors.first(`step2.attributeGroup[${index}]`) }}</span>
               </div>
               <div class="col-span-5">
-                <tree-select v-model="attribute.values" multiple :options="attribute.vals" v-validate="'required'" :name="`attribute_values[${index}]`" data-vv-as="مقدار"/>
-                <span class="text-danger text-sm" v-show="errors.has(`step2.attribute_values[${index}]`)">{{ errors.first(`step2.attribute_values[${index}]`) }}</span>
+                <tree-select v-model="attributeGroup.attributes" multiple :options="attributeGroup.atts" v-validate="'required'" :name="`attributes[${index}]`" data-vv-as="مقدار"/>
+                <span class="text-danger text-sm" v-show="errors.has(`step2.attributes[${index}]`)">{{ errors.first(`step2.attributes[${index}]`) }}</span>
               </div>
             </template>
-            <vs-button color="primary" class="col-span-2" @click.native="product.attributes.push({id:null ,values:[],vals:[]})">افزودن ویژگی</vs-button>
+            <vs-button color="primary" class="col-span-2" @click.native="groupAttributes.length ?product.attributes.push({name : null ,attributes:[],atts:[]}):null">افزودن ویژگی</vs-button>
           </div>
         </form>
       </tab-content>
       <tab-content title="متغیر ها" :before-change="()=>validateStep('step3')">
         <vs-collapse :not-arrow="true" :accordion="true" type="border" >
-          <vs-collapse-item v-for="(variable , index) in product.variables" :key="index">
+          <vs-collapse-item v-for="(variant , index) in product.variants" :key="index">
             <div slot="header" v-if="~~product.type === 2">
-              {{ `${variableLabel()} ${variableValue(variable['variable_id']? variable['variable_id'] :null)}` }}
+              {{ `${product.variantGroup.name} ${ (product.variantGroup.attributes.find(a => a.id === variant['attribute_id'])||{label:''}).label}` }}
             </div>
             <div class="grid grid-cols-8 gap-5">
-              <vs-button class="col-span-1 row-start-1 col-end-9" v-if="~~product.type === 2" color="primary" @click.native="product.variables.splice(index, 1)">حذف</vs-button>
-              <label class="col-span-2 row-start-1 col-start-1" v-if="~~product.type === 2">{{ variableLabel() }}</label>
-              <tree-select class="col-span-8" v-model="variable['variable_id']" v-if="~~product.type === 2" :options="product.variable.values"/>
-              <vs-input label="قیمت خرید" v-model="variable['purchase_price']" class="col-span-2 w-full"/>
-              <vs-input label="قیمت فروش" v-model="variable['selling_price']" class="col-span-2 w-full"/>
-              <vs-input label="قیمت تخفیف خورده" v-model="variable['discounted_price']" class="col-span-2 w-full"/>
-              <vs-input label="قیمت فروش کلی" v-model="variable['wholesale_price']" class="col-span-2 w-full"/>
-              <vs-input label="کمترین مقدار خرید برای قیمت عمده" v-model="variable['minimum_wholesale']" class="col-span-2 w-full"/>
-              <vs-input label="موجودی" v-model="variable['inventory']" class="col-span-2 w-full"/>
-              <vs-input label="واحد" v-model="variable['unit']" class="col-span-2 w-full"/>
+              <vs-button class="col-span-1 row-start-1 col-end-9" v-if="~~product.type === 2" color="primary" @click.native="product.variants.splice(index, 1)">حذف</vs-button>
+              <label class="col-span-2 row-start-1 col-start-1" v-if="~~product.type === 2">{{ product.variantGroup.name }}</label>
+              <tree-select class="col-span-8" v-model="variant['attribute_id']" v-if="~~product.type === 2" :options="product.variantGroup.attributes"/>
+              <vs-input label="قیمت خرید" v-model="variant['purchase_price']" class="col-span-2 w-full"/>
+              <vs-input label="قیمت فروش" v-model="variant['selling_price']" class="col-span-2 w-full"/>
+              <vs-input label="قیمت تخفیف خورده" v-model="variant['discounted_price']" class="col-span-2 w-full"/>
+              <vs-input label="قیمت فروش کلی" v-model="variant['wholesale_price']" class="col-span-2 w-full"/>
+              <vs-input label="کمترین مقدار خرید برای قیمت عمده" v-model="variant['minimum_wholesale']" class="col-span-2 w-full"/>
+              <vs-input label="موجودی" v-model="variant['inventory']" class="col-span-2 w-full"/>
+              <vs-input label="واحد" v-model="variant['unit']" class="col-span-2 w-full"/>
             </div>
           </vs-collapse-item>
         </vs-collapse>
-        <tree-select v-model="product.variable.id" :options="variables" v-if="~~product.type === 2 && !product.variables.length" @input="variableValues(product.variable.id)"/>
-        <vs-button v-if="~~product.type === 2" color="primary" class="col-span-2" @click.native="product.variables.push({id:null ,value:''})">افزودن ویژگی</vs-button>
+        <tree-select v-model="product.variantGroup.name" :options="variables" v-if="~~product.type === 2 && !product.variants.length" @input="variableValues(product.variantGroup.name)"/>
+        <vs-button v-if="~~product.type === 2" color="primary" class="col-span-2" @click.native="product.variantGroup.attributes && product.variantGroup.attributes.length ? product.variants.push({id:null ,value:''}):null">افزودن ویژگی</vs-button>
       </tab-content>
       <tab-content title="عکس ها" :before-change="()=>validateStep('step4')">
-        <vs-button @click.native="selectFile">آپلود عکس</vs-button>
-        <div class="grid grid-cols-4 gap-5">
-          <vs-card actionable class="col-span-1 cardx" v-for="(image , index) in product.images" :key="index">
+        <vs-button @click.native="selectFile" class="mb-2">آپلود عکس</vs-button>
+        <div class="grid grid-cols-6 gap-5">
+          <vs-card class="col-span-1 cardx" v-for="(image , index) in product.images" :key="index" fixedHeight>
             <div slot="header" v-if="~~product.type === 2">
-              <tree-select :options="productVariables"/>
+              <tree-select v-model="image.variant_index" :options="productVariables"/>
             </div>
-            <div slot="media">
+            <div class="relative">
+              <vs-button radius class="absolute" size="small" color="danger" type="gradient" icon="delete" @click.native="product.images.splice(index , 1)" />
               <img :src="image.link" :alt="image.link">
-            </div>
-            <div slot="footer">
-              <vs-row vs-justify="flex-start">
-                <vs-button color="danger" type="gradient" @click.native="product.images.splice(index , 1)" >Delete</vs-button>
-              </vs-row>
             </div>
           </vs-card>
         </div>
@@ -136,8 +146,6 @@ function createTree(cats, disabled, id = null) {
   })
   return catsFiltered
 }
-import momentj from 'moment-jalaali'
-import moment from 'moment'
 import PersionDate from 'vue-persian-datetime-picker'
 import Editor from "~/components/admin/Editor";
 export default {
@@ -149,11 +157,14 @@ export default {
   props: {
     product:{
       required: true,
+    },
+    active:{
+      default:true,
     }
   },
   data() {
     return {
-      canditions:[
+      conditions:[
         {
           id: 0,
           label: 'غیرفعال',
@@ -179,9 +190,25 @@ export default {
       ]
     }
   },
+  fetch() {
+    this.$store.dispatch('storeCategory/getCategories')
+    this.$store.dispatch('attribute/getAttributes')
+    this.$store.dispatch('brands/getBrands')
+  },
   computed: {
     categories() {
       return createTree(this.$store.getters['storeCategory/getCategories'], false)
+    },
+    groupAttributes(){
+      let attributes = []
+      this.$store.getters['attribute/getAttributes'].forEach(att => {
+        let pushAtt = this.product.attributes.find(a => a.name === att.name )
+
+        if (!attributes.find(at=>at.id === att.name)){
+          attributes.push({id: att.name, label: att.name , isDisabled:pushAtt})
+        }
+      })
+      return attributes
     },
     attributes() {
       let attributes = []
@@ -198,25 +225,39 @@ export default {
       })
       return attributes
     },
+    brands(){
+      let brands = []
+      for (let brand of this.$store.getters['brands/getBrands']){
+        brands.push({
+          id:brand.id,
+          label:brand.name,
+        })
+      }
+      return brands
+    },
     variables() {
       let variables = []
-      this.$store.getters['attribute/getAttributes'].forEach(att => (att.is_variable ? variables.push({id: att.id, label: att.name}) : null))
+      this.$store.getters['attribute/getAttributes'].forEach(att => {
+        if (att.is_variable && !variables.find(at=>at.id === att.name)){
+          variables.push({id: att.name, label: att.name})
+        }
+      })
       return variables
     },
     productVariables(){
       let variables = [
 
       ]
-      this.product.variables.forEach((v  , k) => {
+      this.product.variants.forEach((v  , k) => {
         variables.push({
           id:k,
-          label: `${this.variableLabel()} ${this.variableValue(v['variable_id'])}`
+          label: `${this.product.variantGroup.name} ${(this.product.variantGroup.attributes.find(att => att.id === v.attribute_id)||{label:''}).label}`
         })
       })
       return variables
     },
     disabledProductType() {
-      return ~~this.product.type === 2 && this.product.variables.length > 0
+      return ~~this.product.type === 2 && this.product.variants.length > 0
     },
   },
   methods: {
@@ -226,17 +267,16 @@ export default {
       }
       this.$validator.validateAll().then(validated => {
         if (validated) {
-          this.$store.commit('products/SET_PRODUCT' , this.product)
+          let product = JSON.parse(JSON.stringify(this.product))
+          product.published_at = this.$jalaali(product.published_at  ,'jYYYY/jMM/jDD').format('YYYY/MM/DD')
+          this.$store.commit('products/SET_PRODUCT' , product)
           this.$emit('save-product')
         }
       })
     },
     typeChanged(val){
-      this.product.variables = []
       if (val !== 2){
-        this.product.variables = [{
-
-        }]
+        this.product.variants = [{}]
       }
     },
     selectFile(){
@@ -250,41 +290,35 @@ export default {
       await this.$store.dispatch('files/uploadProductImage' , file)
       this.product.images.push({
         link : this.$store.getters['files/getFile'].link,
-        'file_id' : this.$store.getters['files/getFile'].id,
+        id : this.$store.getters['files/getFile'].id,
       })
     },
     validateStep(scope){
       return new Promise((resolve, reject)=>{
         this.$validator.validateAll(scope).then((res)=>{
-          console.log(res , this.errors , this.product)
           res ? resolve(true) : reject(false)
         })
       })
-    },
-    variableLabel(){
-      return (this.variables.find(v => v.id === this.product.variable.id)).label
     },
     variableValue(id){
       if (id === null) return ''
       return this.$store.getters['attribute/getAttribute']['values'].find(v => v.id === id).value
     },
-    async normalizeAttributes(id) {
+    normalizeAttributes(id) {
       if (id === null) return []
-      await this.$store.dispatch('attribute/getAttribute', id)
-      let attribute = this.$store.getters['attribute/getAttribute']
-      let values = []
-      attribute.values.forEach(val => values.push({id: val.id, label: val.value}))
-      return values
+      let attributes = []
+      this.$store.getters['attribute/getAttributes'].forEach(att => att.name === id ? attributes.push({id: att.id, label: att.value}):null)
+      return attributes
     },
-    async attributeValues(index, id) {
-      if (typeof id === 'undefined'){
-        id=null
+    attributeValues(index, id) {
+      id = id || null
+      this.product.attributes[index].atts = this.normalizeAttributes(id)
+      this.product.attributes[index].attributes = []
+    },
+    variableValues(id) {
+      if (id){
+        this.product.variantGroup.attributes = this.normalizeAttributes(id)
       }
-      this.product.attributes[index].vals = await this.normalizeAttributes(id)
-      this.product.attributes[index].values = []
-    },
-    async variableValues(id) {
-      this.product.variable.values = await this.normalizeAttributes(id)
     },
     normalizer(cat) {
       return {
@@ -294,10 +328,6 @@ export default {
       }
     },
   },
-  beforeCreate() {
-    this.$store.dispatch('storeCategory/getCategories')
-    this.$store.dispatch('attribute/getAttributes')
-  }
 }
 </script>
 <style>
