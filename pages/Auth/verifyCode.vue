@@ -1,8 +1,13 @@
 <template>
-  <form @submit.prevent="checkVerifyCode">
-    <vs-input label="کد تایید" placeholder="کد تایید" type="text" v-model="verifyCode"/>
-    <vs-button label="ارسال" @click.native="checkVerifyCode"/>
-  </form>
+  <div>
+    <h3 class="font-bold text-cool-700 text-lg">کد تایید را وارد کنید</h3>
+    <p class="text-sm text-cool-500 font-thin mt-3">شما حساب کاربری ندارید  و در حال ایجاد حساب کاربری هستید</p>
+    <form @submit.prevent="checkVerifyCode">
+      <vs-input class="contactform mt-6" label="کد تایید" placeholder="کد تایید" type="text" v-model="verifyCode" size="large"/>
+      <vs-button class="mt-5 mx-auto block" color="#F97316" type="filled" @click.native="checkVerifyCode">ارسال کد</vs-button>
+    </form>
+    <p class="text-xs text-cool-500 font-thin mt-8 text-center">با ورود و یا ثبت نام در وبسایت ما شما شرایط و قوانین استفاده از سرویس های سایت ما و قوانین حریم خصوصی آن را می‌پذیرید. </p>
+  </div>
 </template>
 
 <script>
@@ -17,7 +22,6 @@ export default {
   methods: {
     checkVerifyCode() {
       this.$apiClient.post('api/auth/check.verify.code', {username: this.username, verifyCode: this.verifyCode}).then(response => {
-        this.$router.push({name: 'Auth-register', query: {username: JSON.parse(response.config.data).username}})
         if (response.status === 200){
           this.$router.push({name: 'Auth-register', query: {username: JSON.parse(response.config.data).username}})
         }
@@ -31,7 +35,8 @@ export default {
           })
         }
       }).catch(error => {
-        if (error.status ===  403){
+
+        if (error.response.status ===  403){
           this.$vs.notify({
             time: 3000,
             title: 'نام کاربری',
@@ -42,6 +47,14 @@ export default {
           setTimeout(() => {
             this.$router.push({name: 'Auth-checkUsername'})
           }, 3500)
+        }
+        if (error.response.status ===  422) {
+          this.$vs.notify({
+            title: 'خطا!!',
+            time: 2000,
+            text: error.response.data.errors.verifyCode[0],
+            color: 'danger'
+          })
         }
       })
     },

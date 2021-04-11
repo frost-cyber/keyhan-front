@@ -1,14 +1,10 @@
 <template>
-  <div class="grid  grid-cols-4 gap-5">
-    <div class="col-start-2 col-span-2">
-      <NuxtChild/>
-    </div>
-  </div>
+   <NuxtChild/>
 </template>
 
 <script>
 export default {
-layout: "FullPage"
+layout: "Auth"
 }
 </script>
 
