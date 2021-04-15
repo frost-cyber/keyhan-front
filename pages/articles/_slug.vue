@@ -70,7 +70,7 @@
 
                   </li>
                   <li v-for="cat in broadCrumb">
-                    <a href="#" title="blogcat" >{{cat.name}}</a>
+                    <a href="#" title="blogcat">{{cat.name}}</a>
                     <span class="vs-breadcrum--separator">/</span>
                   </li>
                 </vs-breadcrumb>
@@ -86,9 +86,9 @@
                 </figure>
                 <figure class=" text-cool-400 my-auto inline-block ml-6">
                   <i class="fal fa-calendar-edit text-2xl ml-2"></i>
-                  <span class="text-sm font-thin relative -top-1"
-                  >تاریخ انتشار : 20 آبان 99</span
-                  >
+                  <span class="text-sm font-thin relative -top-1">
+                     تاریخ انتشار : {{$jalaali(article.created_at).format("jDD jMMMM  jYYYY ")}}
+                  </span>
                 </figure>
                 <figure class=" text-cool-400 my-auto inline-block ml-6">
                   <i class="fal fa-eye text-2xl ml-2"></i>
@@ -99,7 +99,9 @@
               </div>
             </div>
           </div>
-          <div class="dynamic-img col-span-2 h-56 md:h-auto md:col-span-1 order-1 md:order-2 overflow-hidden relative"></div>
+          <div class="dynamic-img col-span-2 h-56 md:h-auto md:col-span-1 order-1 md:order-2 overflow-hidden relative">
+            <img :src="article.thumbnail.link" width="100%">
+          </div>
         </div>
       </div>
     </section>
@@ -139,7 +141,7 @@
         </div>
       </div>
     </section>
-    <article-slider :articles="blogarray"/>
+    <article-slider :articles="articles"/>
     <section class="title-section mt-24 mb-3 relative">
       <div class="container mx-auto">
         <div class="grid grid-cols-2 gap-30">
@@ -160,34 +162,50 @@
   import sidebarCategories from "@/components/front/blog/sidebarCategories";
   import ArticleSlider from "~/components/front/blog/articleSlider";
   import Comments from "~/components/front/blog/comments";
+  import article from "~/pages/admin/article";
+
   export default {
     name: "_slug",
     async asyncData(ctx) {
       let slug = ctx.route.params.slug
-      await ctx.store.dispatch('article/getArticle',slug)
-      return{
+      await ctx.store.dispatch('article/getArticle', slug)
+      await ctx.store.dispatch('article/getCategoriesArticle' )
+      let query = {
+        "category" : ctx.store.getters['article/getArticle'].categories[0].id
+      }
+      await ctx.store.dispatch('article/getArticles',query)
+      return {
         article: ctx.store.getters['article/getArticle'],
-        blogarray:[
-          { img: require('@/assets/img/product/02.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
-          { img: require('@/assets/img/product/03.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
-          { img: require('@/assets/img/product/04.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
-          { img: require('@/assets/img/product/03.png') ,title:"  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند " ,href:"#" ,desc:" آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "},
-        ],
-        value1: "",
+        articles: ctx.store.getters['article/getArticles'],
+        CategoriesArticle: ctx.store.getters['article/getCategoriesArticle'],
       }
     },
-    computed:{
-      broadCrumb(){
+    computed: {
+      broadCrumb() {
         let category = this.article.categories[0]
         let cats = []
         do {
           cats.unshift(category)
-          category = (category.parent_id?category.parent:category)
-        }while (category.parent_id != null || category.id !== cats[0].id)
+          category = (category.parent_id ? category.parent : category)
+        } while (category.parent_id != null || category.id !== cats[0].id)
         return cats
-      }
+      },
+      relatedPosts() {
+        let articles = []
+        let category = this.article.categories[0].id
+        let length = this.articles.length
+        for (let i = 0; i < length; i++) {
+          this.articles[i].categories[0].id
+          if (category === this.articles[i].categories[0].id){
+            articles.push(this.articles[i])
+          }
+          console.log(articles)
+        }
+        return articles
+
+      },
     },
-    components:{
+    components: {
       Comments,
       ArticleSlider,
       sidebarCategories,

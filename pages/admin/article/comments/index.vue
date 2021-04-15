@@ -1,9 +1,9 @@
 <template>
   <vs-card>
-    <vs-table ref="table" pagination :data="articles">
+    <vs-table ref="table" pagination :data="comments">
       <template slot="thead">
-        <vs-th>عکس</vs-th>
-        <vs-th>عنوان</vs-th>
+        <vs-th>نظرات</vs-th>
+        <vs-th>مقاله مرتبط</vs-th>
         <vs-th>وضعیت</vs-th>
         <vs-th>تاریخ</vs-th>
         <vs-th>تنظیمات</vs-th>
@@ -11,22 +11,23 @@
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="index" v-for="(tr, index) in data">
-          <vs-td >
-            <img v-if="image" :src="tr.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" style="width: 20%">
-          </vs-td>
+          <vs-td>{{tr.body.substring(0,20)+"..."}}</vs-td>
           <vs-td>
-            <p class="">{{ tr.title }}</p>
+            {{tr.commentable.title}}
           </vs-td>
-          <vs-td v-if="tr.status === 'active'">فعال</vs-td>
-          <vs-td v-else> غیر فعال</vs-td>
+          <vs-switch @input="changeConfirmed(tr.id)" color="success" v-model="tr.confirmed">
+            <span slot="on">تایید شده</span>
+            <span slot="off">تایید نشده</span>
+          </vs-switch>
+
           <vs-td>
             <p class="">{{ $jalaali(tr.created_at).format('jYYYY/jMM/jDD') }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
-            <NuxtLink :to="{name:'admin-article-blogs-slug' , params:{slug:tr.slug}}" >
+            <NuxtLink :to="{name:'admin-article-comments-id' , params:{id:tr.id}}" >
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current"/>
             </NuxtLink>
-            <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteArticle(tr)"/>
+            <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteComment(tr)"/>
           </vs-td>
         </vs-tr>
         </tbody>
@@ -39,21 +40,23 @@
   export default {
     name: "index",
     computed: {
-      articles() {
-        return this.$store.getters['article/getArticles']
+      comments() {
+        return this.$store.getters['articleComment/getComments']
       }
     },
     data(){
       return{
-        image:true,
-        file:''
+
       }
     },
     methods: {
-      deleteArticle(article) {
-        this.$store.dispatch('article/deleteArticle', article).then((res) =>{
+      changeConfirmed(id){
+        this.$store.dispatch('articleComment/toggleConfirm',id)
+      },
+      deleteComment(comment) {
+        this.$store.dispatch('articleComment/deleteComment', comment).then((res) =>{
           if (res.status === 200){
-            this.$store.commit('article/DELETE_ARTICLE', article)
+            this.$store.commit('articleComment/DELETE_COMMENT', comment)
             this.$vs.notify({
               title: "با موفقیت حذف شد.",
               time: 2000,
@@ -75,7 +78,7 @@
       }
     },
     mounted() {
-      this.$store.dispatch('article/getArticles')
+      this.$store.dispatch('articleComment/getComments')
     }
   }
 </script>

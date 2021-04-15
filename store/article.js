@@ -1,6 +1,7 @@
 export const state=()=>({
   articles:[],
   tags:[],
+  categoriesArticle:[],
   errors: [],
   article:{
     image_id:null,
@@ -12,6 +13,7 @@ export const state=()=>({
     description:null,
     publish_at:null,
     category_id:null,
+    thumbnail:{},
     file:null,
   }
 })
@@ -28,6 +30,10 @@ export const mutations={
   SET_ERRORS(state, errors) {
     state.errors = errors
   },
+  SET_CategoriesArticle(state, categoriesArticle) {
+    state.categoriesArticle = categoriesArticle
+  },
+
   SET_ARTICLES(state, articles) {
     state.articles = articles
   },
@@ -53,22 +59,38 @@ export const actions={
     const tags = await this.$apiClient.get('api/tags')
     commit('SET_TAGS',tags.data)
   },
-  async getArticles({commit}) {
-    const articles = await this.$apiClient.get('api/articles')
+  async getArticles({commit},query=null) {
+    let url = 'api/articles'
+    if(query){
+      let params = new URLSearchParams(query)
+      url += "?" + params.toString()
+    }
+    const articles = await this.$apiClient.get(url)
     commit('SET_ARTICLES', articles.data)
+
+  },
+  async getCategoriesArticle({commit},query=null) {
+    let url = 'api/categoryArticle'
+    if(query){
+      let params = new URLSearchParams(query)
+      url += "?" + params.toString()
+    }
+    const categoriesArticle = await this.$apiClient.get(url)
+    commit('SET_CategoriesArticle', categoriesArticle.data)
+
   },
   async getArticle({commit}, articleId) {
     const article = await this.$apiClient.get(`api/articles/${articleId}`)
     commit('SET_ARTICLE', article.data)
   },
   async deleteArticle({commit , state}, article) {
-    return this.$apiClient.delete(`api/articles/${article.id}`)
+    return this.$apiClient.delete(`api/articles/${article.slug}`)
   },
   async storeArticle({commit , state}, article) {
     return this.$apiClient.post('api/articles', article)
   },
   async updateArticle({commit , state}, article) {
-    return this.$apiClient.patch(`api/articles/${article.id}`, article)
+    return this.$apiClient.patch(`api/articles/${article.slug}`, article)
   },
 }
 export const getters={
@@ -80,6 +102,9 @@ export const getters={
   },
   getArticles(state){
     return JSON.parse(JSON.stringify(state.articles))
+  },
+  getCategoriesArticle(state){
+    return JSON.parse(JSON.stringify(state.categoriesArticle))
   },
   getErrors(state) {
     return JSON.parse(JSON.stringify(state.errors))

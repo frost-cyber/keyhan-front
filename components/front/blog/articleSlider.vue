@@ -6,7 +6,7 @@
                  class="col-span-6 md:col-span-4 lg:col-span-3 overflow-hidden item-blog border border-cool-100 rounded-lg hover:shadow-xl mb-5">
           <div class="img-blog">
             <a class="img-thum" :href="article.href">
-              <img :src="article.img" alt="" />
+              <img :src="article.thumbnail.link" alt="" />
             </a>
           </div>
           <div class="title-blog px-4 my-4 h-13 overflow-hidden">
@@ -18,7 +18,7 @@
           </div>
           <div class="des-course px-4 pb-4 h-15 overflow-hidden ">
             <p class="text-xs text-cool-600 font-thin text-right">
-              {{article.desc}}
+              {{article.description}}
             </p>
           </div>
         </article>
@@ -34,8 +34,9 @@
     props:{
       articles:{
         required: true,
-        type: Array,
-      }
+        type: Array
+      },
+
     },
     components: {
     },

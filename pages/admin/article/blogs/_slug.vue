@@ -10,11 +10,8 @@
   export default {
     name: "update",
     components: {SaveArticle},
-    validate({params}) {
-      return /^\d+$/.test(params.id)
-    },
     async asyncData({params , store}) {
-      await store.dispatch('article/getArticle', params.id)
+      await store.dispatch('article/getArticle', params.slug)
       let article = store.getters["article/getArticle"]
       article.categories = article.categories[0]??null
       return {

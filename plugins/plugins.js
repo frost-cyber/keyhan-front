@@ -51,7 +51,7 @@ export default function (ctx ,injector) {
   jalaali.locale('fa' , jalaliFa)
   jalaali.loadPersian()
   injector('jalaali',jalaali)
-  injector('createQuery' , createQuery)
   injector('cloneObject' , (object) => JSON.parse(JSON.stringify(object)))
+  injector('createQuery' , createQuery)
 }
 

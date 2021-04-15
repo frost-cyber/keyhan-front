@@ -123,6 +123,16 @@ export default [
           },
         ]
       },
+      {
+        name: 'نظرات',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/article/comments',
+            name: 'لیست',
+          },
+        ]
+      },
 
 
     ]
