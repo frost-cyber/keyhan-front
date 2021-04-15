@@ -189,8 +189,6 @@
       },
     },
     async created() {
-      console.log(this.article.thumbnail)
-
       await this.$store.dispatch('articleCategory/getCategories')
       this.categories = this.$store.getters['articleCategory/getCategories']
       // let index = categories.length

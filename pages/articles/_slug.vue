@@ -155,14 +155,13 @@
         </div>
       </div>
     </section>
-    <comments/>
+    <comments :comment="comment" @comments="saveComment"/>
   </div>
 </template>
 <script>
   import sidebarCategories from "@/components/front/blog/sidebarCategories";
   import ArticleSlider from "~/components/front/blog/articleSlider";
   import Comments from "~/components/front/blog/comments";
-  import article from "~/pages/admin/article";
 
   export default {
     name: "_slug",
@@ -175,10 +174,38 @@
       }
       await ctx.store.dispatch('article/getArticles',query)
       return {
+        comment:{},
         article: ctx.store.getters['article/getArticle'],
         articles: ctx.store.getters['article/getArticles'],
         CategoriesArticle: ctx.store.getters['article/getCategoriesArticle'],
       }
+    },
+    methods:{
+      saveComment() {
+        this.comment.article_id = this.article.id
+        this.$store.dispatch('articleComment/storeComment', this.comment).then((response) => {
+          if (response.status === 200) {
+            this.$vs.notify({
+              title: " کامنت با موفقیت ساخته شد",
+              time: 2000,
+              color: "success",
+              position: "bottom-center",
+              icon: 'check_box',
+            })
+            setTimeout(() => {
+              this.$router.push('.')
+            }, 2100)
+          }
+        }).catch(error => {
+          if (error.response && error.response.status === 422) {
+            this.$store.commit('articleComment/SET_ERRORS', error.response.data.errors)
+          }
+        })
+      },
+    },
+    destroyed() {
+      this.$store.commit('articleComment/SET_COMMENT')
+
     },
     computed: {
       broadCrumb() {
