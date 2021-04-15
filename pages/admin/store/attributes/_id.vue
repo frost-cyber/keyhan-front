@@ -1,32 +1,55 @@
 <template>
   <div>
-    <SaveAttribute :attribute="attribute" :disable="disabled" @save-attribute="saveAttribute"/>
+    <SaveAttributes :attributes="attributes" :disable="disabled" @save-attributes="saveAttributes"/>
   </div>
 </template>
 
 <script>
-import SaveAttribute from "~/components/admin/SaveAttribute";
+import SaveAttributes from "~/components/admin/SaveAttributes";
 
 export default {
   name: "update",
-  components: {SaveAttribute},
+  components: {SaveAttributes},
   validate({params}) {
     return /^\d+$/.test(params.id)
   },
-  async asyncData({params , store}) {
-    await store.dispatch('attribute/getAttribute', params.id)
+  data() {
     return {
-      attribute: store.getters["attribute/getAttribute"],
+      attribute: {},
+      attributes: [],
       disabled: false,
+      saveStatus: []
     }
   },
+  async fetch() {
+    await this.$store.dispatch('attribute/getAttribute', this.$route.params.id)
+    this.attribute = this.$store.getters["attribute/getAttribute"]
+    await this.$store.dispatch('attribute/getAttributes', {
+      name: this.attribute.name
+    })
+    this.attributes = this.$store.getters["attribute/getAttributes"]
+  },
   methods: {
-    saveAttribute() {
+    saveAttributes() {
+      this.attributes.forEach(this.saveAttribute)
+
+    },
+    async saveAttribute(attribute, index) {
       this.disabled = true
-      this.$store.dispatch('attribute/updateAttribute', this.attribute).then((response) => {
+      return await this.$store.dispatch(`attribute/${(attribute.id ? 'update' : 'store')}Attribute`, attribute).then((response) => {
         if (response.status === 200) {
+          this.saveStatus[index] = true
+          attribute.id = response.data.attribute.id
+        }
+      }).catch(error => {
+        this.saveStatus[index] = false
+        if (error.response && error.response.status === 422) {
+          this.$store.commit('attribute/SET_ERRORS', {index: index, errors: error.response.data.errors})
+        }
+      }).then(() => {
+        if (index === this.attributes.length - 1 && this.saveStatus.length === this.attributes.length && !this.saveStatus.includes(false)) {
           this.$vs.notify({
-            title: "با موفقیت ویژگی آپدیت شد",
+            title: "با موفیت ویژگی ها ساخته شد",
             text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
             time: 2000,
             color: "success",
@@ -36,11 +59,8 @@ export default {
           setTimeout(() => {
             this.$router.push('.')
           }, 2100)
-        }
-      }).catch(error => {
-        this.disabled = false
-        if (error.response && error.response.status === 422) {
-          this.$store.commit('attribute/SET_ERRORS', error.response.data.errors)
+        } else {
+          this.disabled = false
         }
       })
     }

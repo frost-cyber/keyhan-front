@@ -62,12 +62,20 @@ export const mutations = {
 }
 
 export const actions = {
-  async getProducts({commit}) {
-    const products = await this.$apiClient.get('api/products')
+  async getProducts({commit} ,query=null) {
+    let url = 'api/products'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    const products = await this.$apiClient.get(url)
     commit('SET_PRODUCTS', products.data)
   },
-  async getProduct({commit}, productId) {
-    const product = await this.$apiClient.get(`api/products/${productId}`)
+  async getProduct({commit},{productId , query = null}) {
+    let url = `api/products/${productId}`
+    if(query) {
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    const product = await this.$apiClient.get(url)
     commit('SET_PRODUCT', product.data)
   },
   async storeProduct({commit, state}, product) {

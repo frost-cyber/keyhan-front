@@ -10,14 +10,23 @@ export default {
   components: {SaveProduct},
   asyncData({store}) {
     return {
-      product: JSON.parse(JSON.stringify(store.getters["products/getProduct"])),
+      product: {
+        attributes:[],
+        variantGroup:{},
+        variants:[],
+        images: [],
+      },
       disabled: false,
     }
   },
   methods: {
     saveProduct() {
       this.disabled = true
-      this.$store.dispatch('products/storeProduct', this.product).then((response) => {
+      let product = this.$cloneObject(this.$store.getters['products/getProduct'])
+      let attributesProduct = {ats :product.attributes}
+      product.attributes = []
+      attributesProduct.ats.forEach(ats => ats.attributes.forEach(id => product.attributes.push({id})))
+      this.$store.dispatch('products/storeProduct',product).then((response) => {
         if (response.status === 200) {
           this.$vs.notify({
             title: "با موفیت ویژگی ساخته شد",

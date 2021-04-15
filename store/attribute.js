@@ -44,22 +44,30 @@ export const mutations = {
   }
 }
 export const actions = {
-  async getAttributes({commit}) {
-    const attributes = await this.$apiClient.get('api/attributes')
+  async getAttributes({commit} , query = null) {
+    let url = 'api/attributes'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    const attributes = await this.$apiClient.get(url)
     commit('SET_ATTRIBUTES', attributes.data)
   },
   async getAttribute({commit}, attributeId) {
     const attribute = await this.$apiClient.get(`api/attributes/${attributeId}`)
     commit('SET_ATTRIBUTE', attribute.data)
   },
-  async storeAttribute({commit , state}, attribute) {
+  storeAttribute({commit , state}, attribute) {
     return this.$apiClient.post('api/attributes', attribute)
   },
-  async updateAttribute({commit , state}, attribute) {
+  updateAttribute({commit , state}, attribute) {
     return this.$apiClient.patch(`api/attributes/${attribute.id}`, attribute)
   },
-  async deleteAttribute({commit , state}, attribute) {
-    return this.$apiClient.delete(`api/attributes/${attribute.id}`)
+  deleteAttribute({commit , state}, {attribute , query = null}) {
+    let url = `api/attributes/${attribute.id}`
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.delete(url)
   }
 }
 export const getters = {
