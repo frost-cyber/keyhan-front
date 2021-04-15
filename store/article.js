@@ -4,6 +4,7 @@ export const state=()=>({
   categoriesArticle:[],
   errors: [],
   article:{
+    id:null,
     image_id:null,
     created_at:null,
     slug:null,

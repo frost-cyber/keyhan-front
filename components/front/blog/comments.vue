@@ -1,15 +1,15 @@
 <template>
   <section class="comment-row">
     <div class="container mx-auto">
-      <div class="grid grid-cols-12 gap-30 p-4 rounded-lg rounded-r-none border border-cool-100 text-cool-600">
-        <div class="col-span-12 md:col-span-6">
-          <div class="comment-item level-1 relative grid md:grid-cols-5 gap-4 rounded-lg bg-cool-100 p-4">
-            <div class="img-comment md:col-span-1">
+      <div class="grid grid-cols-12 gap-30 p-4 rounded-lg rounded-r-none border border-cool-100 text-cool-600"  :data="comments">
+        <div class="col-span-12 md:col-span-6" >
+          <div class="comment-item level-1 relative grid md:grid-cols-5 gap-4 rounded-lg bg-cool-100 p-4" >
+            <div class="img-comment md:col-span-1" >
               <img class="inline-block rounded-lg" src="@/assets/img/product/avatar.jpg" alt="">
             </div>
             <div class="info-comment md:col-span-4">
               <h5 class="inline-block text-base font-bold">تکتم حیدرزاده</h5>
-              <p class="commment-text text-sm font-thin mt-3">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و </p>
+              <p class="commment-text text-sm font-thin mt-3">عت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و  </p>
               <a class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500" href=""><i class="fal fa-reply"></i></a>
             </div>
           </div>
@@ -33,7 +33,6 @@
                 <p class="commment-text text-sm font-thin mt-3">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و </p>
               </div>
             </div>
-
             <div class="comment-item relative col-span-5 grid md:grid-cols-5 gap-4 rounded-lg bg-cool-100">
               <div class="img-comment md:col-span-1">
                 <img class="inline-block rounded-lg" src="@/assets/img/product/avatar.jpg" alt="">
@@ -46,6 +45,7 @@
             </div>
 
           </div>
+
           <div class="paganition mt-5 mx-auto">
             <vs-pagination :total="12" icon-pack="fal"
                            prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="currentx"></vs-pagination>
@@ -53,21 +53,11 @@
         </div>
         <div class="col-span-12 md:col-span-6">
           <div class="form-contact">
-            <vs-input
-              class="contactform"
-              placeholder="نام و نام خانوادگی"
-              v-model="value1"
-              size="small"
-            />
-            <vs-input
-              class="contactform mt-3"
-              placeholder="پست الکترونیک شما"
-              v-model="value1"
-              size="small"
-            />
-            <vs-textarea  class="contactform mt-3" label="دیدگـــاه شما" height="200px" />
+            <vs-input class="contactform" placeholder="نام و نام خانوادگی" v-model="comment.name" size="small"/>
+            <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما" v-model="comment.email" size="small"/>
+            <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px" v-model="comment.body"/>
             <div class="mt-3 text-sm">
-              <vs-button color="#F97316" type="filled">ثبت نظـــر شما</vs-button>
+              <vs-button color="#F97316" @click="saveComment" type="filled">ثبت نظـــر شما</vs-button>
             </div>
           </div>
 
@@ -78,11 +68,37 @@
 </template>
 <script>
   export default {
-    name:"comments",
+    name: "comments",
+    props: {
+      comment: {
+        required: true,
+      },
+      article: {
+        required: true,
+      },
+    },
     data(){
-      return{
+      return {
         colorx: '#F97316',
         currentx: 5,
+        comments:[]
+      }
+    },
+    computed:{
+      comments() {
+        return this.$store.getters['articleComment/getComments']
+      }
+    },
+    mounted() {
+    },
+    methods:{
+      saveComment(){
+        this.$validator.validateAll().then(validated => {
+          if (validated) {
+            this.$store.commit('articleComment/SET_COMMENT', this.comment)
+            this.$emit('comments')
+          }
+        })
       }
     }
   }

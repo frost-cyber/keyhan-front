@@ -1,12 +1,16 @@
 export const state=()=>({
   comments:[],
   errors: [],
+  article:{
+    id: null
+  },
   comment:{
     created_at:null,
     body:null,
     confirmed:null,
     name:null,
     email:null,
+
   }
 })
 export const getters={
@@ -18,10 +22,17 @@ export const getters={
   },
 }
 export const actions={
+  async storeComment({commit , state}, comment) {
+    return this.$apiClient.post('api/articleComments', comment)
+  },
+  async updateComment({commit , state}, comment) {
+    return this.$apiClient.patch(`api/articleComments/${comment.id}`, comment)
+  },
   async getComment({commit}, commentId) {
     const comment = await this.$apiClient.get(`api/articleComments/${commentId}`)
     commit('SET_COMMENT', comment.data)
   },
+
   async toggleConfirm({commit},commentId){
     return  this.$apiClient.put(`api/articleComments/${commentId}/toggleConfirm`)
   },
@@ -29,7 +40,7 @@ export const actions={
     return this.$apiClient.delete(`api/articleComments/${comment.id}`)
   },
   async getComments({commit},query=null) {
-    let url = 'api/articleComments'
+    let url = `api/articleComments`
     if(query){
       let params = new URLSearchParams(query)
       url += "?" + params.toString()
@@ -40,16 +51,31 @@ export const actions={
   },
 }
 export const mutations={
+
+  SET_ARTICLECOMMENT(state, comment = null) {
+    if (comment == null){
+      comment = {
+        created_at:null,
+        body:null,
+        confirmed:null,
+        name:null,
+        email:null,
+      }
+    }
+    state.comment = comment
+  },
+  SET_ERRORS(state, errors) {
+    state.errors = errors
+  },
   SET_COMMENT(state, comment = null) {
     if (comment == null){
       comment = {
         name:null,
         email:null,
-        created_at:null,
         body:null,
-        confirmed:null,
       }
     }
+
     state.comment = comment
   },
   SET_COMMENTS(state, comments) {

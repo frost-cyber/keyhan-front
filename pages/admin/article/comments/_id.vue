@@ -1,5 +1,5 @@
 <template>
-  <div class="vx-row" >
+  <div class="vx-row">
     <div class="vx-col sm:w-1/3">
       <vs-card hover="true">
         <div slot="header">
@@ -10,7 +10,7 @@
             <span>نام:</span>
           </div>
           <div class="vx-col sm:w-2/3 w-full">
-           {{comment.user.name || comment.name}}
+            {{comment.name || comment.user.name}}
           </div>
         </div>
         <div class="vx-row mb-6">
@@ -18,7 +18,7 @@
             <span>ایمیل:</span>
           </div>
           <div class="vx-col sm:w-2/3 w-full">
-            {{comment.user.email || comment.email}}
+            {{comment.email || comment.user.email}}
           </div>
         </div>
         <div class="vx-row mb-6">
@@ -40,7 +40,8 @@
             <span>نظر</span>
           </div>
           <div class="vx-col sm:w-3/3 w-full">
-              <vs-textarea v-model="comment.body"/>
+            <vs-textarea v-model="comment.body"/>
+            <vs-button @click="updateComment"  color="success">update</vs-button>
           </div>
         </div>
       </vs-card>
@@ -51,18 +52,47 @@
 
 <script>
   export default {
-    name: "_id",
+    name: "update",
 
-    async asyncData({params , store}) {
+    async asyncData({params, store}) {
       await store.dispatch('articleComment/getComment', params.id)
-      let comment = store.getters["articleComment/getComment"]
-      console.log(comment)
-
       return {
-        comment: comment,
+        comment: store.getters['articleComment/getComment'],
 
       }
     },
+    methods: {
+
+      updateComment() {
+        // this.disabled = true
+        this.$store.dispatch('articleComment/updateComment', this.comment).then((response) => {
+          this.$store.commit('articleComment/SET_ARTICLECOMMENT', this.comment)
+          if (response.status === 200) {
+            this.$vs.notify({
+              title: "با موفقیت نظر آپدیت شد",
+              text: "چند لحظه دیگر به صفحه نظرات  هدایت خواهید شد.",
+              time: 2000,
+              color: "success",
+              position: "bottom-center",
+              icon: 'check_box',
+            })
+            setTimeout(() => {
+              this.$router.push('.')
+            }, 2100)
+          }
+        }).catch(error => {
+          // this.disabled = false
+          if (error.response && error.response.status === 422) {
+            this.$store.commit('articleComment/SET_ERRORS', error.response.data.errors)
+          }
+        })
+      },
+      destroyed() {
+        this.$store.commit('articleComment/SET_ARTICLECOMMENT')
+        this.comment = this.$store.getters['articleComment/getComment']
+      }
+
+    }
   }
 </script>
 
