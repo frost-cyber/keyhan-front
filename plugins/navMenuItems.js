@@ -88,6 +88,16 @@ export default [
           },
         ]
       },
+      {
+        name: 'نظرات',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/store/comments',
+            name: 'لیست',
+          },
+        ]
+      },
     ]
   },
   {
@@ -133,10 +143,7 @@ export default [
           },
         ]
       },
-
-
     ]
-
   },
 ]
 

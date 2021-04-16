@@ -43,21 +43,21 @@ export const mutations = {
 }
 export const actions = {
   async getCategories({commit}) {
-    const categories = await this.$apiClient.get('api/categories')
+    const categories = await this.$apiClient.get('api/storeCategories')
     commit('SET_CATEGORIES', categories.data)
   },
   async getCategory({commit}, categoryId) {
-    const category = await this.$apiClient.get(`api/categories/${categoryId}`)
+    const category = await this.$apiClient.get(`api/storeCategories/${categoryId}`)
     commit('SET_CATEGORY', category.data)
   },
   async storeCategory({commit , state}, category) {
-    return this.$apiClient.post('api/categories', category)
+    return this.$apiClient.post('api/storeCategories', category)
   },
   async updateCategory({commit , state}, category) {
-    return this.$apiClient.patch(`api/categories/${category.id}`, category)
+    return this.$apiClient.patch(`api/storeCategories/${category.id}`, category)
   },
   async deleteCategory({commit , state}, category) {
-    return this.$apiClient.delete(`api/categories/${category.id}`)
+    return this.$apiClient.delete(`api/storeCategories/${category.id}`)
   }
 }
 
