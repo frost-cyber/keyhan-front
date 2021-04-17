@@ -54,10 +54,6 @@ export default [
             url: '/admin/store/brands',
             name: 'لیست',
           },
-          {
-            url: '/admin/store/brands/create',
-            name: 'ایجاد',
-          },
         ]
       },
       {

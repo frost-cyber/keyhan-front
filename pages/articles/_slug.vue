@@ -146,16 +146,14 @@
       <div class="container mx-auto">
         <div class="grid grid-cols-2 gap-30">
           <div class="col-span-2">
-            <h3
-              class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 "
-            >
+            <h3 class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 " >
               نظرات شما
             </h3>
           </div>
         </div>
       </div>
     </section>
-    <comments :comment="comment" @comments="saveComment"/>
+    <comments :comment="comment" :article="article" @comments="saveComment"/>
   </div>
 </template>
 <script>

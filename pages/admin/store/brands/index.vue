@@ -1,5 +1,6 @@
 <template>
   <vs-card>
+    <vs-button @click.native="editPopup = true">ایجاد برند</vs-button>
     <vs-table ref="table" pagination :data="brands">
       <template slot="thead">
         <vs-th>لوگو</vs-th>
@@ -46,7 +47,7 @@ export default {
   data() {
     return {
       brands: [],
-      editPopup: true,
+      editPopup: false,
       titlePopup: 'ایجاد',
       brand: {
         logo:{

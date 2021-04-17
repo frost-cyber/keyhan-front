@@ -42,12 +42,10 @@ export const actions={
   async getComments({commit},query=null) {
     let url = `api/articleComments`
     if(query){
-      let params = new URLSearchParams(query)
-      url += "?" + params.toString()
+      url += "?" + this.$createQuery(query).substr(1);
     }
     const comments = await this.$apiClient.get(url)
     commit('SET_COMMENTS', comments.data)
-
   },
 }
 export const mutations={

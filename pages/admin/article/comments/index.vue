@@ -78,7 +78,9 @@
       }
     },
     mounted() {
-      this.$store.dispatch('articleComment/getComments')
+      this.$store.dispatch('articleComment/getComments' , {
+        confirmed:-1,
+      })
     }
   }
 </script>

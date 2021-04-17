@@ -38,6 +38,9 @@ export const actions={
   },
   updateComment({commit} , comment){
     return this.$apiClient.put(`api/product/comments/${comment.id}` , comment)
+  },
+  storeComment({commit} , comment){
+    return this.$apiClient.post(`api/product/comments` , comment)
   }
 }
 export const mutations={

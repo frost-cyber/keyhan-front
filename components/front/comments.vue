@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="comment-item relative grid md:grid-cols-5 gap-4 rounded-lg bg-cool-100 p-4"
-         v-for="comment in comments" :class="[`level-${comment.level}` , ...(comment.level>1 ?['mr-10' , 'mt-3']:[])]">
+         v-for="comment in currentPageComments" :class="[`level-${comment.level}` , ...(comment.level>1 ?['mr-10' , 'mt-3']:[])]">
       <template v-if="comment.level<3">
         <div class="img-comment md:col-span-1">
           <img class="inline-block rounded-lg" src="@/assets/img/product/avatar.jpg" alt="">
         </div>
         <div class="info-comment md:col-span-4">
-          <h5 class="inline-block text-base font-bold">{{comment.name || comment.user.name}}</h5>
-          <p class="commment-text text-sm font-thin mt-3">{{comment.body}}</p>
+          <h5 class="inline-block text-base font-bold">{{ comment.name || comment.user.name }}</h5>
+          <p class="commment-text text-sm font-thin mt-3">{{ comment.body }}</p>
           <a class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500" href=""><i class="fal fa-reply"></i></a>
         </div>
       </template>
@@ -18,8 +18,8 @@
             <img class="inline-block rounded-lg image-comment" src="@/assets/img/product/avatar.jpg" alt="">
           </div>
           <div class="info-comment col-span-4">
-            <h5 class="inline-block text-base font-bold">{{ comment.parent.name || comment.parent.user.name}}</h5>
-            <p class="commment-text text-sm font-thin mt-3">{{ comment.parent.body.slice(0,20)+ (comment.parent.body.slice(0,20).length < comment.parent.body.length?'...':'')  }}</p>
+            <h5 class="inline-block text-base font-bold">{{ comment.parent.name || comment.parent.user.name }}</h5>
+            <p class="commment-text text-sm font-thin mt-3">{{ comment.parent.body.slice(0, 20) + (comment.parent.body.slice(0, 20).length < comment.parent.body.length ? '...' : '') }}</p>
           </div>
         </div>
         <div class="comment-item relative col-span-5 grid md:grid-cols-5 gap-4 rounded-lg bg-cool-100">
@@ -27,15 +27,15 @@
             <img class="inline-block rounded-lg" src="@/assets/img/product/avatar.jpg" alt="">
           </div>
           <div class="info-comment md:col-span-4">
-            <h5 class="inline-block text-base font-bold">{{comment.name || comment.user.name}}</h5>
-            <p class="commment-text text-sm font-thin mt-3">{{comment.body}}</p>
+            <h5 class="inline-block text-base font-bold">{{ comment.name || comment.user.name }}</h5>
+            <p class="commment-text text-sm font-thin mt-3">{{ comment.body }}</p>
             <a class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500" href=""><i class="fal fa-reply"></i></a>
           </div>
         </div>
       </template>
     </div>
-    <div class="paganition mt-5 mx-auto">
-      <vs-pagination :total="12" icon-pack="fal" prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="currentx"></vs-pagination>
+    <div class="paganition mt-5 mx-auto" v-if="totalPages>1">
+      <vs-pagination :total="totalPages" icon-pack="fal" prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="color" v-model="currentPage"></vs-pagination>
     </div>
   </div>
 </template>
@@ -46,6 +46,17 @@ export default {
   props: {
     componentsData: {
       require: true
+    },
+    perPage: {
+      default: 3
+    },
+    color:{
+      default: 'warning'
+    }
+  },
+  data() {
+    return {
+      currentPage: 1
     }
   },
   computed: {
@@ -59,17 +70,17 @@ export default {
         comment.children = []
         commentsTemp.push(comment)
       })
-      this.componentsData.forEach(comment =>{
+      this.componentsData.forEach(comment => {
         commentsTemp.forEach(c => {
           if (!comment.parent_id) return;
-          if (comment.parent_id === c.id){
+          if (comment.parent_id === c.id) {
             comment = this.$cloneObject(comment)
             comment.level = 2
             c.children.push(comment)
             return
           }
           let parent = c.children.find(ca => ca.id === comment.parent_id)
-          if (parent){
+          if (parent) {
             comment = this.$cloneObject(comment)
             comment.level = 3
             comment.parent = this.$cloneObject(parent)
@@ -84,6 +95,13 @@ export default {
         })
       })
       return comments
+    },
+    totalPages() {
+      return Math.ceil(this.comments.length / this.perPage)
+    },
+    currentPageComments() {
+      let start = (this.currentPage - 1) * this.perPage
+      return this.comments.slice(start, start + this.perPage)
     }
   }
 

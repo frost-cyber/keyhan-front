@@ -86,18 +86,23 @@
                     <div class="con-tab-ejemplo">
                       <div class="grid grid-cols-12 gap-30 text-cool-600">
                         <div class="col-span-12 md:col-span-7">
-                          <comments :components-data="product.comments"/>
+                          <comments :components-data="product.comments" color="#EF4444"/>
                         </div>
                         <div class="col-span-12 md:col-span-5">
                           <div>
-                            <div class="form-contact">
-                              <vs-input class="contactform" placeholder="نام و نام خانوادگی" v-model="value1" size="small"/>
-                              <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما" v-model="value1" size="small"/>
-                              <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px"/>
+                            <form data-vv-scope="comment" class="form-contact">
+                              <template>
+                                <vs-input class="contactform" placeholder="نام و نام خانوادگی" v-model="comment.name" size="small" v-validate="'required'" name="name" data-vv-as="نام"/>
+                                <span class="text-danger text-sm" v-show="errors.has('comment.name')">{{ errors.first('comment.name') }}</span>
+                                <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما" v-model="comment.email" size="small" v-validate="'required'" name="email"  data-vv-as="ایمیل"/>
+                                <span class="text-danger text-sm" v-show="errors.has('comment.email')">{{ errors.first('comment.email') }}</span>
+                              </template>
+                              <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px" v-model="comment.body" v-validate="'required'" name="body"  data-vv-as="نظر"/>
+                              <span class="text-danger text-sm" v-show="errors.has('comment.body')">{{ errors.first('comment.body') }}</span>
                               <div class="mt-3 text-sm">
-                                <vs-button color="#F97316" type="filled">ثبت نظـــر شما</vs-button>
+                                <vs-button color="#F97316" type="filled" @click.native="saveComment">ثبت نظـــر شما</vs-button>
                               </div>
-                            </div>
+                            </form>
                             <div class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
                               <div class="col-span-4">
                                 <h3>
@@ -222,6 +227,7 @@ export default {
       }
       attGroup.attributes.push(attribute)
     })
+    this.comment.product_id = product.id
     this.product = product
   },
   data() {
@@ -229,7 +235,12 @@ export default {
       product: {},
       popupActive: false,
       activeVariant: 0,
-      colorx: '#EF4444',
+      colorx : '#EF4444',
+      comment:{
+        name:'',
+        email:'',
+        body:'',
+      },
     }
   },
   computed: {
@@ -275,9 +286,45 @@ export default {
     }
   },
   methods: {
-    log(x) {
-      console.log(x)
-    }
+    saveComment(){
+      this.$validator.validateAll('comment').then(res => {
+        if (!res) return 0;
+        this.$store.dispatch('productComment/storeComment' , this.comment).then(res => {
+          if (res.status === 200){
+            this.$vs.notify({
+              title:'نظر شما با موفقیت ثبت گردید',
+              time: 2000,
+              color: "success",
+              position: "bottom-center",
+              icon: 'check_box',
+            })
+          }
+        }).catch(error => {
+
+          if (error.response.status === 422){
+            this.$vs.notify({
+              title:'نظر شما با خطا گردید',
+              text: 'خطا های زیر را رفع کنید.',
+              time: 3000,
+              color: "danger",
+              position: "bottom-center",
+              icon: 'check_box',
+            })
+
+            Object.entries(error.response.data.errors).forEach((error , i)=>{
+              setTimeout(() => {this.$vs.notify({
+                title:'خطا!!!',
+                text: error[1][0],
+                time: 3500,
+                color: "danger",
+                position: "bottom-center",
+                icon: 'check_box',
+              }) }, 500 * (i+1))
+            })
+          }
+        })
+      })
+    },
   }
 }
 </script>
