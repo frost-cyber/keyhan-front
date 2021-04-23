@@ -63,12 +63,12 @@ export const actions = {
 
 export const getters = {
   getCategories(state) {
-    return JSON.parse(JSON.stringify(state.categories))
+    return state.categories
   },
   getCategory(state) {
-    return JSON.parse(JSON.stringify(state.category))
+    return state.category
   },
   getErrors(state) {
-    return JSON.parse(JSON.stringify(state.errors))
+    return state.errors
   }
 }

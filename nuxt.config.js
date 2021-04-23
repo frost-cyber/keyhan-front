@@ -19,6 +19,7 @@ export default {
     'material-icons/iconfont/material-icons.css', //Material Icons
     'vuesax/dist/vuesax.css',
     '@/assets/css/iconfont.css',
+    '@/assets/css/fontawesome.all.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

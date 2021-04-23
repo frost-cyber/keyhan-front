@@ -8,12 +8,11 @@
             <div class="breadcumb text-sm text-center mx-auto">
               <vs-breadcrumb color="#eee" align="center">
                 <li>
-                  <a href="#" title="Home">صفحه اصلی</a
-                  ><span class="vs-breadcrum--separator">/</span>
+                  <a href="#" title="Home">صفحه اصلی</a>
+                  <span class="vs-breadcrum--separator">/</span>
                 </li>
                 <li>
-                  <a href="#" title="blogcat">دانشنامه</a
-                  >
+                  <a href="#" title="blogcat">دانشنامه</a>
                 </li>
               </vs-breadcrumb>
             </div>
@@ -31,15 +30,7 @@
               </div>
               <div class="content-side text-right mt-5">
                 <div class="font-fd my-auto search">
-                  <vs-input
-                    color="#F97316"
-                    icon-after="true"
-                    icon-pack="fal"
-                    icon="fa-search"
-                    placeholder="جستجو ..."
-                    :icon-no-border="false"
-                    v-model="value1"
-                  />
+                  <vs-input color="#F97316" icon-after="true" icon-pack="fal" icon="fa-search" placeholder="جستجو ..." :icon-no-border="false" v-model="query2.search"/>
                 </div>
               </div>
             </div>
@@ -48,8 +39,6 @@
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-1 lg:px-8  "> محصولات </h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >کالاها</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >دوره ها</vs-checkbox>
               </div>
             </div>
             <div class="right-item p-3 border-cool-100 border rounded-lg relative mb-4">
@@ -57,41 +46,29 @@
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-1 lg:px-8  "> دسته بندی ها </h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >تجهیزات مخابراتی</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" > تجهیزات شبکه ای</vs-checkbox>
+                <template v-for="(cat , index) in mainCategories">
+                  <vs-checkbox class="text-sm text-cool-600 mb-1" v-model="temp.categories" :vs-value="cat.slug" @input="selectCategory" :key="index">{{ cat.name }}</vs-checkbox>
+                </template>
               </div>
             </div>
-            <div class="right-item p-3 border-cool-100 border rounded-lg relative mb-4">
+            <div class="right-item p-3 border-cool-100 border rounded-lg relative mb-4" v-if="childCategories.length">
               <div class="title-sidebar relative">
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-1 lg:px-8  ">زیر دسته تجهیزات مخابراتی</h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >مخابرات یک</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >دوم مخابراتی</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >مخابرات یک</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >دوم مخابراتی</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >مخابرات یک</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >دوم مخابراتی</vs-checkbox>
-
+                <template v-for="(cat , index) in childCategories">
+                  <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon="fa-check" v-model="temp.categories" :vs-value="cat.slug" @input="selectCategory" >{{ cat.name }}</vs-checkbox>
+                </template>
               </div>
             </div>
-            <div class="right-item p-3 border-cool-100 border rounded-lg relative mb-4">
+            <div class="right-item p-3 border-cool-100 border rounded-lg relative mb-4" v-if="brands.length">
               <div class="title-sidebar relative">
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-1 lg:px-8  "> برندها </h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >سامسونگ</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >ال جی</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >سامسونگ</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >دلند</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >اسمارت</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >تی سی ال</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >اسوس</vs-checkbox>
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >اچ پی </vs-checkbox>
-
+                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="selectedBrands" :vs-value="brand.slug" v-for="(brand , index) in brands"> {{ brand.name }}</vs-checkbox>
               </div>
             </div>
-
           </div>
           <div class="left-box col-span-12 md:col-span-8 lg:col-span-9 p-3 border-cool-100 border rounded-lg">
             <div class="order-area mb-5">
@@ -103,156 +80,13 @@
             </div>
             <div class="itemes-area">
               <div class="grid grid-cols-12 gap-5">
-                <div class="col-span-6 lg:col-span-4 ">
-                  <div class="item-pro border border-cool-100 rounded-lg p-2 relative block">
-                    <div class="saving absolute z-10">
-                      <vs-button
-                        class="save-product"
-                        color="#D1D5DB"
-                        type="flat"
-                        icon-pack="fal"
-                        icon=" fa-bookmark"
-                      ></vs-button>
-                    </div>
-                    <div class="img-product mb-4">
-                      <a class="img-thum" href="#">
-                        <img class="rounded-lg  mx-auto" src="@/assets/img/product/02.png" alt="" />
-                      </a>
-                    </div>
-                    <div class="title-product h-12 overflow-hidden">
-                      <a href="">
-                        <h3 class="text-sm mt-1 text-cool-600 text-center font-bold">آموزش صفرتاصد طراحی سایت</h3>
-                      </a>
-                    </div>
-                    <div class="null-stock px-4 mt-2 h-16">
-                      <p
-                        class="tag-stock text-center m-auto text-cool-400 relative top-3"
-                      >
-                        نــــاموجود
-                      </p>
-                    </div>
-                  </div>
+                <div class="col-span-6 lg:col-span-4" v-for="product in products" :key="product.slug">
+                  <productCart :product="product"/>
                 </div>
-
-                <div class="col-span-6 lg:col-span-4 ">
-                  <div class="item-pro border border-cool-100 rounded-lg p-2 relative block">
-                    <div class="saving absolute z-10">
-                      <vs-button
-                        class="save-product"
-                        color="#D1D5DB"
-                        type="flat"
-                        icon-pack="fal"
-                        icon=" fa-bookmark"
-                      ></vs-button>
-                    </div>
-                    <div class="img-product mb-4">
-                      <a class="img-thum" href="#">
-                        <img class="rounded-lg mx-auto" src="@/assets/img/product/img-p02.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="title-product h-12 overflow-hidden">
-                      <a href="">
-                        <h3 class="text-sm mt-1 text-cool-600 text-center font-bold">آموزش صفرتاصد طراحی سایت</h3>
-                      </a>
-                    </div>
-                    <div class="price-product px-4 mt-2 h-16 ltr">
-                      <div class="price-old">
-                        <span
-                          class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-xl"
-                        >
-                          50%</span
-                        >
-                        <del
-                          class="value-old text-sm text-cool-400 line-through mx-1"
-                        >
-                          130,000</del
-                        >
-                      </div>
-                      <div class="price-new">
-                        <div class="price-new-area relative">
-                          <span class="unit-price text-xs absolute top-1 left-0"
-                          >تومان</span
-                          >
-                          <ins class="text-base font-medium ml-9">121,000</ins>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-span-6 lg:col-span-4 ">
-                  <div class="item-pro border border-cool-100 rounded-lg p-2 relative block">
-                    <div class="saving absolute z-10">
-                      <vs-button
-                        class="save-product"
-                        color="#D1D5DB"
-                        type="flat"
-                        icon-pack="fal"
-                        icon=" fa-bookmark"
-                      ></vs-button>
-                    </div>
-                    <div class="img-product mb-4">
-                      <a class="img-thum" href="#">
-                        <img class="rounded-lg mx-auto" src="@/assets/img/product/img-p02.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="title-product h-12 overflow-hidden">
-                      <a href="">
-                        <h3 class="text-sm mt-1 text-cool-600 text-center font-bold">آموزش صفرتاصد طراحی سایت</h3>
-                      </a>
-                    </div>
-
-                    <div class="price-product px-4 mt-2 h-16 ">
-                      <div class="price-final text-center">
-                        <div class="area-price relative top-3">
-                          <ins class="text-base font-medium before-toman">120000</ins>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-span-6 lg:col-span-4 ">
-                  <div class="item-pro border border-cool-100 rounded-lg p-2 relative block">
-                    <div class="saving absolute z-10">
-                      <vs-button
-                        class="save-product"
-                        color="#D1D5DB"
-                        type="flat"
-                        icon-pack="fal"
-                        icon=" fa-bookmark"
-                      ></vs-button>
-                    </div>
-                    <div class="img-product mb-4">
-                      <a class="img-thum" href="#">
-                        <img class="rounded-lg mx-auto" src="@/assets/img/product/img-p02.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div class="title-product h-12 overflow-hidden">
-                      <a href="">
-                        <h3 class="text-sm mt-1 text-cool-600 text-center font-bold">آموزش صفرتاصد طراحی سایت</h3>
-                      </a>
-                    </div>
-
-                    <div class="show-product text-center px-1 lg:px-4 h-16 ">
-                      <vs-button
-                        class="show-product-btn text-sm"
-                        color="#F97316"
-                        type="border"
-                        href="#"
-                      >
-                        مشاهـــــده جزئیات</vs-button
-                      >
-                    </div>
-                  </div>
-                </div>
-
-
               </div>
             </div>
-            <div class="paganition mt-5 mx-auto">
-              <vs-pagination max="6" :total="6" icon-pack="fal"
-                             prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="currentx"></vs-pagination>
+            <div class="paganition mt-5 mx-auto" v-if="pagination.last_page > 1">
+              <vs-pagination max="6" :total="pagination.last_page" icon-pack="fal" prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="query2.page"></vs-pagination>
             </div>
           </div>
         </div>
@@ -261,25 +95,121 @@
   </div>
 </template>
 <script>
+import productCart from '@/components/front/store/productCart'
+
 export default {
+  components: {
+    productCart
+  },
   data() {
     return {
-      colorx:'#F97316',
-      currentx: 5 ,
+      temp:{categories:[]},
+      colorx: '#F97316',
+      currentx: 5,
+      products: [],
+      pagination: {
+        total: 0
+      },
+      selectedBrands:[],
+      query2: {
+        brands : []
+      }
     };
   },
   name: "index",
-  async asyncData({store}){
-    await store.dispatch('products/getProducts');
-    return {
-      products:store.getters['products/getProducts']
-    }
-  }
+  fetch() {
+    this.getProducts()
+    this.$store.dispatch('storeCategory/getCategories')
+    this.getBrands()
+    // this.$nextTick(() => {
+    //   this.$nuxt.$loading.start()
+    //   setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    // })
+  },
+  watch: {
+    'query2.category' (value){
+      this.query2.page = 1
+    },
+    'selectedBrands' (value){
+      this.query2.brands =value
+      this.query2.page = 1
+    },
+    query2:{
+      deep: true,
+      handler(c){
+        this.goToQuery().then(r => {
 
+          this.$fetch()
+        })
+      }
+    }
+  },
+  computed: {
+    brands(){
+      return this.$store.getters['brands/getBrands']
+    },
+    mainCategories() {
+      let cat = this.$store.getters['storeCategory/getCategories'].find(c => c.slug === this.$route.query.category)
+      return this.$store.getters['storeCategory/getCategories'].filter(c => ~~c.parent_id === ~~((cat || {}).parent_id || 0))
+    },
+    childCategories() {
+      let cat = this.$store.getters['storeCategory/getCategories'].find(c => c.slug === this.$route.query.category)
+      return this.$store.getters['storeCategory/getCategories'].filter(c => (c.parent_id === ~~(cat || {}).id))
+    },
+  },
+  created() {
+    let query = this.$cloneObject(this.$route.query)
+    if(!query.category){
+      query.category = null
+    }
+    this.temp.categories = [query.category]
+    this.query2 = {...query}
+  },
+  methods: {
+    getBrands(){
+      let query = {}
+      if (this.$route.query.category){
+        query.category = this.$route.query.category
+      }
+      this.$store.dispatch('brands/getBrands' , query)
+    },
+    selectCategory(value){
+      this.temp.categories = [value[1]]
+      this.query2.category = value[1]
+    },
+    getProducts() {
+      let q = this.$cloneObject(this.$route.query)
+      q.with = ['files', 'variants']
+      q.pagination = true
+
+      this.$store.dispatch('products/getProductsArchive', q).then(res => {
+        this.products = []
+        if (res.status === 200) {
+          this.pagination = res.data
+          res.data.data.forEach((product) => {
+            let variant = product.variants.reduce((bestVariant, variant) => {
+              return (variant.selling_price < bestVariant.selling_price) && variant.inventory !== 0 ? variant : bestVariant
+            })
+            this.products.push({
+              name: product.name,
+              slug: product.slug,
+              thumbnail: product.files[0].link,
+              inventory: variant.inventory,
+              discounted_price: variant.discounted_price,
+              selling_price: variant.selling_price,
+            })
+          })
+        }
+      });
+    },
+    goToQuery() {
+      return this.$router.replace({path: this.$route.path, query: this.query2})
+    },
+  },
 }
 </script>
 <style>
-.title-sidebar h3::before{
+.title-sidebar h3::before {
   content: "";
   height: 2px;
   width: 80%;
@@ -290,26 +220,32 @@ export default {
   left: 15px;
   margin: auto;
 }
-.content-side .con-vs-checkbox{
+
+.content-side .con-vs-checkbox {
   justify-content: right !important;
 }
-.before-toman:after{
+
+.before-toman:after {
   content: "تومان";
   margin-right: 5px;
   font-size: 12px;
 }
-.img-product{
+
+.img-product {
   border: 1px solid #eee;
   border-radius: 8px;
 }
-.item-pro:hover{
+
+.item-pro:hover {
   transform: translateY(-5px);
   @apply shadow-lg;
 }
-.vs-pagination--mb{
+
+.vs-pagination--mb {
   justify-content: center !important;
 }
-.archive-product .img-product img{
+
+.archive-product .img-product img {
   max-height: 159px;
   max-width: 100%;
 }

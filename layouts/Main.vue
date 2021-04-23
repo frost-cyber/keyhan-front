@@ -11,7 +11,10 @@
   import VHeader from "./Template/Header.vue";
   import VFooter from "./Template/Footer.vue";
   import '@/assets/css/style.css' ;//tailwind
-  import '@/assets/css/fontawesome.min.css' //fontawesome
+  // import '@/assets/css/regular.css' //fontawesome
+  // import '@/assets/css/solid.css' //fontawesome
+  // import '@/assets/css/light.min.css' //fontawesome
+  // import '@/assets/css/brands.min.css' //fontawesome
 
   export default {
     head: {

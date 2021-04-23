@@ -70,6 +70,17 @@ export const actions = {
     const products = await this.$apiClient.get(url)
     commit('SET_PRODUCTS', products.data)
   },
+  getProductsArchive({commit} ,query=null) {
+    let url = 'api/products'
+    if(!query){
+      query = {
+        pagination:true,
+      }
+    }
+    query.pagination = true
+    url += "?" + this.$createQuery(query).substr(1)
+    return this.$apiClient.get(url)
+  },
   async getProduct({commit},{productId , query = null}) {
     let url = `api/products/${productId}`
     if(query) {
