@@ -45,10 +45,10 @@
                 </div>
                 <div class="title-blog px-4 my-4 h-13 overflow-hidden">
                   <nuxt-link :to="{name:'articles-slug' , params:{slug:blog.slug}}">
-                  <h3 class="text-right font-black text-xs md:text-sm">
-                    {{blog.title}}
-                  </h3>
-                   </nuxt-link>
+                    <h3 class="text-right font-black text-xs md:text-sm">
+                      {{blog.title}}
+                    </h3>
+                  </nuxt-link>
                 </div>
                 <div class="des-course px-4 pb-4 h-15 overflow-hidden ">
                   <p class="hidden md:block text-xs text-cool-600 font-thin text-right">
@@ -68,28 +68,19 @@
 </template>
 
 <script>
-  export default {
-    name: "index",
-    async asyncData({params , store}) {
-      await store.dispatch('articleCategory/getCategoryArticle')
-      return {
-        categories: store.getters['articleCategory/getCategoryArticle'],
-        disabled: false,
-        colorx:'#F97316',
-        currentx: 5 ,
-      }
-    },
-
-    mounted() {
-      this.$store.dispatch('article/getArticles')
-    },
-    computed:{
-      articles(){
-        return this.$store.getters['article/getArticles']
-      },
-
+export default {
+  name: "_slug",
+  async asyncData({params , store}) {
+    await store.dispatch('article/getArticles',{category:params.slug})
+    return {
+      articles: store.getters['article/getArticles'],
+      disabled: false,
+      colorx:'#F97316',
+      currentx: 5 ,
     }
-  }
+  },
+
+}
 </script>
 
 <style>

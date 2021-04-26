@@ -46,6 +46,10 @@ export const actions = {
     const categories = await this.$apiClient.get('api/articleCategories')
     commit('SET_CATEGORIES', categories.data)
   },
+  async getCategoryArticle({commit}) {
+    const categories = await this.$apiClient.get('api/categoryArticle')
+    commit('SET_CATEGORIES', categories.data)
+  },
   async getCategory({commit}, categoryId) {
     const category = await this.$apiClient.get(`api/articleCategories/${categoryId}`)
     commit('SET_CATEGORY', category.data)
@@ -63,6 +67,9 @@ export const actions = {
 
 export const getters = {
   getCategories(state) {
+    return JSON.parse(JSON.stringify(state.categories))
+  },
+  getCategoryArticle(state) {
     return JSON.parse(JSON.stringify(state.categories))
   },
 

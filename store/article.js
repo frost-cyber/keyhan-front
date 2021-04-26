@@ -93,6 +93,9 @@ export const actions={
   async updateArticle({commit , state}, article) {
     return this.$apiClient.patch(`api/articles/${article.slug}`, article)
   },
+  async getArticlesCategory({commit , state}, categories) {
+    return this.$apiClient.patch(`api/articles/category/${categories.slug}`)
+  },
 }
 export const getters={
   getTags(state){
@@ -104,6 +107,7 @@ export const getters={
   getArticles(state){
     return JSON.parse(JSON.stringify(state.articles))
   },
+
   getCategoriesArticle(state){
     return JSON.parse(JSON.stringify(state.categoriesArticle))
   },

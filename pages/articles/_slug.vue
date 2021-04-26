@@ -53,8 +53,7 @@
     <section class="landing-blog">
       <div class="container mx-auto">
         <div
-          class="grid grid-cols-2 gap-30 border-cool-100 border rounded-lg overflow-hidden relative"
-        >
+          class="grid grid-cols-2 gap-30 border-cool-100 border rounded-lg overflow-hidden relative">
           <div class="rightbox col-span-2 md:col-span-1 order-2 md:order-1 p-4">
             <div class="content-info">
               <div class="title-single md:mt-3">
@@ -108,9 +107,7 @@
     <section class="row-content mt-5">
       <div class="container mx-auto">
         <div class="grid grid-cols-12 md:gap-4 lg:gap-30">
-          <div
-            class="col-span-12 md:col-span-9 "
-          >
+          <div class="col-span-12 md:col-span-9 ">
             <div class="content-box p-4 rounded-lg border border-cool-100 text-cool-600 font-normal text-sm md:text-base" v-html="article.body"></div>
             <div class="btntocomment mt-5 text-center">
               <vs-button color="#4B5563" type="border">در بحث و گفتگو در رابطه با این مطلب شرکت کنید</vs-button>
@@ -141,7 +138,7 @@
         </div>
       </div>
     </section>
-    <article-slider :articles="articles"/>
+<!--    <article-slider :articles="articles"/>-->
     <section class="title-section mt-24 mb-3 relative">
       <div class="container mx-auto">
         <div class="grid grid-cols-2 gap-30">
@@ -166,6 +163,7 @@
     async asyncData(ctx) {
       let slug = ctx.route.params.slug
       await ctx.store.dispatch('article/getArticle', slug)
+
       await ctx.store.dispatch('article/getCategoriesArticle' )
       let query = {
         "category" : ctx.store.getters['article/getArticle'].categories[0].id
@@ -215,20 +213,20 @@
         } while (category.parent_id != null || category.id !== cats[0].id)
         return cats
       },
-      relatedPosts() {
-        let articles = []
-        let category = this.article.categories[0].id
-        let length = this.articles.length
-        for (let i = 0; i < length; i++) {
-          this.articles[i].categories[0].id
-          if (category === this.articles[i].categories[0].id){
-            articles.push(this.articles[i])
-          }
-          console.log(articles)
-        }
-        return articles
-
-      },
+      // relatedPosts() {
+      //   let articles = []
+      //   let category = this.article.categories[0].id
+      //   let length = this.articles.length
+      //   for (let i = 0; i < length; i++) {
+      //     this.articles[i].categories[0].id
+      //     if (category === this.articles[i].categories[0].id){
+      //       articles.push(this.articles[i])
+      //     }
+      //     console.log(articles)
+      //   }
+      //   return articles
+      //
+      // },
     },
     components: {
       Comments,
