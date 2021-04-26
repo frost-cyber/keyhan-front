@@ -12,3 +12,6 @@ vue.filter('title', function (value, replacer = '_') {
   })
   return capitalized_array.join(' ')
 })
+vue.filter('currency', function (value, unit = process.env.CURRENCY_FILTER_UNIT || 'IRR', locales = process.env.CURRENCY_FILTER_LOCALES || "fa-IR") {
+  return new Intl.NumberFormat(locales, {style: 'currency', currency: unit}).format(value)
+})

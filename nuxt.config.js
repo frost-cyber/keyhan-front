@@ -1,9 +1,8 @@
+require('dotenv').config()
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Keyhan',
-    htmlAttrs: {
-    },
+    title: process.env.TITLE || 'کافه انرژی',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
@@ -24,8 +23,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: "@/plugins/plugins.js", mode: 'client'},
+    {src: '@/plugins/Only.client.js' , mode: 'client'},
+    {src: "@/plugins/plugins.js",},
     {src: "@/plugins/Api.js"},
+    {src: '@/plugins/filters.js'},
     {src: "@/plugins/veeValidate.js"},
     {src: '@/plugins/vuesax.config.js'},
     {src: '@/plugins/themeConfig.js'},
@@ -37,7 +38,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -49,12 +51,6 @@ export default {
     '@nuxtjs/auth-next',
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseUrl: 'http://server.keyhan.p',
-    proxy: true,
-    credentials: true
-  },
   proxy: {
     '/laravel': {
       target: 'https://laravel-auth.nuxtjs.app',
@@ -104,7 +100,9 @@ export default {
       'draggable',
     ]
   },
-
+  tailwindcss: {
+    jit:true,
+  },
   serverMiddleware: [
     '~/serverMiddleware/selectiveSSR.js'
   ]

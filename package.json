@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt --port=63311",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
@@ -37,15 +37,20 @@
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/style-resources": "^1.0.0",
-    "@nuxtjs/tailwindcss": "^4.0.2",
-    "@tailwindcss/postcss7-compat": "^2.0.4",
+    "@nuxtjs/tailwindcss": "^4.0.3",
     "autoprefixer": "9",
     "fibers": "^5.0.0",
     "postcss": "7",
     "postcss-rtl": "^1.7.3",
     "sass": "^1.32.8",
-    "sass-loader": "10",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "sass-loader": "10"
+  },
+  "config": {
+    "nuxt": {
+      "port": 63311,
+      "host" : "localhost"
+    }
   }
 }

@@ -1,10 +1,6 @@
 export default function (req, res, next) {
-  // const paths = ['/admin', '/admin/', 'admin/', 'admin']
+  const paths = process.env.SSR_PAGES_OFF.split(',')
   req.headers.upgrade = ''
-  const paths = ["/"]
-  if (paths.includes(req.originalUrl)) {
-    res.spa = true
-  }
-  res.spa = true
+  paths.forEach(path => req.originalUrl.startsWith(path) ? res.spa = true : res.spa = false)
   next()
 }

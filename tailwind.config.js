@@ -45,7 +45,19 @@ View the full documentation at https://tailwindcss.com.
 */
 
 module.exports = {
-
+  // These paths are just examples, customize them to match your project structure
+  purge: {
+    content: [
+      'components/**/*.vue',
+      'layouts/**/*.vue',
+      'pages/**/*.vue',
+      'plugins/**/*.js',
+      'nuxt.config.js',
+      // TypeScript
+      'plugins/**/*.ts',
+      'nuxt.config.ts'
+    ]
+  },
   important: true,
   // prefix: '',
   // separator: ':',

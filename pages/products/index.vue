@@ -66,7 +66,7 @@
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-1 lg:px-8  "> برندها </h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="selectedBrands" :vs-value="brand.slug" v-for="(brand , index) in brands"> {{ brand.name }}</vs-checkbox>
+                <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon=" fa-check" v-model="selectedBrands" :vs-value="brand.slug" v-for="(brand , index) in brands" :key="index"> {{ brand.name }}</vs-checkbox>
               </div>
             </div>
           </div>
