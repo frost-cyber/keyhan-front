@@ -13,10 +13,11 @@ export default {
   validate({params}) {
     return /^\d+$/.test(params.id)
   },
-  async asyncData({params , store , $cloneObject}) {
-    await store.dispatch('storeCategory/getCategory', params.id)
+  async asyncData({params , store}) {
+    let cat = {}
+    store.dispatch('storeCategory/getCategory', {categoryId : params.id}).then(res => cat = res.data)
     return {
-      category: $cloneObject(store.getters['storeCategory/getCategory']),
+      category: cat,
       disabled: false,
     }
   },

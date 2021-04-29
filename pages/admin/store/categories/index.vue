@@ -50,9 +50,8 @@ function createTree(data, id = null, level = 0) {
 export default {
   name: "index",
   async asyncData({store}) {
-
-    await store.dispatch('storeCategory/getCategories')
-    let cats = store.getters['storeCategory/getCategories']
+    let cats = []
+    store.dispatch('storeCategory/getCategories').then(res => cats = res.data)
     cats.forEach(category => category.showChild = false)
 
     return {

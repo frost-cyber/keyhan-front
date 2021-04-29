@@ -13,6 +13,8 @@
 <script>
 export default {
   name: "checkUsername",
+  middleware:'auth',
+  auth: 'guest',
   data() {
     return {
       username: null

@@ -191,7 +191,7 @@ export default {
     }
   },
   fetch() {
-    this.$store.dispatch('storeCategory/getCategories')
+    this.$store.dispatch('storeCategory/getCategories').then(res => this.$store.commit('storeCategory/SET_CATEGORIES' , res.data))
     this.$store.dispatch('attribute/getAttributes')
     this.$store.dispatch('brands/getBrands')
   },

@@ -60,7 +60,7 @@ export default {
       link:f.link,
       variant_index:null
     }))
-    console.log(this.$cloneObject(product.variants))
+
     product.variants.forEach((v , i ) => {
       v.files.forEach(f => product.images.push({
         id:f.id,

@@ -13,6 +13,8 @@
 <script>
 export default {
   name: "verifyCode",
+  middleware:'auth',
+  auth: 'guest',
   data() {
     return {
       verifyCode: null,

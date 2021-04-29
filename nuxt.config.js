@@ -51,12 +51,6 @@ export default {
     '@nuxtjs/auth-next',
   ],
 
-  proxy: {
-    '/laravel': {
-      target: 'https://laravel-auth.nuxtjs.app',
-      pathRewrite: { '^/laravel': '/' }
-    }
-  },
   auth: {
     strategies: {
       'laravelSanctum': {
@@ -67,7 +61,7 @@ export default {
     redirect: {
       login: '/auth/checkusername',
       logout: '/',
-      callback: '/login',
+      callback: '/api/login',
       home: '/'
     }
   },

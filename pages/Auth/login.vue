@@ -19,6 +19,8 @@
 <script>
 export default {
   name: "login",
+  middleware:'auth',
+  auth: 'guest',
   data() {
     return {
       login: {

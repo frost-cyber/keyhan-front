@@ -9,7 +9,9 @@
 
 <script>
 export default {
-name: "index"
+  name: "index",
+  middleware:'auth',
+  auth: 'guest',
 }
 </script>
 

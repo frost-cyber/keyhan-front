@@ -1,6 +1,6 @@
 import axios from 'axios'
 export default function (context , injector) {
-  const apiClient  = axios.create({
+  const apiClient  = context.$axios.create({
     baseURL: 'http://'+ (process.env.BASE_URL.replace(/^http[s]?:\/\// , '') || "server.keyhan.p"),
     withCredentials: true,
   })

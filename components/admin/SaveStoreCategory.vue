@@ -127,13 +127,9 @@ export default {
       })
     },
   },
-  async mounted() {
-    await this.$store.dispatch('storeCategory/getCategories')
-    let cats = this.$cloneObject(this.$store.getters['storeCategory/getCategories'])
-    this.categories = createTree(cats , this.category.id ?? 0)
+  fetch() {
+    let cats = this.$store.dispatch('storeCategory/getCategories').then(res => res.data)
+    this.categories = createTree(cats, this.category.id ?? 0)
   },
-  destroyed() {
-
-  }
 }
 </script>

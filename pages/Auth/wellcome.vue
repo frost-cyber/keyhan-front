@@ -9,7 +9,9 @@
 
 <script>
 export default {
-  name: "wellcome"
+  name: "wellcome",
+  middleware:'auth',
+  auth: 'guest',
 }
 </script>
 

@@ -110,16 +110,14 @@ export default {
       pagination: {
         total: 0
       },
-      selectedBrands: [],
-      query2: {
-        brands: []
-      }
+      selectedBrands:[],
+      query2: {}
     };
   },
   name: "index",
   fetch() {
     this.getProducts()
-    this.$store.dispatch('storeCategory/getCategories')
+    this.$store.dispatch('storeCategory/getCategories').then(res=>this.$store.commit('storeCategory/SET_CATEGORIES' , res.data))
     this.getBrands()
     // this.$nextTick(() => {
     //   this.$nuxt.$loading.start()
@@ -163,6 +161,7 @@ export default {
       query.category = null
     }
     this.temp.categories = [query.category]
+    query.brands = query.brands || []
     this.query2 = {...query}
   },
   methods: {
@@ -203,7 +202,7 @@ export default {
       });
     },
     goToQuery() {
-      return this.$router.replace({path: this.$route.path, query: this.query2})
+      return this.$router.replace({path: this.$route.path, query: {...this.query2}})
     },
   },
 }
