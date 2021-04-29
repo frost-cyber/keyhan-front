@@ -99,7 +99,7 @@
             </div>
           </div>
           <div class="dynamic-img col-span-2 h-56 md:h-auto md:col-span-1 order-1 md:order-2 overflow-hidden relative">
-            <img :src="article.thumbnail.link" width="100%">
+            <img :src="article.thumbnail" width="100%">
           </div>
         </div>
       </div>
@@ -163,7 +163,6 @@
     async asyncData(ctx) {
       let slug = ctx.route.params.slug
       await ctx.store.dispatch('article/getArticle', slug)
-
       await ctx.store.dispatch('article/getCategoriesArticle' )
       let query = {
         "category" : ctx.store.getters['article/getArticle'].categories[0].id

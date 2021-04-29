@@ -62,12 +62,17 @@ export const actions={
   },
   async getArticles({commit},query=null) {
     let url = 'api/articles'
-    if(query){
-      let params = new URLSearchParams(query)
-      url += "?" + params.toString()
+    if(!query){
+      query = {
+        pagination:true,
+      }
     }
+    query.pagination = true
+    url += "?" + this.$createQuery(query).substr(1)
     const articles = await this.$apiClient.get(url)
     commit('SET_ARTICLES', articles.data)
+    return this.$apiClient.get(url)
+
 
   },
   async getCategoriesArticle({commit},query=null) {

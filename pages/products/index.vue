@@ -57,7 +57,7 @@
               </div>
               <div class="content-side text-right mt-5">
                 <template v-for="(cat , index) in childCategories">
-                  <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon="fa-check" v-model="temp.categories" :vs-value="cat.slug" @input="selectCategory" >{{ cat.name }}</vs-checkbox>
+                  <vs-checkbox class="text-sm text-cool-600 mb-1" icon-pack="fal" icon="fa-check" v-model="temp.categories" :vs-value="cat.slug" @input="selectCategory">{{ cat.name }}</vs-checkbox>
                 </template>
               </div>
             </div>
@@ -103,16 +103,16 @@ export default {
   },
   data() {
     return {
-      temp:{categories:[]},
+      temp: {categories: []},
       colorx: '#F97316',
       currentx: 5,
       products: [],
       pagination: {
         total: 0
       },
-      selectedBrands:[],
+      selectedBrands: [],
       query2: {
-        brands : []
+        brands: []
       }
     };
   },
@@ -127,16 +127,16 @@ export default {
     // })
   },
   watch: {
-    'query2.category' (value){
+    'query2.category'(value) {
       this.query2.page = 1
     },
-    'selectedBrands' (value){
-      this.query2.brands =value
+    'selectedBrands'(value) {
+      this.query2.brands = value
       this.query2.page = 1
     },
-    query2:{
+    query2: {
       deep: true,
-      handler(c){
+      handler(c) {
         this.goToQuery().then(r => {
 
           this.$fetch()
@@ -145,7 +145,7 @@ export default {
     }
   },
   computed: {
-    brands(){
+    brands() {
       return this.$store.getters['brands/getBrands']
     },
     mainCategories() {
@@ -159,21 +159,21 @@ export default {
   },
   created() {
     let query = this.$cloneObject(this.$route.query)
-    if(!query.category){
+    if (!query.category) {
       query.category = null
     }
     this.temp.categories = [query.category]
     this.query2 = {...query}
   },
   methods: {
-    getBrands(){
+    getBrands() {
       let query = {}
-      if (this.$route.query.category){
+      if (this.$route.query.category) {
         query.category = this.$route.query.category
       }
-      this.$store.dispatch('brands/getBrands' , query)
+      this.$store.dispatch('brands/getBrands', query)
     },
-    selectCategory(value){
+    selectCategory(value) {
       this.temp.categories = [value[1]]
       this.query2.category = value[1]
     },

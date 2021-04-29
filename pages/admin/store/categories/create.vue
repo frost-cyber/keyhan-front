@@ -42,11 +42,11 @@ export default {
     }
   },
   created() {
-    this.category = this.$store.getters['storeCategory/getCategory']
+    this.category = this.$cloneObject(this.$store.getters['storeCategory/getCategory'])
   },
   destroyed() {
     this.$store.commit('storeCategory/SET_CATEGORY')
-    this.category = this.$store.getters['storeCategory/getCategory']
+    this.category = this.$cloneObject(this.$store.getters['storeCategory/getCategory'])
   }
 }
 </script>
