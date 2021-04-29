@@ -166,7 +166,7 @@
       async uploadFile(event){
         let file = event.target.files[0]
         await this.$store.dispatch('files/uploadArticleImage' , file)
-        this.article.thumbnail = this.$store.getters['files/getFile']
+        this.article.thumbnail = this.$store.getters['files/getFile'] || {}
       },
       log() {
         console.log(this.article.category)

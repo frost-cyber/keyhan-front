@@ -68,77 +68,64 @@
 </template>
 
 <script>
-  export default {
-    name: "index",
-    // async asyncData({params , store}) {
-    //   await store.dispatch('articleCategory/getCategoryArticle')
-    //   return {
-    //     articles: [],
-    //     pagination: {
-    //       total: 0
-    //     },
-    //     categories: store.getters['articleCategory/getCategoryArticle'],
-    //     disabled: false,
-    //     colorx:'#F97316',
-    //     currentx: 5 ,
-    //   }
-    // },
-    data() {
-      return {
-        temp: {categories: []},
-        colorx: '#F97316',
-        currentx: 5,
-        articles: [],
-        pagination: {
-          total: 0
-        },
-        query2: {
-          page: []
-        }
-      };
-    },
-    fetch() {
-      this.$store.dispatch('articleCategory/getCategoryArticle')
-      this.getArticles()
-    },
-    watch: {
-      query2: {
-        deep: true,
-        handler(c) {
-          this.goToQuery().then(r => {
-            this.$fetch()
-          })
-
-        }
-      }
-    },
-    created() {
-      let query = this.$cloneObject(this.$route.query)
-      this.temp.categories = [query.category]
-      this.query2 = {...query}
-    },
-    methods: {
-      getArticles() {
-        let q = this.$cloneObject(this.$route.query)
-        q.with = ['thumbnail']
-        q.pagination = true
-
-        this.$store.dispatch('article/getArticles', q).then(res => {
-          this.articles = []
-          if (res.status === 200) {
-            this.pagination = res.data
-            res.data.data.forEach((article) => {
-              this.articles.push({
-                title: article.title,
-                slug: article.slug,
-                description: article.description,
-                thumbnail: article.thumbnail.link,
-              })
-            })
-          }
-        });
+export default {
+  name: "index",
+  data() {
+    return {
+      temp: {categories: []},
+      colorx: '#F97316',
+      currentx: 5,
+      articles: [],
+      pagination: {
+        total: 0
       },
-      goToQuery() {
+      query2: {
+        page: []
+      }
+    };
+  },
+  fetch() {
+    this.$store.dispatch('articleCategory/getCategoryArticle')
+    this.getArticles()
+  },
+  watch: {
+    query2: {
+      deep: true,
+      handler(c) {
+        this.goToQuery().then(r => {
+          this.$fetch()
+        })
+
+      }
+    }
+  },
+  created() {
+    let query = this.$cloneObject(this.$route.query)
+    this.temp.categories = [query.category]
+    this.query2 = {...query}
+  },
+  methods: {
+    getArticles() {
+      let q = this.$cloneObject(this.$route.query)
+      q.with = ['thumbnail']
+      q.pagination = true
+
+      this.$store.dispatch('article/getArticles', q).then(res => {
+        this.articles = []
+        if (res.status === 200) {
+          this.pagination = res.data
+          res.data.data.forEach((article) => {
+            this.articles.push({
+              title: article.title,
+              slug: article.slug,
+              description: article.description,
+              thumbnail: article.thumbnail.link,
+            })
+          })
+        }
+      });
+    },
+    goToQuery() {
         return this.$router.replace({path: this.$route.path, query: this.query2})
       },
     },
@@ -146,9 +133,9 @@
     CategoriesArticle() {
     let categories = this.$store.getters['articleCategory/getCategories']
     return categories;
-  },
-}
+    },
   }
+}
 </script>
 
 <style>
