@@ -43,7 +43,11 @@ export const mutations = {
 }
 export const actions = {
   async getCategories({commit}) {
-    const categories = await this.$apiClient.get('api/articleCategories')
+    let url = 'api/products'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    const categories = await this.$apiClient.get(url)
     commit('SET_CATEGORIES', categories.data)
   },
   async getCategoryArticle({commit}) {

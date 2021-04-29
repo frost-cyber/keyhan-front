@@ -29,7 +29,7 @@
                 <h3 class="text-center border-b-2 border-cool-600 pb-3 relative block px-2 lg:px-8 "> دسته بندی ها </h3>
               </div>
               <div class="content-side text-right mt-5">
-                <vs-checkbox class="text-sm text-cool-600 mb-1" @input="$router.push({name:'articles-category-slug' , params:{slug:cat.slug}})" v-for="(cat,index) in CategoriesArticle" :key="index" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >
+                <vs-checkbox class="text-sm text-cool-600 mb-1" @input="goToCategory" v-for="(cat,index) in CategoriesArticle" :key="index" icon-pack="fal" icon=" fa-check" v-model="checkBox1" >
                   {{cat.name}}
                 </vs-checkbox>
               </div>
@@ -40,7 +40,7 @@
               <article v-for="(article , index ) in articles" :key="index" class=" overflow-hidden item-blog border border-cool-100 rounded-lg hover:shadow-xl mb-5 col-span-6 " :class="'md:col-span-'+article.responsivMd +' lg:col-span-'+article.responsivLg">
                 <div class="img-blog">
                   <nuxt-link :to="{name:'articles-slug' , params:{slug:article.slug}}">
-                    <img :src="article.thumbnail || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
+                    <img :src="(article.thumbnail||{}).link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
                   </nuxt-link>
                 </div>
                 <div class="title-blog px-4 my-4 h-13 overflow-hidden">
@@ -72,7 +72,7 @@ export default {
   name: "index",
   data() {
     return {
-      temp: {categories: []},
+      temp: {},
       colorx: '#F97316',
       currentx: 5,
       articles: [],
@@ -80,12 +80,12 @@ export default {
         total: 0
       },
       query2: {
-        page: []
+        page: ''
       }
     };
   },
   fetch() {
-    this.$store.dispatch('articleCategory/getCategoryArticle')
+    this.$store.dispatch('articleCategory/getCategoryArticle' , {parent:''})
     this.getArticles()
   },
   watch: {
@@ -95,33 +95,26 @@ export default {
         this.goToQuery().then(r => {
           this.$fetch()
         })
-
       }
     }
   },
   created() {
     let query = this.$cloneObject(this.$route.query)
-    this.temp.categories = [query.category]
     this.query2 = {...query}
   },
   methods: {
+    goToCategory(){
+      delete this.query2.page
+      $router.push({name:'articles-category-slug' , params:{slug:cat.slug} , query:this.query2})
+    },
     getArticles() {
       let q = this.$cloneObject(this.$route.query)
       q.with = ['thumbnail']
       q.pagination = true
-
       this.$store.dispatch('article/getArticles', q).then(res => {
-        this.articles = []
         if (res.status === 200) {
           this.pagination = res.data
-          res.data.data.forEach((article) => {
-            this.articles.push({
-              title: article.title,
-              slug: article.slug,
-              description: article.description,
-              thumbnail: article.thumbnail.link,
-            })
-          })
+          this.articles = res.data.items
         }
       });
     },

@@ -40,7 +40,7 @@
               <article v-for="(article , index ) in articles" :key="index" class=" overflow-hidden item-blog border border-cool-100 rounded-lg hover:shadow-xl mb-5 col-span-6 " :class="'md:col-span-'+article.responsivMd +' lg:col-span-'+article.responsivLg">
                 <div class="img-blog">
                   <nuxt-link :to="{name:'articles-slug' , params:{slug:article.slug}}">
-                    <img :src="article.thumbnail || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
+                    <img :src="article.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
                   </nuxt-link>
                 </div>
                 <div class="title-blog px-4 my-4 h-13 overflow-hidden">
