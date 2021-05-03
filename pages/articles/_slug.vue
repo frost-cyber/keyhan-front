@@ -138,7 +138,7 @@
         </div>
       </div>
     </section>
-<!--    <article-slider :articles="articles"/>-->
+    <article-slider :articles="articles"/>
     <section class="title-section mt-24 mb-3 relative">
       <div class="container mx-auto">
         <div class="grid grid-cols-2 gap-30">
@@ -165,7 +165,7 @@
       await ctx.store.dispatch('article/getArticle', slug)
       await ctx.store.dispatch('article/getCategoriesArticle' )
       let query = {
-        "category" : ctx.store.getters['article/getArticle'].categories[0].id
+        "category" : ctx.store.getters['article/getArticle'].categories[0].slug
       }
       await ctx.store.dispatch('article/getArticles',query)
       return {
