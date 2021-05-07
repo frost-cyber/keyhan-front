@@ -37,10 +37,10 @@
           </div>
           <div class="left-box col-span-12 md:col-span-8 lg:col-span-9 p-3 border-cool-100 border rounded-lg">
             <div class=" grid grid-cols-12 gap-5 md:gap-4">
-              <article v-for="(article , index ) in articles" :key="index" class=" overflow-hidden item-blog border border-cool-100 rounded-lg hover:shadow-xl mb-5 col-span-6 " :class="'md:col-span-'+article.responsivMd +' lg:col-span-'+article.responsivLg">
-                <div class="img-blog">
-                  <nuxt-link :to="{name:'articles-slug' , params:{slug:article.slug}}">
-                    <img :src="article.thumbnail || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
+              <article  class="col-span-6 lg:col-span-4" v-for="(article , index ) in articles" :key="index"  :class="'md:col-span-'+article.responsivMd +' lg:col-span-'+article.responsivLg">
+                <div class="img-product mb-4">
+                  <nuxt-link  class="img-thum" :to="{name:'articles-slug' , params:{slug:article.slug}}">
+                    <img class="rounded-lg  mx-auto" :src="article.thumbnail || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
                   </nuxt-link>
                 </div>
                 <div class="title-blog px-4 my-4 h-13 overflow-hidden">
