@@ -73,7 +73,8 @@
                 <vs-button icon="delete" @click.native="product.attributes.splice(index, 1)"/>
               </div>
               <div class="col-span-5">
-                <tree-select v-model="attributeGroup.name" :options="groupAttributes" @input="attributeValues(index , attributeGroup.name)" v-validate="'required'" :name="`attributeGroup[${index}]`" data-vv-as="ویژگی"/>
+                <tree-select v-model="attributeGroup.name" :options="groupAttributes" @input="attributeValues(index , attributeGroup.name)" v-validate="'required'" :name="`attributeGroup[${index}]`"
+                             data-vv-as="ویژگی"/>
                 <span class="text-danger text-sm" v-show="errors.has(`step2.attributeGroup[${index}]`)">{{ errors.first(`step2.attributeGroup[${index}]`) }}</span>
               </div>
               <div class="col-span-5">
@@ -86,10 +87,10 @@
         </form>
       </tab-content>
       <tab-content title="متغیر ها" :before-change="()=>validateStep('step3')">
-        <vs-collapse :not-arrow="true" :accordion="true" type="border" >
+        <vs-collapse :not-arrow="true" :accordion="true" type="border">
           <vs-collapse-item v-for="(variant , index) in product.variants" :key="index">
             <div slot="header" v-if="~~product.type === 2">
-              {{ `${product.variantGroup.name} ${ (product.variantGroup.attributes.find(a => a.id === variant['attribute_id'])||{label:''}).label}` }}
+              {{ `${product.variantGroup.name} ${(product.variantGroup.attributes.find(a => a.id === variant['attribute_id']) || {label: ''}).label}` }}
             </div>
             <div class="grid grid-cols-8 gap-5">
               <vs-button class="col-span-1 row-start-1 col-end-9" v-if="~~product.type === 2" color="primary" @click.native="product.variants.splice(index, 1)">حذف</vs-button>
@@ -106,7 +107,9 @@
           </vs-collapse-item>
         </vs-collapse>
         <tree-select v-model="product.variantGroup.name" :options="variables" v-if="~~product.type === 2 && !product.variants.length" @input="variableValues(product.variantGroup.name)"/>
-        <vs-button v-if="~~product.type === 2" color="primary" class="col-span-2" @click.native="product.variantGroup.attributes && product.variantGroup.attributes.length ? product.variants.push({id:null ,value:''}):null">افزودن ویژگی</vs-button>
+        <vs-button v-if="~~product.type === 2" color="primary" class="col-span-2"
+                   @click.native="product.variantGroup.attributes && product.variantGroup.attributes.length ? product.variants.push({id:null ,value:''}):null">افزودن ویژگی
+        </vs-button>
       </tab-content>
       <tab-content title="عکس ها" :before-change="()=>validateStep('step4')">
         <vs-button @click.native="selectFile" class="mb-2">آپلود عکس</vs-button>
@@ -116,11 +119,27 @@
               <tree-select v-model="image.variant_index" :options="productVariables"/>
             </div>
             <div class="relative">
-              <vs-button radius class="absolute" size="small" color="danger" type="gradient" icon="delete" @click.native="product.images.splice(index , 1)" />
+              <vs-button radius class="absolute" size="small" color="danger" type="gradient" icon="delete" @click.native="product.images.splice(index , 1)"/>
               <img :src="image.link" :alt="image.link">
             </div>
           </vs-card>
         </div>
+      </tab-content>
+      <tab-content title="لینک ها" :before-change="()=>validateStep('step5')" v-if="~~product.type === 3">
+        <vs-button @click.native="product.links.push({title:'' , link:'' , description:''})">افزودن لینک</vs-button>
+        <vs-collapse :not-arrow="true" :accordion="true" type="border">
+          <vs-collapse-item v-for="(link , index) in product.links" :key="index">
+            <h3 slot="header">
+              {{ link.title }}
+            </h3>
+            <vs-button @click.native="product.links.splice(index , 1)">حذف</vs-button>
+            <div class="grid grid-cols-1 gap-2">
+              <vs-input class="w-full" label-placeholder="عنوان" v-model="link.title" required/>
+              <vs-input class="w-full" label-placeholder="لینک" v-model="link.link" required/>
+              <vs-textarea label="توضیحات" v-model="link.description" required/>
+            </div>
+          </vs-collapse-item>
+        </vs-collapse>
       </tab-content>
     </form-wizard>
   </vs-card>
@@ -146,8 +165,10 @@ function createTree(cats, disabled, id = null) {
   })
   return catsFiltered
 }
+
 import PersionDate from 'vue-persian-datetime-picker'
 import Editor from "~/components/admin/Editor";
+
 export default {
   name: "saveProduct",
   components: {
@@ -155,16 +176,16 @@ export default {
     PersionDate,
   },
   props: {
-    product:{
+    product: {
       required: true,
     },
-    active:{
-      default:true,
+    active: {
+      default: true,
     }
   },
   data() {
     return {
-      conditions:[
+      conditions: [
         {
           id: 0,
           label: 'غیرفعال',
@@ -191,7 +212,7 @@ export default {
     }
   },
   fetch() {
-    this.$store.dispatch('storeCategory/getCategories').then(res => this.$store.commit('storeCategory/SET_CATEGORIES' , res.data))
+    this.$store.dispatch('storeCategory/getCategories').then(res => this.$store.commit('storeCategory/SET_CATEGORIES', res.data))
     this.$store.dispatch('attribute/getAttributes')
     this.$store.dispatch('brands/getBrands')
   },
@@ -199,13 +220,13 @@ export default {
     categories() {
       return createTree(this.$store.getters['storeCategory/getCategories'], false)
     },
-    groupAttributes(){
+    groupAttributes() {
       let attributes = []
       this.$store.getters['attribute/getAttributes'].forEach(att => {
-        let pushAtt = this.product.attributes.find(a => a.name === att.name )
+        let pushAtt = this.product.attributes.find(a => a.name === att.name)
 
-        if (!attributes.find(at=>at.id === att.name)){
-          attributes.push({id: att.name, label: att.name , isDisabled:pushAtt})
+        if (!attributes.find(at => at.id === att.name)) {
+          attributes.push({id: att.name, label: att.name, isDisabled: pushAtt})
         }
       })
       return attributes
@@ -215,22 +236,22 @@ export default {
       this.$store.getters['attribute/getAttributes'].forEach(att => {
         let pushAtt = true
         this.product.attributes.forEach(a => {
-          if (a.id === att.id){
+          if (a.id === att.id) {
             pushAtt = false
           }
         })
-        if (pushAtt){
+        if (pushAtt) {
           attributes.push({id: att.id, label: att.name})
         }
       })
       return attributes
     },
-    brands(){
+    brands() {
       let brands = []
-      for (let brand of this.$store.getters['brands/getBrands']){
+      for (let brand of this.$store.getters['brands/getBrands']) {
         brands.push({
-          id:brand.id,
-          label:brand.name,
+          id: brand.id,
+          label: brand.name,
         })
       }
       return brands
@@ -238,20 +259,18 @@ export default {
     variables() {
       let variables = []
       this.$store.getters['attribute/getAttributes'].forEach(att => {
-        if (att.is_variable && !variables.find(at=>at.id === att.name)){
+        if (att.is_variable && !variables.find(at => at.id === att.name)) {
           variables.push({id: att.name, label: att.name})
         }
       })
       return variables
     },
-    productVariables(){
-      let variables = [
-
-      ]
-      this.product.variants.forEach((v  , k) => {
+    productVariables() {
+      let variables = []
+      this.product.variants.forEach((v, k) => {
         variables.push({
-          id:k,
-          label: `${this.product.variantGroup.name} ${(this.product.variantGroup.attributes.find(att => att.id === v.attribute_id)||{label:''}).label}`
+          id: k,
+          label: `${this.product.variantGroup.name} ${(this.product.variantGroup.attributes.find(att => att.id === v.attribute_id) || {label: ''}).label}`
         })
       })
       return variables
@@ -261,53 +280,58 @@ export default {
     },
   },
   methods: {
-    saveProduct (){
-      if (this.disable){
+    saveProduct() {
+      if (this.disable) {
         return
       }
       this.$validator.validateAll().then(validated => {
         if (validated) {
           let product = JSON.parse(JSON.stringify(this.product))
-          product.published_at = this.$jalaali(product.published_at  ,'jYYYY/jMM/jDD').format('YYYY/MM/DD')
-          this.$store.commit('products/SET_PRODUCT' , product)
+          product.published_at = this.$jalaali(product.published_at, 'jYYYY/jMM/jDD').format('YYYY/MM/DD')
+          this.$store.commit('products/SET_PRODUCT', product)
           this.$emit('save-product')
         }
       })
     },
-    typeChanged(val){
-      if (val !== 2){
+    typeChanged(val) {
+      if (val !== 2) {
         this.product.variants = [{}]
+        if (val === 3 && !Array.isArray(this.product.links)) {
+          this.$set(this.product, 'links', [])
+        }
+      } else {
+        this.product.variants = []
       }
     },
-    selectFile(){
+    selectFile() {
       let input = document.createElement('input')
-      input.type='file'
+      input.type = 'file'
       input.onchange = this.uploadFile
       input.click()
     },
-    async uploadFile(event){
+    async uploadFile(event) {
       let file = event.target.files[0]
-      await this.$store.dispatch('files/uploadProductImage' , file)
+      await this.$store.dispatch('files/uploadProductImage', file)
       this.product.images.push({
-        link : this.$store.getters['files/getFile'].link,
-        id : this.$store.getters['files/getFile'].id,
+        link: this.$store.getters['files/getFile'].link,
+        id: this.$store.getters['files/getFile'].id,
       })
     },
-    validateStep(scope){
-      return new Promise((resolve, reject)=>{
-        this.$validator.validateAll(scope).then((res)=>{
+    validateStep(scope) {
+      return new Promise((resolve, reject) => {
+        this.$validator.validateAll(scope).then((res) => {
           res ? resolve(true) : reject(false)
         })
       })
     },
-    variableValue(id){
+    variableValue(id) {
       if (id === null) return ''
       return this.$store.getters['attribute/getAttribute']['values'].find(v => v.id === id).value
     },
     normalizeAttributes(id) {
       if (id === null) return []
       let attributes = []
-      this.$store.getters['attribute/getAttributes'].forEach(att => att.name === id ? attributes.push({id: att.id, label: att.value}):null)
+      this.$store.getters['attribute/getAttributes'].forEach(att => att.name === id ? attributes.push({id: att.id, label: att.value}) : null)
       return attributes
     },
     attributeValues(index, id) {
@@ -316,7 +340,7 @@ export default {
       this.product.attributes[index].attributes = []
     },
     variableValues(id) {
-      if (id){
+      if (id) {
         this.product.variantGroup.attributes = this.normalizeAttributes(id)
       }
     },
@@ -331,7 +355,7 @@ export default {
 }
 </script>
 <style>
-.vpd-input-group input{
+.vpd-input-group input {
   width: 100%;
 }
 </style>
