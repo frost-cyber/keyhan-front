@@ -141,5 +141,26 @@ export default [
       },
     ]
   },
+  {
+    header: 'سایت',
+    icon: 'FileTextIcon',
+    i18n: 'Others',
+    items:[
+      {
+        name: 'تنظیمات',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/settings',
+            name: 'عمومی',
+          },
+          {
+            url: '/admin/settings/home',
+            name: 'صفحه اصلی',
+          },
+        ]
+      },
+    ],
+  }
 ]
 

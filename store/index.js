@@ -5,7 +5,7 @@ const navbarSearchAndPinList = {
   pages: {
     key: "title",
       data: [
-      {title: 'Home',   url: '/',      icon: 'HomeIcon', is_bookmarked: false},
+      {title: 'home',   url: '/',      icon: 'HomeIcon', is_bookmarked: false},
       {title: 'login', url: '/login', icon: 'FileIcon', is_bookmarked: false},
     ]
   }
