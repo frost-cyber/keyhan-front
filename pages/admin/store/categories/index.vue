@@ -51,7 +51,7 @@ export default {
   name: "index",
   async asyncData({store}) {
     let cats = []
-    store.dispatch('storeCategory/getCategories').then(res => cats = res.data)
+    await store.dispatch('storeCategory/getCategories').then(res => cats = res.data)
     cats.forEach(category => category.showChild = false)
 
     return {
