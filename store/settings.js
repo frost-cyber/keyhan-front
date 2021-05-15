@@ -19,7 +19,13 @@ export const actions = {
  },
  updateFooter({} , footer){
    return this.$apiClient.$put('api/settings/footer' , footer)
- }
+ },
+ getHome({}){
+   return this.$apiClient.$get('api/settings/footer')
+ },
+ updateHome({} , home){
+   return this.$apiClient.$put('api/settings/home' , home)
+ },
 }
 
 export const getters = {

@@ -21,6 +21,26 @@ export const actions = {
       }
     })
   },
+  HomeCategoryImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeCategoryImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  HomeBrandImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeBrandImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
   uploadSiteLogo({commit}, file) {
     let fileData = new FormData
     fileData.append('file', file)
