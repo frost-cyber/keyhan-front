@@ -33,7 +33,6 @@
   </section>
 </template>
 <script>
-import carousel from "vue-owl-carousel";
 
 export default {
   name: "courses",
@@ -54,9 +53,6 @@ export default {
         1470: {items: 4, nav: true}
       }
     }
-  },
-  components: {
-    carousel,
   },
 };
 </script>

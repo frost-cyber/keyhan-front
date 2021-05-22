@@ -47,16 +47,25 @@
       </div>
     </vs-card>
     <vs-card class="col-span-3">
-      <vs-card class="col-span-3">
-        <div class="grid grid-cols-6 gap-2">
-          <div class="col-span-2" v-for="(brand , index) in options.brands" :key="index">
-            <img class="w-full" :src="brand.src || require('@/assets/images/Flag_of_None.png')" @click="selectFile('HomeBrandImage' , (data)=> brand.src = data.link)">
-            <tree-select v-model="brand.slug" :options="brands" label="دسته" :normalizer="normalizer"/>
-            <vs-input label="عکس" class="w-full" v-model="brand.src"/>
-            <vs-input label="متن جایگزین" class="w-full" v-model="brand.alt"/>
-          </div>
+      <div class="grid grid-cols-6 gap-2">
+        <div class="col-span-2" v-for="(brand , index) in options.brands" :key="index">
+          <img class="w-full" :src="brand.src || require('@/assets/images/Flag_of_None.png')" @click="selectFile('HomeBrandImage' , (data)=> brand.src = data.link)">
+          <tree-select v-model="brand.slug" :options="brands" label="دسته" :normalizer="normalizer"/>
+          <vs-input label="عکس" class="w-full" v-model="brand.src"/>
+          <vs-input label="متن جایگزین" class="w-full" v-model="brand.alt"/>
         </div>
-      </vs-card>
+      </div>
+    </vs-card>
+    <vs-card class="col-span-6">
+       <h3>محصولات پیشنهادی</h3>
+      <div class="grid grid-cols-6 gap-2">
+        <div class="col-span-2">
+          <tree-select class="w-full" multiple v-model="options.productsRecommended.categories" :options="categories" :normalizer="normalizer"/>
+        </div>
+        <div class="col-span-2">
+          <tree-select class="w-full" multiple v-model="options.productsRecommended.products" :options="products" :normalizer="normalizer"/>
+        </div>
+      </div>
     </vs-card>
     <vs-button @click="save">ذخیره</vs-button>
   </div>
@@ -67,6 +76,7 @@ export default {
   name: "home.vue",
   data() {
     return {
+      products:[],
       categories: [],
       brands: [],
       options: {
@@ -147,6 +157,7 @@ export default {
             alt:null,
           },
         ],
+        productsRecommended:{}
       }
     }
   },
@@ -159,6 +170,8 @@ export default {
     })
     await this.$store.dispatch('brands/getBrands')
     this.brands = this.$store.getters['brands/getBrands']
+    await this.$store.dispatch('products/getProducts')
+    this.products = this.$store.getters['products/getProducts']
   },
   methods: {
     save() {
@@ -181,7 +194,7 @@ export default {
       return {
         id: val.slug,
         label: val.name,
-        children: val.children_recursive || []
+        children: (val.children_recursive && val.children_recursive.length)? val.children_recursive : undefined,
       }
     },
     selectFile(action, setter) {

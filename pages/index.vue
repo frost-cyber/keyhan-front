@@ -6,18 +6,9 @@
         <div class="grid grid-cols-12 gap-30">
           <div class="col-span-12 md:col-span-9 slider-area ltr">
             <carousel :items="1" :autoplayHoverPause="true" :autoplay="true" :nav="false" :margin="5" :loop="true" >
-              <a href="">
-                <img src="@/assets/img/slider/slider01.jpg"/>
-              </a>
-              <a href="">
-                <img src="@/assets/img/slider/slider01.jpg"/>
-              </a>
-              <a href="">
-                <img src="@/assets/img/slider/slider01.jpg"/>
-              </a>
-              <a href="">
-                <img src="@/assets/img/slider/slider01.jpg"/>
-              </a>
+              <nuxt-link :to="slide.link" v-for="(slide , index) in setting.slider" :key="index">
+                <img :src="slide.src" :alt="slide.alt"/>
+              </nuxt-link>
             </carousel>
           </div>
           <div class="col-span-12 md:col-span-3 banner-area">
@@ -26,7 +17,6 @@
                 <a href="">
                   <img class="rounded-lg" src="@/assets/img/banner/banner01.jpg" alt="" />
                 </a>
-
               </div>
               <div class="col-span-1 md:col-span-2 banner-bottom">
                 <a href="">
@@ -127,7 +117,6 @@
 </template>
 
 <script>
-import carousel from 'vue-owl-carousel'
 import brands from "@/components/front/home/brands";
 import courses from "@/components/front/home/courses";
 import categories from "@/components/front/home/categories";
@@ -143,7 +132,17 @@ export default {
     products,
     courses,
     articles,
-    carousel
+  },
+  data(){
+    return {
+      setting:{}
+    }
+  },
+  fetch(ctx) {
+    ctx.store.dispatch('settings/getHome').then(res => {
+      this.setting = res.options
+      ctx.store.commit('settings/SET_Home' , res.options)
+    })
   },
   data() {
     return {

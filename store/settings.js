@@ -1,10 +1,21 @@
 export const state = () => {
   return {
+    header : {},
+    home :{},
+    footer:{},
   }
 }
 
 export const mutations = {
-
+  SET_HEADER(state , header){
+    state.header = header
+  },
+  SET_FOOTER(state , footer){
+    state.footer = footer
+  },
+  SET_HOME(state , home){
+    state.home = home
+  }
 }
 
 export const actions = {
@@ -29,5 +40,13 @@ export const actions = {
 }
 
 export const getters = {
-
+  getHeader(state){
+    return state.header
+  },
+  getFooter(state){
+    return state.footer
+  },
+  getHome(state){
+    return state.home
+  },
 }

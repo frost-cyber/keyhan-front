@@ -6,7 +6,7 @@
           <div class="col-span-12 md:col-span-2 lg:col-span-1 text-center md:text-right m-auto logo">
             <div class="logo-area">
               <nuxt-link class="m-auto" to="/">
-                <img src="@/assets/img/logo.svg" alt="لوگو کیهان"/>
+                <img :src="setting.logo.link" :alt="setting.logo.alt"/>
               </nuxt-link>
             </div>
           </div>
@@ -45,7 +45,7 @@
               </a>
               <div class="logo-area">
                 <a href="">
-                  <img class="mx-auto" src="@/assets/img/logo.svg" alt="لوگو کیهان"/>
+                  <img class="mx-auto" :src="setting.logo.link" :alt="setting.logo.alt"/>
                 </a>
               </div>
               <div class="title-menu mt-5 p-3 border-orange-400 border-r-2 border-l-2 font-black rounded-lg">
@@ -127,7 +127,7 @@
           </div>
           <div class="lg:col-span-2 lg:text-left">
             <figure>
-              <span class="font-thin text-cool-600">09120760345</span>
+              <span class="font-thin text-cool-600">{{setting.navbar.phone}}</span>
               <i class="fal fa-phone mr-2 text-xl text-cool-600"></i>
             </figure>
           </div>
@@ -144,6 +144,11 @@ export default {
       categories: [],
       colorx: "rgb(249 115 22)",
     };
+  },
+  computed: {
+    setting() {
+      return this.$store.getters['settings/getHeader']
+    }
   },
   created() {
     this.$store.dispatch('storeCategory/getCategories', {

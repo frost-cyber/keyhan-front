@@ -6,23 +6,23 @@
   @font-face {
     font-family: 'Shabnam';
     font-weight: 100;
-    src: url(../fonts/Shabnam-Light.woff) format("woff");
+    src: url(~/assets/fonts/Shabnam-Light.woff) format("woff");
   }
   @font-face {
     font-family: 'Shabnam';
     font-weight: 300;
-    src: url(../fonts/Shabnam.woff) format("woff");
+    src: url(~/assets/fonts/Shabnam.woff) format("woff");
   }
   @font-face {
     font-family: 'Shabnam';
     font-weight: 900;
-    src: url(../fonts/Shabnam-Bold.woff) format("woff");
+    src: url(~/assets/fonts/Shabnam-Bold.woff) format("woff");
   }
   .btn-border{
     @apply border-orange-500;
     @apply text-orange-500;
     @apply bg-ff ;
-    @apply border-1;
+    @apply border;
     @apply py-2;
     @apply px-6;
     @apply rounded-lg;
@@ -60,8 +60,8 @@ a , li , img , div ,
 /* header */
 
 .header{
-  background-image: url(../img/bgright-header.svg) ,
-  url(../img/bgleft-header.svg);
+  background-image: url(~/assets/img/bgright-header.svg) ,
+  url(~/assets/img/bgleft-header.svg);
   background-position: center right, center left;
   background-repeat: no-repeat;
   background-size: contain;
@@ -149,7 +149,7 @@ a , li , img , div ,
   padding: 10px 15px;
   font-weight: 200;
 }
-/* home */
+/* Home */
 /* slider */
 .ltr{
   direction: ltr;
@@ -263,12 +263,12 @@ a , li , img , div ,
   @apply text-cool-400;
   @apply rounded-full;
   @apply p-2;
-  @apply w-10;
-  @apply h-10;
+  @apply w-11;
+  @apply h-11;
   @apply grid;
   @apply items-center;
   @apply border-cool-100;
-  @apply border-1;
+  @apply border;
 }
 .owl-carousel{
   position: relative;
@@ -276,7 +276,7 @@ a , li , img , div ,
 .product-row .owl-prev{
   position: absolute;
   bottom: 50%;
-  left: 0px;
+  left: -30px;
 }
 .product-row .owl-next{
   position: absolute;
@@ -322,7 +322,7 @@ a , li , img , div ,
   border: 1px solid var(--dd) !important;
 }
 .bg-contact{
-  background-image: url(../img/lightbox_back.jpg);
+  background-image: url(~/assets/img/lightbox_back.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -334,7 +334,7 @@ a , li , img , div ,
   position: absolute;
   right: -3px;
   top: -8px;
-  background: url(../img/seperate.svg);
+  background: url(~/assets/img/seperate.svg);
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
@@ -371,12 +371,12 @@ a , li , img , div ,
   height: 15px;
   top: 5px;
   right: 0;
-  background-image: url(../img/check.svg);
+  background-image: url(~/assets/img/check.svg);
   background-repeat: no-repeat;
   background-size: contain;
 }
 .footer{
-  background-image: url(../img/bgleft-header.svg);
+  background-image: url(~/assets/img/bgleft-header.svg);
   background-position: -30% 0;
   background-repeat: no-repeat;
   background-size: contain;
@@ -392,13 +392,13 @@ a , li , img , div ,
   line-height: 28px;
 }
 .dynamic-img{
-  background-image: url(../img/product/02.png);
+  background-image: url(~/assets/img/product/02.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover ;
 }
 .rightbox {
-  background-image: url(../img/bgblob.svg);
+  background-image: url(~/assets/img/bgblob.svg);
   background-repeat: no-repeat;
   background-position: top right;
 }
@@ -509,7 +509,7 @@ button:focus{
 .des-product ul li{
   display: block;
   @apply text-xs;
-  @apply font-light;
+  @apply font-thin;
   @apply py-1;
   @apply pr-4;
   @apply relative;
@@ -524,7 +524,7 @@ button:focus{
 }
 .landing-product .owl-stage-outer{
   @apply border-cool-200;
-  @apply border-1;
+  @apply border;
   @apply rounded-lg;
 }
 .btn-customize button{
@@ -552,7 +552,7 @@ button:focus{
 }
 .tab-area .con-slot-tabs {
   @apply border-cool-200;
-  @apply border-1;
+  @apply border;
   @apply p-3 !important;
   @apply mt-2;
   @apply rounded-lg;
@@ -563,7 +563,7 @@ button:focus{
 }
 .save-product-s.vs-button{
   border-radius: 99px !important;
-  @apply border-1 !important;
+  @apply border !important;
   @apply border-cool-100 !important;
   @apply border-solid !important;
   position: absolute;
@@ -580,7 +580,7 @@ button:focus{
   position: absolute;
   width: 50px;
   height: 50px;
-  background: url(../img/circle.svg);
+  background: url(~/assets/img/circle.svg);
   background-position: center left;
   background-repeat: no-repeat;
   top: 12px;
@@ -591,7 +591,7 @@ button:focus{
   position: absolute;
   width: 50px;
   height: 50px;
-  background: url(../img/circle.svg);
+  background: url(~/assets/img/circle.svg);
   background-position: center left;
   background-repeat: no-repeat;
   transform: rotate(180deg);
@@ -629,7 +629,7 @@ button:focus{
   display         : block;
   float           : right;
   position        : relative;
-  background      : url('../img/star-off.svg');
+  background      : url('~/assets/img/star-off.svg');
   background-repeat: no-repeat;
   background-size : contain;
 }
@@ -638,7 +638,7 @@ button:focus{
   display         : block;
   width           : 1.5em;
   height          : 1.5em;
-  background      : url('../img/star-on.svg');
+  background      : url('~/assets/img/star-on.svg');
   background-size : contain;
   background-repeat: no-repeat;
   opacity         : 0;
@@ -700,7 +700,7 @@ button:focus{
 
 /* profile */
 .sidebar-profile{
-  background: url(../img/bgprofile.svg);
+  background: url(~/assets/img/bgprofile.svg);
   background-repeat: no-repeat;
   background-position: top center;
 }

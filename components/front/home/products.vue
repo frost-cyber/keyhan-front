@@ -63,16 +63,12 @@
   </section>
 </template>
 <script>
-import carousel from "vue-owl-carousel";
 export default {
   name:'products',
   props: {
     products: {
       type: Array,
     }
-  },
-  components: {
-    carousel,
   },
   data() {
     return {
