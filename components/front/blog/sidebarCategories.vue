@@ -9,51 +9,13 @@
   </h3>
   <div class="footer-menu mt-5">
     <ul>
-      <li>
-        <a href="">
-          ارتباط با ما
-        </a>
+      <li v-for="(cat,index) in CategoriesArticle" :key="index">
+        <nuxt-link :to="{name:'articles-category-slug', params:{slug:cat.slug}}">
+          {{cat.name}}
+        </nuxt-link>
       </li>
-      <li>
-        <a href="">
-          تماس با ما
-        </a>
-      </li>
-      <li>
-        <a href="">
-          قوانین و مقررات
-        </a>
-      </li>
-      <li>
-        <a href="">
-          مرجوعی
-        </a>
-      </li>
-      <li>
-        <a href="">
-          غرفه ما در دیجی کالا
-        </a>
-      </li>
-      <li>
-        <a href="">
-          غرفه ما در باسلام
-        </a>
-      </li>
-      <li>
-        <a href="">
-          کلید و پریزهای لمسی
-        </a>
-      </li>
-      <li>
-        <a href="">
-          پنل های خورشیدی
-        </a>
-      </li>
-      <li>
-        <a href="">
-          برندهای موجود در صنعت برق
-        </a>
-      </li>
+
+
     </ul>
   </div>
 </div>
@@ -61,6 +23,16 @@
 </template>
 <script>
   export default {
-    name:"sidebarCategories"
-  }
+    name:"sidebarCategories",
+    fetch() {
+      this.$store.dispatch('articleCategory/getCategoryArticle')
+    },
+      computed: {
+        CategoriesArticle() {
+          let categories = this.$store.getters['articleCategory/getCategories']
+          return categories;
+        },
+      }
+    }
+
 </script>

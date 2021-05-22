@@ -52,16 +52,15 @@
     </section>
     <section class="landing-blog">
       <div class="container mx-auto">
-        <div
-          class="grid grid-cols-2 gap-30 border-cool-100 border rounded-lg overflow-hidden relative">
+        <div class="grid grid-cols-2 gap-30 border-cool-100 border rounded-lg overflow-hidden relative">
           <div class="rightbox col-span-2 md:col-span-1 order-2 md:order-1 p-4">
-            <div class="content-info">
-              <div class="title-single md:mt-3">
+            <div class="content-info grid grid-rows-6">
+              <div class="title-single md:mt-3 row-start-1">
                 <h1 class="text-xl font-bold text-cool-600">
                   {{article.title}}
                 </h1>
               </div>
-              <div class="breadcumb text-sm">
+              <div class="breadcumb text-sm row-start-2">
                 <vs-breadcrumb color="#eee">
                   <li>
                     <a href="#" title="Home">صفحه اصلی</a>
@@ -74,10 +73,10 @@
                   </li>
                 </vs-breadcrumb>
               </div>
-              <div class="des-single mt-3 text-sm text-cool-600 h-28 overflow-hidden">
+              <div class="des-single mt-3 text-sm text-cool-600 h-28 overflow-hidden row-start-3 row-end-6">
                 {{article.description}}
               </div>
-              <div class="info-box bg-cool-100 p-2 mt-5 rounded-lg ">
+              <div class="info-box bg-cool-100 p-2 mt-5 rounded-lg row-start-6 ">
                 <figure class=" text-cool-400 my-auto inline-block ml-6">
                   <i class="fal fa-folder-open text-2xl ml-2"></i>
                   <span class="text-sm font-thin relative -top-1">{{article.categories[0].name}}</span
@@ -99,7 +98,7 @@
             </div>
           </div>
           <div class="dynamic-img col-span-2 h-56 md:h-auto md:col-span-1 order-1 md:order-2 overflow-hidden relative">
-            <img :src="article.thumbnail" width="100%">
+            <img :src="article.thumbnail.link" width="100%">
           </div>
         </div>
       </div>

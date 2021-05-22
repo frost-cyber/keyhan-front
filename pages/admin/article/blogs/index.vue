@@ -12,8 +12,10 @@
         <tbody>
         <vs-tr :data="tr" :key="index" v-for="(tr, index) in data">
           <vs-td >
-            <img v-if="image" :src="tr.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" style="width: 20%">
-          </vs-td>
+            <div class="w-full">
+              <img v-if="image" :src="tr.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" style="width: 20%">
+            </div>
+            </vs-td>
           <vs-td>
             <p class="">{{ tr.title }}</p>
           </vs-td>
@@ -23,7 +25,7 @@
             <p class="">{{ $jalaali(tr.created_at).format('jYYYY/jMM/jDD') }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
-            <NuxtLink :to="{name:'admin-article-blogs-slug' , params:{slug:tr.slug}}" >
+            <NuxtLink :to="{name:'admin-article-blogs-id' , params:{id:tr.id}}" >
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current"/>
             </NuxtLink>
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteArticle(tr)"/>
