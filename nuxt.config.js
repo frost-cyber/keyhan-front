@@ -94,9 +94,6 @@ export default {
       'draggable',
     ]
   },
-  tailwindcss: {
-    jit:true,
-  },
   serverMiddleware: [
     '~/serverMiddleware/selectiveSSR.js'
   ]
