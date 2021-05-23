@@ -1,7 +1,7 @@
 export const state = () => {
   return {
     header : {},
-    home :{},
+    home :{slider: [],sliderBanners:[{},{}]},
     footer:{},
   }
 }
@@ -32,7 +32,7 @@ export const actions = {
    return this.$apiClient.$put('api/settings/footer' , footer)
  },
  getHome({}){
-   return this.$apiClient.$get('api/settings/footer')
+   return this.$apiClient.$get('api/settings/home')
  },
  updateHome({} , home){
    return this.$apiClient.$put('api/settings/home' , home)

@@ -3,9 +3,9 @@
     <div class="container mx-auto">
       <div class="grid grid-cols-12 gap-4 md:gap-30">
         <div  v-for="(brand , index) in brands" :key="index" class="col-span-4 md:col-span-4 lg:col-span-2">
-          <a class="brands-item" :href="brand.href">
-            <img class="rounded-lg border border-cool-100 border-solid shadow-my" :src="brand.img" alt=""/>
-          </a>
+          <nuxt-link class="brands-item" :to="{name : 'products' ,query:{brands : brand.slug}}">
+            <img class="rounded-lg border border-cool-100 border-solid shadow-my" :src="brand.src" :alt="brand.alt"/>
+          </nuxt-link>
         </div>
       </div>
     </div>

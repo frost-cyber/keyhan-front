@@ -19,21 +19,13 @@
     </vs-card>
     <vs-card class="col-span-1">
       <h2>بنر کنار اسلایدر</h2>
-      <div>
-        <h3>بنر 1</h3>
-        <img class="w-full" :src="options.sliderBanners[0].src || require('@/assets/images/Flag_of_None.png')"
-             @click="selectFile('HomeSliderBannerImage' , (data)=> options.sliderBanners[0].src = data.link)">
-        <vs-input label="عکس" class="w-full" v-model="options.sliderBanners[0].src"/>
-        <vs-input label="متن جایگزین" class="w-full" v-model="options.sliderBanners[0].alt"/>
-        <vs-input label="لینک" class="w-full" v-model="options.sliderBanners[0].link"/>
-      </div>
-      <div>
-        <h3>بنر 2</h3>
-        <img class="w-full" :src="options.sliderBanners[0].src || require('@/assets/images/Flag_of_None.png')"
-             @click="selectFile('HomeSliderBannerImage' , (data)=> options.sliderBanners[1].src = data.link)">
-        <vs-input label="عکس" class="w-full" v-model="options.sliderBanners[1].src"/>
-        <vs-input label="متن جایگزین" class="w-full" v-model="options.sliderBanners[1].alt"/>
-        <vs-input label="لینک" class="w-full" v-model="options.sliderBanners[1].link"/>
+      <div v-for="(banner , index) in options.sliderBanners" :key="index">
+        <h3>بنر {{ index+1 }}</h3>
+        <img class="w-full" :src="banner.src || require('@/assets/images/Flag_of_None.png')"
+             @click="selectFile('HomeSliderBannerImage' , (data)=> banner.src = data.link)">
+        <vs-input label="عکس" class="w-full" v-model="banner.src"/>
+        <vs-input label="متن جایگزین" class="w-full" v-model="banner.alt"/>
+        <vs-input label="لینک" class="w-full" v-model="banner.link"/>
       </div>
     </vs-card>
     <vs-card class="col-span-3">
@@ -162,6 +154,9 @@ export default {
     }
   },
   async fetch() {
+    this.$store.dispatch('settings/getHome').then(res => {
+      this.options = res.options
+    })
     this.$store.dispatch('storeCategory/getCategories', {
       with: 'childrenRecursive',
       parent: '',

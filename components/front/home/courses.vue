@@ -4,28 +4,7 @@
       <div class="grid grid-cols-12">
         <div class="col-span-12 product-area">
           <carousel :navText="['','']" :items="4" :autoplayHoverPause="true" :autoplay="true" :nav="true" :margin="30" :loop="true" :dots="false" :responsive="carouselResponsive">
-            <div v-for="(course , index ) in courses" :key="index">
-              <div class="item-course border border-cool-100 rounded-lg hover:shadow-xl mb-10 mt-2 relative">
-                <vs-button class="save-product" color="#D1D5DB" type="flat" icon-pack="fal" icon=" fa-bookmark"></vs-button>
-                <div class="img-course">
-                  <a class="img-thum" :href="course.href">
-                    <img :src="course.img" alt=""/>
-                  </a>
-                </div>
-                <div class="title-course px-4 my-4 h-13 overflow-hidden">
-                  <a class="title-p text-cool-800" :href="course.href">
-                    <h3 class="text-right font-black text-sm">
-                      {{ course.title }}
-                    </h3>
-                  </a>
-                </div>
-                <div class="des-course px-4 pb-4 h-15 overflow-hidden ">
-                  <p class="text-xs text-cool-600 font-thin text-right">
-                    {{ course.desc }}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <product-cart v-for="(course , index ) in courses" :key="index" :product="course"/>
           </carousel>
         </div>
       </div>
@@ -34,8 +13,12 @@
 </template>
 <script>
 
+import productCart from "~/components/front/store/productCart";
 export default {
   name: "courses",
+  components:{
+    productCart,
+  },
   props: {
     courses: {
       required: true,
