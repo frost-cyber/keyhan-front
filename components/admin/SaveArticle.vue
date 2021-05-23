@@ -162,14 +162,19 @@
         input.onchange = this.uploadFile
         input.click()
       },
-
       async uploadFile(event){
         let file = event.target.files[0]
-        await this.$store.dispatch('files/uploadArticleImage' , file)
-        this.article.thumbnail = this.$store.getters['files/getFile'] || {}
-      },
-      log() {
-        console.log(this.article.category)
+        await this.$store.dispatch('files/uploadArticleImage' , file).then(res=>{
+          this.article.thumbnail = res.data
+        }).catch(error=>{
+          if(error.response.status === 422){
+            this.$vs.notify({
+              title : 'درخواست شما با خطا مواجه شد',
+              text : error.response.data.errors.file[0],
+              color : 'danger',
+            })
+          }
+        })
       },
       successUpload(event) {
         let response = (JSON.parse(event.currentTarget.response))
@@ -198,7 +203,6 @@
       // }
     },
     mounted() {
-
       this.tags = this.$store.getters['article/getTags']
     }
   }

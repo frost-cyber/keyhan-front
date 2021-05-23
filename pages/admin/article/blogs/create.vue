@@ -10,11 +10,6 @@
     export default {
       name: "create",
       components: {SaveArticle},
-      created() {
-        console.log(this.article.thumbnail)
-        // this.article = JSON.parse(JSON.stringify(this.$store.getters["article/getArticle"]))
-        console.log(this.article.thumbnail)
-      },
       destroyed() {
         this.$store.commit('article/SET_ARTICLE')
       },

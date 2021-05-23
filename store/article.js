@@ -84,13 +84,13 @@ export const actions={
     commit('SET_ARTICLE', article.data)
   },
   async deleteArticle({commit , state}, article) {
-    return this.$apiClient.delete(`api/articles/${article.slug}`)
+    return this.$apiClient.delete(`api/articles/${article.id}`)
   },
   async storeArticle({commit , state}, article) {
     return this.$apiClient.post('api/articles', article)
   },
   async updateArticle({commit , state}, article) {
-    return this.$apiClient.patch(`api/articles/${article.slug}`, article)
+    return this.$apiClient.patch(`api/articles/${article.id}`, article)
   },
   async getArticlesCategory({commit , state}, categories) {
     return this.$apiClient.patch(`api/articles/category/${categories.slug}`)
