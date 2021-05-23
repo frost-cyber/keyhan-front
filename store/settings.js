@@ -1,7 +1,7 @@
 export const state = () => {
   return {
-    header : {logo:{}},
-    home :{slider: [],sliderBanners:[{},{}]},
+    header : {logo:{} , navbar:{}},
+    home :{slider: [],sliderBanners:[{},{}] , brands:[] , categories:[] ,recommendedProducts:{}},
     footer:{contacts:{}},
   }
 }
