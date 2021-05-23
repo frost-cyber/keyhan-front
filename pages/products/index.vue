@@ -192,6 +192,8 @@ export default {
             this.products.push({
               name: product.name,
               slug: product.slug,
+              type: product.type,
+              description: product.description,
               thumbnail: product.files[0].link,
               inventory: variant.inventory,
               discounted_price: variant.discounted_price,

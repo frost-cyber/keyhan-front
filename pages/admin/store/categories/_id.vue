@@ -15,7 +15,7 @@ export default {
   },
   async asyncData({params , store}) {
     let cat = {}
-    store.dispatch('storeCategory/getCategory', {categoryId : params.id}).then(res => cat = res.data)
+    await store.dispatch('storeCategory/getCategory', {categoryId : params.id}).then(res => cat = res.data)
     return {
       category: cat,
       disabled: false,
