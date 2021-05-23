@@ -111,6 +111,7 @@ export default {
               position: "bottom-center",
               icon    : 'check_box',
             })
+            this.getProfile()
             setTimeout(() => {
               this.$router.push('.')
             }, 2100)
