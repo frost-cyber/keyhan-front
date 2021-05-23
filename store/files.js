@@ -11,6 +11,56 @@ export const mutations = {
 }
 
 export const actions = {
+  HomeSliderImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeSliderImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  HomeCategoryImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeCategoryImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  HomeBrandImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeBrandImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  uploadSiteLogo({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=SettingSiteLogo', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+  uploadLicenseImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=SettingLicenseImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
   async uploadProductImage({commit}, file) {
     let fileData = new FormData
     fileData.append('file', file)
