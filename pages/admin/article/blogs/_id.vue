@@ -10,9 +10,9 @@
   export default {
     name: "update",
     components: {SaveArticle},
-    async asyncData({params , store}) {
-      await store.dispatch('article/getArticle', params.slug)
-      let article = store.getters["article/getArticle"]
+    async asyncData({params , store,$cloneObject}) {
+      await store.dispatch('article/getArticle', params.id)
+      let article = $cloneObject(store.getters["article/getArticle"])
       article.categories = article.categories[0]??null
       return {
         article: article,

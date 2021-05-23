@@ -32,16 +32,25 @@ export const actions = {
       }
     })
   },
-  async uploadArticleImage({commit}, file) {
+  uploadArticleImage({commit}, file) {
     let fileData = new FormData
     fileData.append('file', file)
     let data = null
-    await this.$apiClient.post('api/files/upload?for=ArticleThumbnail', fileData, {
+    return this.$apiClient.post('api/files/upload?for=ArticleThumbnail', fileData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    }).then(res => data = res.data).catch(err => console.log(err))
-    commit('SET_FILE' , data)
+    })
+  },
+  uploadProfileImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=ProfileAvatar', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   },
   async uploadEditorImage({commit}, file) {
     let fileData = new FormData
