@@ -22,7 +22,7 @@ export const getters={
   },
 }
 export const actions={
-  async storeComment({commit , state}, comment) {
+   storeComment({commit , state}, comment) {
     return this.$apiClient.post('api/articleComments', comment)
   },
   async updateComment({commit , state}, comment) {
