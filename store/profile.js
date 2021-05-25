@@ -1,6 +1,11 @@
 export const state = () => ({
   errors: [],
   users: [],
+  products:[],
+  product:{
+    is_virtual:null,
+
+  },
   user: {
     id: null,
     name: null,
@@ -26,6 +31,9 @@ export const mutations = {
   SET_USERS(state, users) {
     state.users = users
   },
+  SET_PRODUCTS(state, products) {
+    state.products = products
+  },
   SET_USER(state, user = null) {
     if (user == null) {
       user = {
@@ -50,6 +58,9 @@ export const actions = {
   async updateProfile({commit, state}, user) {
     return this.$apiClient.patch(`api/profile/update`, user)
   },
+  deleteProductFromWishlist({commit,state},product){
+    return this.$apiClient.get(`api/products/${product}/toggle_withlist`)
+  },
   async updatePassword({commit, state}, password) {
     return this.$apiClient.put(`api/profile/password`, password)
   },
@@ -64,6 +75,15 @@ export const actions = {
     }
     const users = await this.$apiClient.get(url)
     commit('SET_USERS', users.data)
+    return this.$apiClient.get(url)
+  },
+  async getProductWishlist({commit}, query = null) {
+    let url = 'api/profile/wishlist'
+    if (query) {
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    const products = await this.$apiClient.get(url)
+    commit('SET_PRODUCTS', products.data)
     return this.$apiClient.get(url)
   },
 }

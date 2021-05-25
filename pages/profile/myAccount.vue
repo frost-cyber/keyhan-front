@@ -112,9 +112,6 @@ export default {
               icon    : 'check_box',
             })
             this.getProfile()
-            setTimeout(() => {
-              this.$router.push('.')
-            }, 2100)
           }
           this.$store.dispatch('profile/getUser').then(res=>{
             if(validated){
@@ -160,11 +157,10 @@ export default {
       })
     },
     getProfile() {
-      // let w = this.$cloneObject(this.$route.query),
-      // w.with = ['avatar'],
       this.$store.dispatch('profile/getUser').then(res => {
         if (res.status === 200) {
           this.user = res.data
+          this.$store.commit('profile/SET_USER',this.$cloneObject(res.data))
         }
 
       })
