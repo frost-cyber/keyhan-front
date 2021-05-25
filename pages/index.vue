@@ -94,7 +94,7 @@
       </div>
     </section>
     <!-- blog -->
-    <section class="title-section mt-24 relative mb-8">
+    <section v-if="articles.length" class="title-section mt-24 relative mb-8">
       <div class="container mx-auto">
         <div class=" grid grid-cols-2 gap-30">
           <div class="col-span-2">
@@ -105,11 +105,11 @@
         </div>
       </div>
     </section>
-    <section class="blog-row">
+    <section v-if="articles.length" class="blog-row">
       <div class="container mx-auto">
         <articles :articles="articles"></articles>
         <div class="col-span-12 text-center">
-          <a class="more-border relative text-xs lg:text-base font-thin text-cool-700 border-b-2 border-cool-600 pb-3 px-6" href="">مشاهـــــده هـــمــــه</a>
+          <nuxt-link class="more-border relative text-xs lg:text-base font-thin text-cool-700 border-b-2 border-cool-600 pb-3 px-6" :to="{name:'articles'}">مشاهـــــده هـــمــــه</nuxt-link>
         </div>
       </div>
     </section>
@@ -167,6 +167,20 @@ export default {
         })
       })
     })
+    this.$store.dispatch('article/getArticles', {
+      limit: 4,
+      sort:'+created_at'
+    }).then(res => {
+      this.articles = []
+      res.data.forEach(article => {
+        this.articles.push({
+          name: article.name,
+          slug: article.slug,
+          img: article.files[0].link,
+          description: article.description,
+        })
+      })
+    })
   },
   computed: {
     setting() {
@@ -196,32 +210,7 @@ export default {
     return {
       courses: [],
       products: [],
-      articles: [
-        {
-          img: require('@/assets/img/product/03.png'),
-          title: "  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند ",
-          href: "#",
-          desc: " آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "
-        },
-        {
-          img: require('@/assets/img/product/03.png'),
-          title: "  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند ",
-          href: "#",
-          desc: " آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "
-        },
-        {
-          img: require('@/assets/img/product/03.png'),
-          title: "  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند ",
-          href: "#",
-          desc: " آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "
-        },
-        {
-          img: require('@/assets/img/product/03.png'),
-          title: "  ۰ تا ۱۰۰ آموزش کسب و کار اینترنتی، دوره جامع وبمستران هوشمند ",
-          href: "#",
-          desc: " آموزش جامع ساخت و مدیریت کسب و کار اینترنتی، اصول بازاریابی و رساندن سایت و "
-        },
-      ],
+      articles: [],
     }
   }
 
