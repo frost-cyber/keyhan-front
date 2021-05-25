@@ -2,7 +2,7 @@ import vue from 'vue'
 import { FormWizard, TabContent } from 'vue-form-wizard'
 import TreeSelect from '@riophae/vue-treeselect'
 import jalaali from 'moment-jalaali'
-import jalaliFa from '@/node_modules/moment/src/locale/fa.js'
+// import jalaliFa from '@/node_modules/moment/src/locale/fa.js'
 
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -40,7 +40,7 @@ function createQuery(object, index = '') {
 }
 
 export default function (ctx ,injector) {
-  jalaali.locale('fa' , jalaliFa)
+  // jalaali.locale('fa' , jalaliFa)
   jalaali.loadPersian()
   injector('jalaali',jalaali)
   injector('cloneObject' , (object) => JSON.parse(JSON.stringify(object)))
