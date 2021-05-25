@@ -9,7 +9,10 @@
         <div class="info-comment md:col-span-4">
           <h5 class="inline-block text-base font-bold">{{ comment.name || comment.user.name }}</h5>
           <p class="commment-text text-sm font-thin mt-3">{{ comment.body }}</p>
-          <a class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500" href=""><i class="fal fa-reply"></i></a>
+          <span class="reply absolute top-3 left-3 hover:text-orange-500"
+                :class="{'text-orange-500':repliedComment == comment.id, 'text-cool-500':repliedComment != comment.id}" @click="commentReply(comment.id)">
+            <i class="fal fa-reply"></i>
+          </span>
         </div>
       </template>
       <template v-else>
@@ -29,7 +32,10 @@
           <div class="info-comment md:col-span-4">
             <h5 class="inline-block text-base font-bold">{{ comment.name || comment.user.name }}</h5>
             <p class="commment-text text-sm font-thin mt-3">{{ comment.body }}</p>
-            <a class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500" href=""><i class="fal fa-reply"></i></a>
+            <span class="reply absolute top-3 left-3 text-cool-500 hover:text-orange-500"
+                  :class="{'text-orange-500':repliedComment == comment.id, 'text-cool-500':repliedComment != comment.id}" @click="commentReply(comment.id)">
+              <i class="fal fa-reply"></i>
+            </span>
           </div>
         </div>
       </template>
@@ -56,7 +62,8 @@ export default {
   },
   data() {
     return {
-      currentPage: 1
+      currentPage: 1,
+      repliedComment:null
     }
   },
   computed: {
@@ -102,6 +109,13 @@ export default {
     currentPageComments() {
       let start = (this.currentPage - 1) * this.perPage
       return this.comments.slice(start, start + this.perPage)
+    }
+  },
+  methods:{
+    commentReply(id){
+      this.repliedComment=id
+      this.$emit('comment_reply',id)
+
     }
   }
 

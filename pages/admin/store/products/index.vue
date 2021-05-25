@@ -40,7 +40,8 @@ export default {
   },
   fetch() {
     this.$store.dispatch('products/getProducts' , {
-      with : ['variants' , 'variants.files' , 'variants.attribute' , 'attributes' , 'brand' , 'files' , 'categories']
+      with : ['variants' , 'variants.files' , 'variants.attribute' , 'attributes' , 'brand' , 'files' , 'categories'],
+      condition:[0,1]
     })
   },
   methods:{

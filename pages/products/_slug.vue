@@ -301,8 +301,8 @@
                       <vs-tab label="نظرات شما">
                         <div class="con-tab-ejemplo">
                           <div class="grid grid-cols-12 gap-30 text-cool-600">
-                            <div class="col-span-12 md:col-span-7">
-                              <comments :components-data="product.comments" color="#EF4444"/>
+                            <div class="col-span-12 md:col-span-7" v-if="product.comments.length >=1">
+                              <comments :components-data="product.comments" @comment_reply="(id)=>$set(comment,'parent_id',id)" color="#EF4444"/>
                             </div>
                             <div class="col-span-12 md:col-span-5">
                               <div>
@@ -504,6 +504,9 @@ export default {
     }
   },
   methods: {
+    log(x){
+      console.log(x)
+    },
     saveComment() {
       this.$validator.validateAll('comment').then(res => {
         if (!res) return 0;

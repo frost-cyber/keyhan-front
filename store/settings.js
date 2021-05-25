@@ -1,8 +1,8 @@
 export const state = () => {
   return {
-    header : {},
-    home :{slider: [],sliderBanners:[{},{}]},
-    footer:{},
+    header : {logo:{} , navbar:{}},
+    home :{slider: [],sliderBanners:[{},{}] , brands:[] , categories:[] ,recommendedProducts:{}},
+    footer:{contacts:{}},
   }
 }
 
