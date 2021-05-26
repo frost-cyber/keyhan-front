@@ -158,6 +158,10 @@ export default [
             url: '/admin/settings/home',
             name: 'صفحه اصلی',
           },
+          {
+            url: '/admin/settings/advice',
+            name: 'درخواست مشاوره',
+          },
         ]
       },
     ],

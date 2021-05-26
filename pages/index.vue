@@ -81,12 +81,18 @@
               تماس میگیریم
             </p>
             <div class="form-contact">
-              <vs-input class="contactform mt-6" placeholder="نام و نام خانوادگی" size="small"/>
-              <vs-input class="contactform mt-3" placeholder="شماره تماس شما" size="small"/>
-              <vs-input class="contactform mt-3" placeholder="موضوع مورد سوال شما" size="small"/>
-              <div class="mt-3 text-sm">
-                <vs-button color="#F97316" type="filled">ثبت درخواست شما</vs-button>
-              </div>
+             <form data-vv-scope="advice">
+                 <vs-input class="contactform mt-6" v-model="advice.name" name="name"  v-validate="'required'" placeholder="نام و نام خانوادگی" size="small"  data-vv-as="نام"/>
+                 <span class="text-danger text-sm" v-show="errors.has('advice.name')">{{ errors.first('advice.name') }}</span>
+                 <vs-input class="contactform mt-3" v-model="advice.phone" name="phone"  v-validate="'required'"  placeholder="شماره تماس شما" size="small"  data-vv-as="شماره تماس"/>
+                 <span class="text-danger text-sm" v-show="errors.has('advice.phone')">{{ errors.first('advice.phone') }}</span>
+                 <vs-input class="contactform mt-3" v-model="advice.subject"  name="subject" v-validate="'required'" placeholder="موضوع مورد سوال شما" size="small"  data-vv-as="موضوع"/>
+                 <span class="text-danger text-sm" v-show="errors.has('advice.subject')">{{ errors.first('advice.subject') }}</span>
+
+               <div class="mt-3 text-sm">
+                 <vs-button color="#F97316" type="filled" @click.native="saveAdvice">ثبت درخواست شما</vs-button>
+               </div>
+             </form>
             </div>
           </div>
           <div class="col-span-12 md:col-span-6 bg-contact rounded-t-lg rounded-l-lg relative"></div>
@@ -206,11 +212,63 @@ export default {
       return products
     },
   },
+ methods:{
+   saveAdvice(){
+     this.$validator.validateAll('advice').then(res=>{
+       if (!res) return
+       this.$store.dispatch('settings/storeAdvice', this.advice).then((response) => {
+         if (response.status === 200) {
+           this.$vs.notify({
+             title: " درخواست با موفقیت ثبت شد",
+             time: 2000,
+             color: "success",
+             position: "bottom-right",
+             icon: 'check_box',
+           })
+         }
+       }).catch(error => {
+         if (error.response.status === 422) {
+           this.$vs.notify({
+             title: 'نظر شما با خطا گردید',
+             text: 'خطا های زیر را رفع کنید.',
+             time: 3000,
+             color: "danger",
+             position: "bottom-right",
+             icon: 'check_box',
+           })
+           Object.entries(error.response.data.errors).forEach((error, i) => {
+            this.errors.add({
+              field:error[0],
+              msg:error[1][0],
+              scope:'advice'
+            })
+             setTimeout(() => {
+               this.$vs.notify({
+                 title: 'خطا!!!',
+                 text: error[1][0],
+                 time: 3500,
+                 color: "danger",
+                 position: "bottom-right",
+                 icon: 'check_box',
+               })
+             }, 500 * (i + 1))
+           })
+         }
+       })
+     })
+
+   }
+ },
+  destroyed() {
+    this.$store.commit('settings/SET_ADVICE')
+
+  },
   data() {
     return {
       courses: [],
       products: [],
       articles: [],
+      advice: {},
     }
   }
 
