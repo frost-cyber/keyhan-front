@@ -38,7 +38,7 @@
     <div class="grid grid-cols-12 gap-30 mt-5">
       <div class="right-dash col-span-12 lg:col-span-6 ">
         <div class="list-item rounded-lg border border-cool-200 p-3">
-          <mywishlist />
+          <mywishlist :wishlist="wishlist" />
         </div>
         <div class="list-item rounded-lg border border-cool-200 p-3 mt-5">
           <mycourse/>
@@ -61,7 +61,9 @@ export default {
   data() {
     return {
       number1:1,
-      colorx:'#F97316'
+      colorx:'#F97316',
+      wishlist:[],
+
     };
   },
   components: {
@@ -69,5 +71,20 @@ export default {
     Myorder,
     Mywishlist
   },
+  fetch(){
+    this.lastWishlist()
+  },
+  methods:{
+    lastWishlist(){
+      this.$store.dispatch('profile/getLastWishlist').then(res => {
+        if (res.status === 200) {
+          this.wishlist = res.data
+          this.$store.commit('profile/SET_PRODUCTS',this.$cloneObject(res.data))
+        }
+
+      })
+    }
+  }
+
 };
 </script>
