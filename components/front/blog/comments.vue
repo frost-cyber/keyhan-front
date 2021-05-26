@@ -66,7 +66,7 @@
               title: 'نظر شما با موفقیت ثبت گردید',
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
           }

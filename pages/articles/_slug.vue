@@ -183,12 +183,9 @@
               title: " کامنت با موفقیت ساخته شد",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
-            setTimeout(() => {
-              this.$router.push('.')
-            }, 2100)
           }
         }).catch(error => {
           if (error.response && error.response.status === 422) {
