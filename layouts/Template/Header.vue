@@ -99,20 +99,10 @@
                 <li>
                   <nuxt-link href="" class="text-cool-800 hover:text-orange-600" to="/">صفحه اصلی</nuxt-link>
                 </li>
-                <li>
-                  <a href="" class="text-cool-800 hover:text-orange-600 ">
-                    درباره ما
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="text-cool-800 hover:text-orange-600 ">
-                    تماس با ما
-                  </a>
-                </li>
-                <li>
-                  <a href="" class="text-cool-800 hover:text-orange-600 ">
-                    با ما همکار شو
-                  </a>
+                <li v-for="(page,index) in setting.navbar.pages" :key="index">
+                  <nuxt-link :to="{name:'slug',params:{slug:page.slug}}" class="text-cool-800 hover:text-orange-600 ">
+                    {{page.title}}
+                  </nuxt-link>
                 </li>
                 <li>
                   <nuxt-link href="" class="text-cool-800 hover:text-orange-600" :to="{name:'articles'}">وبلاگ</nuxt-link>

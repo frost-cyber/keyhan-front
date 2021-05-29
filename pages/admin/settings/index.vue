@@ -15,6 +15,15 @@
         <div class="grid grid-cols-6 gap-3">
           <h2 class="col-span-6">نوار پیمایش</h2>
           <vs-input label="تلفن" class="col-span-6 w-full" v-model="header.navbar.phone"/>
+          <div class="col-span-6">
+            <label>صفحات</label>
+            <v-select class="w-full" :options="pages" v-model="header.navbar.pages" label="title" multiple>
+              <template slot="page" slot-scope="page">
+                {{page.title}}
+              </template>
+            </v-select>
+          </div>
+
         </div>
       </vs-card>
       <vs-button @click.native="saveHeader">ذخیره</vs-button>
@@ -62,13 +71,16 @@
 </template>
 <script>
 import ListIcons from "~/components/admin/ListIcons";
+import vSelect from "vue-select"
 export default {
   name: "index.vue",
   components:{
-    ListIcons
+    ListIcons,
+    vSelect
   },
   data(){
     return {
+      pages:[],
       header:{
         logo :{ link:null, alt:null, },
         navbar:{},
@@ -84,6 +96,7 @@ export default {
   fetch() {
     this.$store.dispatch('settings/getHeader').then(res => this.header = res.options)
     this.$store.dispatch('settings/getFooter').then(res => this.footer = res.options)
+    this.$store.dispatch('page/getPages').then(res => this.pages = res.data)
   },
   methods:{
     selectFile(action , setter){
@@ -107,7 +120,7 @@ export default {
     saveHeader(){
       this.$store.dispatch('settings/updateHeader' , this.header).then(res => {
         this.$vs.notify({
-          title: 'تنضیمات Header ذخیره شد.',
+          title: 'تنظیمات Header ذخیره شد.',
           color: 'success'
         })
       }).catch(err => {
@@ -123,7 +136,7 @@ export default {
     saveFooter(){
       this.$store.dispatch('settings/updateFooter' , this.footer).then(res => {
         this.$vs.notify({
-          title: 'تنضیمات Footer ذخیره شد.',
+          title: 'تنظیمات Footer ذخیره شد.',
           color: 'success'
         })
       }).catch(err => {
