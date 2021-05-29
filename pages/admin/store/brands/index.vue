@@ -69,7 +69,7 @@ export default {
             title: "با موفقیت حذف شد.",
             time: 2000,
             color: "success",
-            position: "bottom-center",
+            position: "bottom-right",
             icon: 'check_box',
           })
         }
@@ -79,7 +79,7 @@ export default {
           text: "خطایی رخ داده است.",
           time: 2000,
           color: "danger",
-          position: "bottom-center",
+          position: "bottom-right",
           icon: 'check_box',
         })
       })
@@ -110,6 +110,13 @@ export default {
               link:'/storage/d3c3d67701c4eb4fcc97b859c57a96b4.png'
             }
           }
+          this.$vs.notify({
+            title: "با موفقیت ذخیره شد.",
+            time: 2000,
+            color: "success",
+            position: "bottom-right",
+            icon: 'check_box',
+          })
         }
       }).catch(err => console.log(err.response))
     }

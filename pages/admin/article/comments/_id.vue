@@ -73,7 +73,7 @@
               text: "چند لحظه دیگر به صفحه نظرات  هدایت خواهید شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             setTimeout(() => {

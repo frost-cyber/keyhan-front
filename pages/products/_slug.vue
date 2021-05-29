@@ -516,7 +516,7 @@ export default {
               title: 'نظر شما با موفقیت ثبت گردید',
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
           }
@@ -527,7 +527,7 @@ export default {
               text: 'خطا های زیر را رفع کنید.',
               time: 3000,
               color: "danger",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             Object.entries(error.response.data.errors).forEach((error, i) => {
@@ -537,7 +537,7 @@ export default {
                   text: error[1][0],
                   time: 3500,
                   color: "danger",
-                  position: "bottom-center",
+                  position: "bottom-right",
                   icon: 'check_box',
                 })
               }, 500 * (i + 1))

@@ -49,11 +49,11 @@ export default {
       }).then(() => {
         if (index === this.attributes.length - 1 && this.saveStatus.length === this.attributes.length && !this.saveStatus.includes(false)) {
           this.$vs.notify({
-            title: "با موفیت ویژگی ها ساخته شد",
+            title: "با موفقیت ویژگی ها ساخته شد",
             text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
             time: 2000,
             color: "success",
-            position: "bottom-center",
+            position: "bottom-right",
             icon: 'check_box',
           })
           setTimeout(() => {

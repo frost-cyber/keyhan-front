@@ -22,11 +22,11 @@
         this.$store.dispatch('articleCategory/storeCategory', this.category).then((response) => {
           if (response.status === 200) {
             this.$vs.notify({
-              title: "با موفقیت ویژگی ساخته شد",
-              text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
+              title: "با موفقیت دسته ساخته شد",
+              text: "چند لحظه دیگر به صفحه دسته ها هدایت خواهید شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             setTimeout(() => {

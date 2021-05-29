@@ -105,10 +105,9 @@ export default {
           if (response.status === 200) {
             this.$vs.notify({
               title   : "با موفقیت کاربر آپدیت شد",
-              text    : "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
               time    : 2000,
               color   : "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon    : 'check_box',
             })
             this.getProfile()
@@ -141,7 +140,7 @@ export default {
               text: "چند لحظه دیگر به صفحه کاربر  هدایت خواهید شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             setTimeout(() => {

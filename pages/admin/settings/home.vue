@@ -172,7 +172,7 @@ export default {
     save() {
       this.$store.dispatch('settings/updateHome', this.options).then(res => {
         this.$vs.notify({
-          title: 'تنضیمات خانه ذخیره شد.',
+          title: 'تنظیمات خانه ذخیره شد.',
           color: 'success'
         })
       }).catch(err => {

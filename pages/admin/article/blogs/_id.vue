@@ -26,10 +26,10 @@
           if (response.status === 200) {
             this.$vs.notify({
               title: "با موفقیت مقاله آپدیت شد",
-              text: "چند لحظه دیگر به صفحه ویژگی ها هدایت خواهید شد.",
+              text: "چند لحظه دیگر به صفحه مقاله ها هدایت خواهید شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             setTimeout(() => {

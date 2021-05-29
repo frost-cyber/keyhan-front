@@ -53,7 +53,7 @@ export default {
             title: "با موفقیت حذف شد.",
             time: 2000,
             color: "success",
-            position: "bottom-center",
+            position: "bottom-right",
             icon: 'check_box',
           })
         }
@@ -63,7 +63,7 @@ export default {
           text: "خطایی رخ داده است.",
           time: 2000,
           color: "danger",
-          position: "bottom-center",
+          position: "bottom-right",
           icon: 'check_box',
         })
       })

@@ -29,11 +29,11 @@ export default {
       this.$store.dispatch('products/storeProduct',product).then((response) => {
         if (response.status === 200) {
           this.$vs.notify({
-            title: "با موفیت ویژگی ساخته شد",
+            title: "با موفقیت محصول ساخته شد",
             text: "چند لحظه دیگر به صفحه محصولات ها هدایت خواهید شد.",
             time: 2000,
             color: "success",
-            position: "bottom-center",
+            position: "bottom-right",
             icon: 'check_box',
           })
           setTimeout(() => {

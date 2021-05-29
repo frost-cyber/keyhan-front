@@ -50,11 +50,9 @@
   export default {
     name: "index",
     async asyncData({store}) {
-
       await store.dispatch('articleCategory/getCategories')
       let cats = store.getters['articleCategory/getCategories']
       cats.forEach(category => category.showChild = false)
-
       return {
         cats: cats,
       }
@@ -77,7 +75,7 @@
               title: "با موفقیت حذف شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
           }
@@ -87,7 +85,7 @@
             text: "خطایی رخ داده است.",
             time: 2000,
             color: "danger",
-            position: "bottom-center",
+            position: "bottom-right",
             icon: 'check_box',
           })
         })

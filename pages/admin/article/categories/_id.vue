@@ -29,7 +29,7 @@
               text: "چند لحظه دیگر به صفحه دسته ها هدایت خواهید شد.",
               time: 2000,
               color: "success",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             setTimeout(() => {

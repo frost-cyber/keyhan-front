@@ -77,7 +77,7 @@
               text: 'خطا های زیر را رفع کنید.',
               time: 3000,
               color: "danger",
-              position: "bottom-center",
+              position: "bottom-right",
               icon: 'check_box',
             })
             Object.entries(error.response.data.errors).forEach((error, i) => {
