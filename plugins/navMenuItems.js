@@ -162,8 +162,24 @@ export default [
             url: '/admin/settings/advice',
             name: 'درخواست مشاوره',
           },
+
         ]
+
       },
+      {
+        name:'صفحات',
+        icon:'FileTextIcon',
+        submenu:[
+          {
+            url: '/admin/pages',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/pages/create',
+            name: 'ایجاد',
+          }
+        ]
+      }
     ],
   }
 ]
