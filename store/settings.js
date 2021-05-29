@@ -47,7 +47,7 @@ export const mutations = {
 
 export const actions = {
   async getAdvices({commit}, query = null) {
-    let url = 'api/showallAdvices'
+    let url = 'api/advices'
     if (query) {
       url += "?" + this.$createQuery(query).substr(1)
     }
@@ -56,10 +56,10 @@ export const actions = {
     return this.$apiClient.get(url)
   },
   storeAdvice({commit , state}, advice) {
-    return this.$apiClient.post('api/advice', advice)
+    return this.$apiClient.post('api/advices', advice)
   },
   async deleteAdvice({commit , state}, advice) {
-    return this.$apiClient.delete(`api/delete/${advice.id}`)
+    return this.$apiClient.delete(`api/advices/${advice.id}`)
   },
  getHeader({}){
    return this.$apiClient.$get('api/settings/header')
@@ -80,7 +80,7 @@ export const actions = {
    return this.$apiClient.$put('api/settings/home' , home)
  },
   async toggleCheck({commit},adviceId){
-    return  this.$apiClient.put(`api/advice/${adviceId}/toggleCheck`)
+    return  this.$apiClient.put(`api/advices/${adviceId}/toggleCheck`)
   },
 }
 
