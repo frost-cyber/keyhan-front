@@ -285,6 +285,24 @@ export default {
         return
       }
       this.$validator.validateAll().then(validated => {
+        console.log(this.product.images.find(f => (typeof f.variant_index === 'undefined'
+          || f.variant_index === null || f.variant_index === "")))
+        if (!this.product.images.length) {
+          this.$vs.notify({
+            title: "باید حداقل یک عکس انتخاب کنید",
+            color:"danger"
+          });
+          return
+        } else if (!this.product.images.find(f => (typeof f.variant_index === 'undefined'
+        || f.variant_index === null || f.variant_index === "")))
+        {
+          this.$vs.notify({
+            title: "محصول باید حداقل یک عکس داشته باشد",
+            color:"danger"
+
+          })
+          return
+        }
         if (validated) {
           let product = JSON.parse(JSON.stringify(this.product))
           product.published_at = this.$jalaali(product.published_at, 'jYYYY/jMM/jDD').format('YYYY/MM/DD')

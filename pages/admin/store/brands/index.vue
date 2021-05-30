@@ -30,9 +30,19 @@
     </vs-table>
     <vs-popup :title="titlePopup" :active.sync="editPopup" @close="brand= { logo:{ link:'/storage/d3c3d67701c4eb4fcc97b859c57a96b4.png' } }">
       <div class="grid grid-cols-4 grid-rows-3 gap-1">
-        <vs-input label="نام" v-model="brand.name" class="col-span-2 row-start-1 w-full"/>
-        <vs-input label="نامک" v-model="brand.slug" class="col-span-2 row-start-2 w-full"/>
-        <img :src="brand.logo.link" @click="selectFile" class="rounded-lg col-start-3 col-span-2 row-start-1 row-end-4 w-full"/>
+        <div class="col-span-2 row-start-1 ">
+          <vs-input label="نام" v-model="brand.name" v-validate="'required'" name="name" class="w-full" data-vv-as="نام"/>
+          <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
+        </div>
+       <div class="col-span-2 row-start-2">
+         <vs-input label="نامک" v-model="brand.slug" class="w-full" v-validate="'required'" name="slug" data-vv-as="نامک"/>
+         <span class="text-danger text-sm" v-show="errors.has('slug')">{{ errors.first('slug') }}</span>
+       </div>
+      <div class="col-start-3 col-span-2 row-start-1 row-end-4 ">
+        <img :src="brand.logo.link || require('@/assets/images/Flag_of_None.png')" name="img"  @click="selectFile" class="rounded-lg w-full" data-vv-as="عکس"/>
+        <span class="text-danger text-sm" v-show="errors.has('img')">{{ errors.first('img') }}</span>
+      </div>
+
         <div class="col-span-1 flex flex-wrap content-end">
           <vs-button color="primary" @click.native="saveBrand">ذخیره</vs-button>
         </div>
@@ -50,8 +60,22 @@ export default {
       editPopup: false,
       titlePopup: 'ایجاد',
       brand: {
-        logo:{
-          link:'/storage/d3c3d67701c4eb4fcc97b859c57a96b4.png'
+        logo:{}
+      }
+    }
+  },
+  watch:{
+    'brand':{
+      deep : true,
+      handler(val){
+        if(!(val.logo||{}).link){
+          this.errors.add({
+            field:'img',
+            msg : 'عکس الزامی است'
+          })
+        }
+        else{
+          this.errors.remove('img')
         }
       }
     }
@@ -100,25 +124,29 @@ export default {
       })
     },
     saveBrand(){
-      let dispatch = this.brand.id ? 'brands/updateBrand':'brands/storeBrand'
-      this.$store.dispatch(dispatch , this.brand).then(res => {
-        if (res.status === 200){
-          this.$fetch()
-          this.editPopup = false
-          this.brand = {
-            logo:{
-              link:'/storage/d3c3d67701c4eb4fcc97b859c57a96b4.png'
+      this.$validator.validateAll().then(res=>{
+        if(!res) return
+        let dispatch = this.brand.id ? 'brands/updateBrand':'brands/storeBrand'
+        this.$store.dispatch(dispatch , this.brand).then(res => {
+          if (res.status === 200){
+            this.$fetch()
+            this.editPopup = false
+            this.brand = {
+              logo:{
+                link:'/storage/d3c3d67701c4eb4fcc97b859c57a96b4.png'
+              }
             }
+            this.$vs.notify({
+              title: "با موفقیت ذخیره شد.",
+              time: 2000,
+              color: "success",
+              position: "bottom-right",
+              icon: 'check_box',
+            })
           }
-          this.$vs.notify({
-            title: "با موفقیت ذخیره شد.",
-            time: 2000,
-            color: "success",
-            position: "bottom-right",
-            icon: 'check_box',
-          })
-        }
-      }).catch(err => console.log(err.response))
+        }).catch(err => console.log(err.response))
+      })
+
     }
   }
 }
