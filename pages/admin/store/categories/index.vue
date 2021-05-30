@@ -11,7 +11,8 @@
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
             <p :style="{'margin-right' : `${tr.level*20}px`}" @click="toggleChild(tr.id)">
-              <feather-icon size="10" :icon="tr.countChildren? tr.showChild ? 'ChevronDownIcon' : 'ChevronLeftIcon' : 'MoreVerticalIcon'"/>
+              <feather-icon size="10"
+                            :icon="tr.countChildren? tr.showChild ? 'ChevronDownIcon' : 'ChevronLeftIcon' : 'MoreVerticalIcon'"/>
               {{ tr.name }}
             </p>
           </vs-td>
@@ -22,7 +23,8 @@
             <NuxtLink :to="{name:'admin-store-categories-id' , params:{id:tr.id}}">
               <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current"/>
             </NuxtLink>
-            <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteCategory(tr)"/>
+            <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2"
+                          @click.stop="deleteCategory(tr)"/>
           </vs-td>
         </vs-tr>
         </tbody>
@@ -49,21 +51,22 @@ function createTree(data, id = null, level = 0) {
 
 export default {
   name: "index",
-  async asyncData({store}) {
-    let cats = []
-    await store.dispatch('storeCategory/getCategories').then(res => cats = res.data)
-    cats.forEach(category => category.showChild = false)
-
-    return {
-      cats: cats,
-    }
-  },
   computed: {
     categories() {
-      return createTree(this.cats)
+      return createTree(this.$store.getters['storeCategory/getCategories'])
     }
   },
+  fetch() {
+    this.getCategories()
+  },
   methods: {
+  async getCategories() {
+      let cats = []
+     await this.$store.dispatch('storeCategory/getCategories').then(res => cats = res.data)
+      cats.forEach(category => category.showChild = false)
+      this.$store.commit('storeCategory/SET_CATEGORIES', cats)
+
+    },
     toggleChild(id) {
       let cat = this.cats.find(item => item.id === id)
       cat.showChild = !cat.showChild
@@ -79,6 +82,7 @@ export default {
             position: "bottom-right",
             icon: 'check_box',
           })
+          this.getCategories()
         }
       }).catch((err) => {
         this.$vs.notify({
@@ -92,6 +96,7 @@ export default {
       })
     }
   },
+
 }
 </script>
 

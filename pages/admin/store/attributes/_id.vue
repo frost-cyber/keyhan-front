@@ -32,7 +32,6 @@ export default {
   methods: {
     saveAttributes() {
       this.attributes.forEach(this.saveAttribute)
-
     },
     async saveAttribute(attribute, index) {
       this.disabled = true

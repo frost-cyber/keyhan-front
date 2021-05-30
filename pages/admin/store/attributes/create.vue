@@ -23,6 +23,7 @@ export default {
     },
     saveAttribute(attribute, index) {
       this.disabled = true
+      attribute.routeCreate = true
       this.$store.dispatch(`attribute/${(attribute.id ? 'update' : 'store')}Attribute`, attribute).then((response) => {
         if (response.status === 200) {
           this.saveStatus[index] = true

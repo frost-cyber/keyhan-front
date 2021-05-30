@@ -49,20 +49,20 @@
 
   export default {
     name: "index",
-    async asyncData({store}) {
-      await store.dispatch('articleCategory/getCategories')
-      let cats = store.getters['articleCategory/getCategories']
-      cats.forEach(category => category.showChild = false)
-      return {
-        cats: cats,
-      }
+    fetch(){
+      this.getCategories()
     },
     computed: {
       categories() {
-        return createTree(this.cats)
+        let cats = this.$store.getters['articleCategory/getCategories']
+        cats.forEach(category => category.showChild = false)
+        return createTree(cats)
       }
     },
     methods: {
+      getCategories(){
+        this.$store.dispatch('articleCategory/getCategories')
+      },
       toggleChild(id) {
         let cat = this.cats.find(item => item.id === id)
         cat.showChild = !cat.showChild
@@ -78,6 +78,7 @@
               position: "bottom-right",
               icon: 'check_box',
             })
+            this.getCategories()
           }
         }).catch((err) => {
           this.$vs.notify({

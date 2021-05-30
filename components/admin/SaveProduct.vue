@@ -1,7 +1,7 @@
 <template>
   <vs-card>
     <form-wizard v-if="active" title="" subtitle="" nextButtonText="بعدی" backButtonText="قبلی" finishButtonText="ارسال" @on-complete="saveProduct">
-      <tab-content title="اطلاعات کلی" :before-changee="()=>validateStep('step1')">
+      <tab-content title="اطلاعات کلی" :before-change="()=>validateStep('step1')">
         <form data-vv-scope="step1">
           <div class="grid grid-cols-8 gap-5">
             <div class="col-span-2">
@@ -9,7 +9,7 @@
               <span class="text-danger text-sm" v-show="errors.has('step1.name')">{{ errors.first('step1.name') }}</span>
             </div>
             <div class="col-span-2">
-              <vs-input label="کدمحصول" class="w-full" v-model="product.sku" v-validate="'required'" name="sku" data-vv-as="کد محصول"/>
+              <vs-input label="کدمحصول" class="w-full" v-model="product.sku" v-validate="{required:true,regex:/^[0-9]{6}$/}" name="sku" data-vv-as="کد محصول"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.sku')">{{ errors.first('step1.sku') }}</span>
             </div>
             <div class="col-span-2">
