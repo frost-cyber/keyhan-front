@@ -12,6 +12,11 @@ import VFooter from "./Template/Footer.vue";
 export default {
   scrollToTop: true,
   name: 'Main',
+  head: {
+    htmlAttrs:{
+      dir:'rtl'
+    }
+  },
   components: {
     vheader: VHeader,
     vfooter: VFooter,
@@ -27,5 +32,5 @@ export default {
 }
 </script>
 <style>
-@import "~/assets/css/style.css";
+@import "~assets/css/style.css";
 </style>
