@@ -11,11 +11,6 @@ import VFooter from "./Template/Footer.vue";
 
 export default {
   scrollToTop: true,
-  head: {
-    htmlAttrs: {
-      dir: 'ltr'
-    }
-  },
   name: 'Main',
   components: {
     vheader: VHeader,

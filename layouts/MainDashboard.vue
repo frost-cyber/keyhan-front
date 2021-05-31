@@ -60,11 +60,10 @@ import TheNavbarVertical from '@/layouts/components/navbar/TheNavbarVertical.vue
 import TheFooter from '@/layouts/components/TheFooter.vue'
 import themeConfig from '@/plugins/themeConfig.js'
 import VNavMenu from '@/layouts/components/vertical-nav-menu/VerticalNavMenu.vue'
-import '@/assets/scss/main.scss'
-import '@/assets/css/main.css' //Tailwind
+
 export default {
   scrollToTop: true,
-  middleware: process.env.AUTH_OFF ? [] : ['auth' , 'isAdmin'],
+  middleware: process.env.AUTH_OFF ? [] : ['auth', 'isAdmin'],
   name: "MainDashboard",
   components: {
     HNavMenu,
@@ -236,6 +235,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  @import "~assets/scss/main.scss";
+</style>
+<style>
+  @import "~assets/css/main.css";
 </style>

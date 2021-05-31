@@ -27,11 +27,6 @@
 import '@/assets/css/style.css' ;//tailwind
 import '@/assets/css/fontawesome.min.css' //fontawesome
 export default {
-  head:{
-    htmlAttrs: {
-      dir:'ltr'
-    },
-  },
   name: "Auth"
 }
 </script>
