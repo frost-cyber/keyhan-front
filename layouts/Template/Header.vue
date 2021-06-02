@@ -21,12 +21,12 @@
               <button class="btn-border" @click.prevent="$auth.logout('laravelSanctum')">خروج از حساب کاربری</button>
             </div>
             <div class=" btncart inline-block relative">
-              <a class="p-2 h-16 w-16 bg-ff border border-cool-100 rounded-lg" href="/">
+              <nuxt-link class="p-2 h-16 w-16 bg-ff border border-cool-100 rounded-lg" :to="{name:'cart'}">
                 <span>
                   <i class="fal fa-shopping-cart text-xl text-cool-400 relative top-1"></i>
                 </span>
-              </a>
-              <span class="num-cart absolute font-fd">6</span>
+              </nuxt-link>
+              <span class="num-cart absolute font-fd">{{cartCountItems}}</span>
             </div>
           </div>
         </div>
@@ -135,9 +135,17 @@ export default {
       colorx: "rgb(249 115 22)",
     };
   },
+ async fetch(){
+    await this.$store.dispatch('cart/currentCart',{withCount:['productVariants']}).then(r=>{
+      this.$store.commit('cart/SET_CURRENT_CART',r.data)
+    })
+  },
   computed: {
     setting() {
       return this.$store.getters['settings/getHeader']
+    },
+    cartCountItems(){
+      return this.$store.getters['cart/currentCartCountItems']
     }
   },
   created() {
