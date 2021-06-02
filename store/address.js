@@ -1,4 +1,7 @@
+import {cities, ostan} from '@/plugins/cities'
 export const state=()=>({
+  ostan,
+  cities,
   errors:[],
   addresses:[],
   address:{
@@ -56,5 +59,11 @@ export const actions={
 export const getters={
   getErrors(state) {
     return JSON.parse(JSON.stringify(state.errors))
+  },
+  getCities(state){
+    return state.cities
+  },
+  getOstans(state){
+    return state.ostan
   }
 }
