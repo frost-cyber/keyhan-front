@@ -23,7 +23,8 @@
                   </li>
                 </vs-breadcrumb>
               </div>
-              <vs-button class="save-product save-product-d top-7" color="#D1D5DB" type="flat" icon-pack="fal" icon=" fa-bookmark"></vs-button>
+              <vs-button class="save-product save-product-d top-7" color="#D1D5DB" type="flat" icon-pack="fal"
+                         icon=" fa-bookmark"></vs-button>
               <div class="feature-img">
                 <video class="rounded-lg mt-3" width="100%" controls>
                   <source src="" type="video/mp4">
@@ -58,8 +59,10 @@
                   <vs-button color="var(--cart)">افزودن به سبدخرید</vs-button>
                 </div>
                 <div class="vote-display h-6">
-                  <p class="text-sm text-cool-700 font-thin float-right">امتیاز <span>4</span> از <span>60</span> رای</p>
-                  <div class="star-area float-left text-cool-400"><i class="fal fa-star "></i><i class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
+                  <p class="text-sm text-cool-700 font-thin float-right">امتیاز <span>4</span> از <span>60</span> رای
+                  </p>
+                  <div class="star-area float-left text-cool-400"><i class="fal fa-star "></i><i
+                    class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
                     class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i></div>
                 </div>
               </div>
@@ -144,11 +147,18 @@
                     <a class="hover:text-blue-400" href="">سمینار</a>
                     </span>
                   </figure>
-                  <vs-input class="mt-5 text-center m-auto block  min-w-full" icon-pack="fal" icon="fa-copy" placeholder="Search" v-model="value1"/>
+                  <vs-input class="mt-5 text-center m-auto block  min-w-full" icon-pack="fal" icon="fa-copy"
+                            placeholder="Search" v-model="value1"/>
                   <div class="social-btn text-center mt-3">
-                    <a class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block" href=""><i class="fab fa-whatsapp "></i></a>
-                    <a class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block" href=""><i class="fab fa-instagram "></i></a>
-                    <a class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block" href=""><i class="fal fa-paper-plane "></i></a>
+                    <a
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fab fa-whatsapp "></i></a>
+                    <a
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fab fa-instagram "></i></a>
+                    <a
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fal fa-paper-plane "></i></a>
 
                   </div>
                 </div>
@@ -166,7 +176,8 @@
           <div class="container mx-auto">
             <div class="grid grid-cols-2 gap-30">
               <div class="col-span-2">
-                <h3 class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
+                <h3
+                  class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
                   نظرات شما
                 </h3>
               </div>
@@ -219,9 +230,11 @@
                   <div class="breadcumb text-sm mb-2">
                     <vs-breadcrumb color="#eee" :items="breadcrumbItems"/>
                   </div>
-                  <vs-button class="save-product save-product-s" color="#D1D5DB" type="flat" icon-pack="fal" icon=" fa-bookmark"></vs-button>
+                  <vs-button class="save-product save-product-s" color="#D1D5DB" type="flat" icon-pack="fal"
+                             icon=" fa-bookmark"></vs-button>
                   <div class="gallery-product ltr">
-                    <carousel v-if="images.length" :navText="['','']" :items="1" :autoplayHoverPause="true" :autoplay="false" :nav="true" :margin="30" :loop="false" :dots="false">
+                    <carousel v-if="images.length" :navText="['','']" :items="1" :autoplayHoverPause="true"
+                              :autoplay="false" :nav="true" :margin="30" :loop="false" :dots="false">
                       <img v-for="image in images" :src="image.src"/>
                     </carousel>
                   </div>  <!--slider -->
@@ -236,7 +249,8 @@
                     <div class="custom-field mt-2">
                       <div class="cf-item inline-block" v-if="product.brand">
                         <span class="text-sm text-cool-700 font-normal">برند :</span>
-                        <a class="text-sm text-cool-500 mr-2 font-thin hover:text-blue-400" href="">{{ product.brand.name }}</a>
+                        <a class="text-sm text-cool-500 mr-2 font-thin hover:text-blue-400"
+                           href="">{{ product.brand.name }}</a>
                       </div>
                       <div class="cf-item inline-block mr-20">
                         <span class="text-sm text-cool-700 font-normal">دسته بندی :</span>
@@ -244,16 +258,22 @@
                       </div>
                     </div>
                     <div class="specific-row mt-4" v-if="product.type === 2">
-                      <h4 class="text-sm text-cool-700 font-normal">انتخاب {{ product.variants[0].attribute.name }} : </h4>
-                      <div class="colors mt-1" :class="product.variants[0].attribute.type === 2 ? 'colors' : 'spec-item' ">
+                      <h4 class="text-sm text-cool-700 font-normal">انتخاب {{ product.variants[0].attribute.name }}
+                        : </h4>
+                      <div class="colors mt-1"
+                           :class="product.variants[0].attribute.type === 2 ? 'colors' : 'spec-item' ">
                         <template v-for="(variant , index) in product.variants">
-                          <vs-tooltip :key="index" v-if="variant.attribute.type === 2" class="inline-block" :text="variant.attribute.value" position="top" @click.native="activeVariant=index">
-                            <button :class="{selected:index === activeVariant}" class="w-6 h-6 hover:shadow-lg border-4 inline-block rounded-full ml-1"
+                          <vs-tooltip :key="index" v-if="variant.attribute.type === 2" class="inline-block"
+                                      :text="variant.attribute.value" position="top">
+                            <button :class="{selected:index === activeVariant}"
+                                    class="w-6 h-6 hover:shadow-lg border-4 inline-block rounded-full ml-1"
+                                    @click="activeVariant=index"
                                     :style="{'border-color' : variant.attribute.code}"></button>
                           </vs-tooltip>
-                          <button :key="index" v-else :class="{selected:index === activeVariant}" class="px-5 py-1 border-1 border-cool-300 focus:border-cool-700 text-cool-500 rounded-lg ml-4"
-                                  @click.native="activeVariant=index">
-                            {{ variant.attribute.value + ' ' + variant.attribute.unit }}
+                          <button :key="index" v-else :class="{selected:index === activeVariant}"
+                                  class="px-5 py-1 border-1 border-cool-300 focus:border-cool-700 text-cool-500 rounded-lg ml-4"
+                                  @click="activeVariant=index">
+                            {{ variant.attribute.value + ' ' + (variant.attribute.unit || '') }}
                           </button>
                         </template>
                       </div>
@@ -267,11 +287,14 @@
                     <div class="holesale mt-4" v-if="variantData.wholesale_price">
                       <h5 class="inline-block"> حداقل مقدار برای محاسبه خرید عمده :</h5>
                       <span class="num-holesale text-sm text-blue-400"> {{ variantData.minimum_wholesale }} </span>
-                      <span class="unit-holesale text-sm text-blue-400" v-if="(variantData.attribute||{unit:''}).unit">{{ (variantData.attribute || {unit: ''}).unit }}</span>
+                      <span class="unit-holesale text-sm text-blue-400" v-if="(variantData.attribute||{unit:''}).unit">{{
+                          (variantData.attribute || {unit: ''}).unit
+                        }}</span>
                     </div>
                   </div>
                 </div>
-                <div class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
+                <div
+                  class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
                 </div>
                 <div class="col-span-11 md:col-span-11 lg:col-span-11">
                   <div class="tab-area">
@@ -280,10 +303,13 @@
                         <div class="con-tab-ejemplo">
                           <div class="grid grid-cols-5 gap-3">
                             <template v-for="(attributeGroup , index) in product.attributes">
-                              <div class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black" :key="index">
+                              <div
+                                class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black"
+                                :key="index">
                                 {{ attributeGroup.name }}
                               </div>
-                              <div class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
+                              <div
+                                class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
                                 {{
                                   attributeGroup.attributes.reduce((values, attribute) => {
                                     values.push(attribute.value);
@@ -302,24 +328,38 @@
                         <div class="con-tab-ejemplo">
                           <div class="grid grid-cols-12 gap-30 text-cool-600">
                             <div class="col-span-12 md:col-span-7" v-if="product.comments.length >=1">
-                              <comments :components-data="product.comments" @comment_reply="(id)=>$set(comment,'parent_id',id)" color="#EF4444"/>
+                              <comments :components-data="product.comments"
+                                        @comment_reply="(id)=>$set(comment,'parent_id',id)" color="#EF4444"/>
                             </div>
                             <div class="col-span-12 md:col-span-5">
                               <div>
                                 <form data-vv-scope="comment" class="form-contact">
                                   <template>
-                                    <vs-input class="contactform" placeholder="نام و نام خانوادگی" v-model="comment.name" size="small" v-validate="'required'" name="name" data-vv-as="نام"/>
-                                    <span class="text-danger text-sm" v-show="errors.has('comment.name')">{{ errors.first('comment.name') }}</span>
-                                    <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما" v-model="comment.email" size="small" v-validate="'required'" name="email" data-vv-as="ایمیل"/>
-                                    <span class="text-danger text-sm" v-show="errors.has('comment.email')">{{ errors.first('comment.email') }}</span>
+                                    <vs-input class="contactform" placeholder="نام و نام خانوادگی"
+                                              v-model="comment.name" size="small" v-validate="'required'" name="name"
+                                              data-vv-as="نام"/>
+                                    <span class="text-danger text-sm"
+                                          v-show="errors.has('comment.name')">{{ errors.first('comment.name') }}</span>
+                                    <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما"
+                                              v-model="comment.email" size="small" v-validate="'required'" name="email"
+                                              data-vv-as="ایمیل"/>
+                                    <span class="text-danger text-sm" v-show="errors.has('comment.email')">{{
+                                        errors.first('comment.email')
+                                      }}</span>
                                   </template>
-                                  <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px" v-model="comment.body" v-validate="'required'" name="body" data-vv-as="نظر"/>
-                                  <span class="text-danger text-sm" v-show="errors.has('comment.body')">{{ errors.first('comment.body') }}</span>
+                                  <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px"
+                                               v-model="comment.body" v-validate="'required'" name="body"
+                                               data-vv-as="نظر"/>
+                                  <span class="text-danger text-sm"
+                                        v-show="errors.has('comment.body')">{{ errors.first('comment.body') }}</span>
                                   <div class="mt-3 text-sm">
-                                    <vs-button color="#F97316" type="filled" @click.native="saveComment">ثبت نظـــر شما</vs-button>
+                                    <vs-button color="#F97316" type="filled" @click.native="saveComment">ثبت نظـــر
+                                      شما
+                                    </vs-button>
                                   </div>
                                 </form>
-                                <div class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
+                                <div
+                                  class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
                                   <div class="col-span-4">
                                     <h3>
                                       امتیاز خودتان را در مورد این محصول ثبت کنید
@@ -353,14 +393,19 @@
                 <div class="sidebar-product rounded-lg border-2 border-cool-200 p-3 lg:mt-12 sticky top-5">
                   <div>
                     <div class="btn-customize block-btn pb-2 border-cool-300 border-dashed border-b">
-                      <vs-button class="block" @click="popupActive=true" color="#4B5563" type="border">سفارشی سازی</vs-button>
+                      <vs-button class="block" @click="popupActive=true" color="#4B5563" type="border">سفارشی سازی
+                      </vs-button>
                       <vs-popup class="customize-popup" title="فرم زیر را پر کنید با شما تماس میگیریم"
                                 :active.sync="popupActive" icon-pack="fal" icon-close="fa-times">
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                          labore
+                          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                          nisi ut
+                          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                          esse
+                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                          in
                           culpa qui officia deserunt mollit anim id est laborum.
                         </p>
                       </vs-popup>
@@ -379,10 +424,14 @@
                     </div>
                     <div class="price-product py-4 h-16 text-left ">
                       <div class="price-old ltr">
-                    <span class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-xl" v-if="variantData.discounted_price">
-                      {{ '%' + ~~((variantData.selling_price - variantData.discounted_price) / (variantData.selling_price / 100)) }}
+                    <span class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-xl"
+                          v-if="variantData.discounted_price">
+                      {{
+                        '%' + ~~((variantData.selling_price - variantData.discounted_price) / (variantData.selling_price / 100))
+                      }}
                     </span>
-                        <del class="value-old text-sm text-cool-400 line-through mx-1" v-if="variantData.discounted_price">
+                        <del class="value-old text-sm text-cool-400 line-through mx-1"
+                             v-if="variantData.discounted_price">
                           {{ variantData.selling_price }}
                         </del>
                         <span class="value-discount text-cool-600 text-sm font-bold float-right">
@@ -394,17 +443,20 @@
                       <span class="unit-price text-xs absolute top-1 left-0">
                         تومان
                       </span>
-                          <ins class="text-base font-medium ml-10">{{ variantData.discounted_price || variantData.selling_price }}</ins>
+                          <ins class="text-base font-medium ml-10">
+                            {{ variantData.discounted_price || variantData.selling_price }}
+                          </ins>
                         </div>
                       </div>
                     </div>
                     <div class="addtocart block-btn mt-4 pb-2 border-cool-300 border-dashed border-b">
-                      <vs-button color="var(--cart)">افزودن به سبدخرید</vs-button>
+                      <vs-button color="var(--cart)" @click="addToCart">افزودن به سبدخرید</vs-button>
                     </div>
                     <div class="num-pro mt-4">
                       <p class="text-xs text-cool-500">اگر قصد خرید عمده دارید و یا همکار هستید تعداد را وارد کنید.</p>
                       <div class=" text-center m-auto">
-                        <vs-input-number class="ltr" color="var(--dd)" icon-pack="fal" icon-dec="fa-minus" icon-inc="fa-plus" v-model="product.type"/>
+                        <vs-input-number class="ltr" color="var(--dd)" icon-pack="fal" icon-dec="fa-minus"
+                                         icon-inc="fa-plus" v-model="cart.quantity"/>
                       </div>
                     </div>
                   </div>
@@ -454,6 +506,12 @@ export default {
       popupActive: false,
       activeVariant: 0,
       colorx: '#EF4444',
+      cart: {
+        quantity: 1,
+        product_variant: '',
+        product: '',
+        increment:true,
+      },
       comment: {
         name: '',
         email: '',
@@ -500,11 +558,39 @@ export default {
       return images
     },
     variantData() {
-      return this.product.variants[this.activeVariant]
+      let variant = this.product.variants[this.activeVariant]
+      this.cart.product = this.product.id
+      this.cart.product_variant = variant.id
+      return variant
     }
   },
   methods: {
-    log(x){
+    addToCart() {
+      this.$store.dispatch('cart/addToCart',this.cart).then(res => {
+        this.$vs.notify({
+          title:'با موفقیت به سبد خرید اضافه شد',
+          possitions:'bottom-right',
+          color:'success'
+
+        })
+        this.$store.dispatch('cart/currentCart',{withCount:['productVariants']}).then(r=>{
+          this.$store.commit('cart/SET_CURRENT_CART',r.data)
+
+        })
+      }).catch(error => {
+        if (error.response.status === 400) {
+          this.$vs.notify({
+            title: "با خطا مواجه شده است",
+            time: 2000,
+            color: "danger",
+            text:error.response.data,
+            position: "bottom-right",
+            icon: 'check_box',
+          })
+        }
+      })
+    },
+    log(x) {
       console.log(x)
     },
     saveComment() {
