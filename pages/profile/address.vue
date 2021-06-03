@@ -58,17 +58,13 @@ export default {
   fetch() {
     this.getAddresses()
   },
-  watch: {
-    popupActive(value) {
-      if (!value) {
-        this.currentAddress = {}
-      }
-    },
-  },
   methods: {
     close(val){
       if (val === this.popupActive){
         return
+      }
+      if(!val){
+        this.currentAddress={}
       }
       this.popupActive=! this.popupActive
     },

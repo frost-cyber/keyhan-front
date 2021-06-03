@@ -6,6 +6,9 @@ export const state=()=>{
 
 }
 export const actions={
+  setAddress({},id){
+    return this.$apiClient.post(`api/carts/currentCart/setAddress/${id}`)
+  },
   addToCart({},data){
     return this.$apiClient.post('api/carts/currentCart/add',data)
   },
