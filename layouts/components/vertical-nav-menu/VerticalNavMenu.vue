@@ -30,8 +30,8 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
-            <logo class="w-10 fill-current text-primary" :class="{'mr-4':!$vs.rtl , 'ml-4':$vs.rtl }" />
+          <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center pl-4" to="/">
+            <logo class="w-full fill-current text-primary" :class="{'mr-4':!$vs.rtl , 'ml-4':$vs.rtl }" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
           </NuxtLink>
           <!-- /Logo -->
