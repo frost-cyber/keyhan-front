@@ -54,18 +54,21 @@
     },
     computed: {
       categories() {
-        let cats = this.$store.getters['articleCategory/getCategories']
-        cats.forEach(category => category.showChild = false)
-        return createTree(cats)
+        return createTree(this.$cloneObject(this.$store.getters['articleCategory/getCategories']))
       }
     },
     methods: {
       getCategories(){
         this.$store.dispatch('articleCategory/getCategories')
+        let categories = this.$cloneObject(this.$store.getters['articleCategory/getCategories'])
+        categories.forEach(category => category.showChild = false)
+        this.$store.commit('articleCategory/SET_CATEGORIES', categories)
       },
       toggleChild(id) {
-        let cat = this.cats.find(item => item.id === id)
-        cat.showChild = !cat.showChild
+        let categories = this.$cloneObject(this.$store.getters['articleCategory/getCategories'])
+        let category = categories.find(item => item.id === id)
+        category.showChild = !category.showChild
+        this.$store.commit('articleCategory/SET_CATEGORIES', categories)
       },
       deleteCategory(category) {
         this.$store.dispatch('articleCategory/deleteCategory', category).then((res) => {

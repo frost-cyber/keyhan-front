@@ -127,8 +127,8 @@ export default {
       })
     },
   },
-  fetch() {
-    let cats = this.$store.dispatch('storeCategory/getCategories').then(res => res.data)
+  async fetch() {
+    let cats = await this.$store.dispatch('storeCategory/getCategories').then(res => res.data)
     this.categories = createTree(cats, this.category.id ?? 0)
   },
 }

@@ -53,7 +53,7 @@ export default {
   name: "index",
   computed: {
     categories() {
-      return createTree(this.$store.getters['storeCategory/getCategories'])
+      return createTree(this.$cloneObject(this.$store.getters['storeCategory/getCategories']))
     }
   },
   fetch() {
@@ -68,8 +68,10 @@ export default {
 
     },
     toggleChild(id) {
-      let cat = this.cats.find(item => item.id === id)
-      cat.showChild = !cat.showChild
+      let categories = this.$cloneObject(this.$store.getters['storeCategory/getCategories'])
+      let category = categories.find(item => item.id === id)
+      category.showChild = !category.showChild
+      this.$store.commit('storeCategory/SET_CATEGORIES', categories)
     },
     deleteCategory(category) {
       this.$store.dispatch('storeCategory/deleteCategory', category).then((res) => {
