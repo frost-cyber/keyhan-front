@@ -203,7 +203,7 @@ export default {
           slug: product.slug,
           type: product.type,
           description: product.description,
-          thumbnail: product.files[0].link,
+          thumbnail: product.files.find(f=>f.pivot.default).link,
           inventory: variant.inventory,
           discounted_price: variant.discounted_price,
           selling_price: variant.selling_price,

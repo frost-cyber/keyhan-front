@@ -547,6 +547,10 @@ export default {
       let images = []
       if (this.product.files && this.product.variants) {
         this.product.files.forEach(file => {
+          if (file.pivot.default){
+            images.unshift({src: file.link, alt: this.product.name})
+            return
+          }
           images.push({src: file.link, alt: this.product.name})
         })
         this.product.variants.forEach(variant => {

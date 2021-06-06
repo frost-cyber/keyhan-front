@@ -116,11 +116,12 @@
         <div class="grid grid-cols-6 gap-5">
           <vs-card class="col-span-1 cardx" v-for="(image , index) in product.images" :key="index" fixedHeight>
             <div slot="header" v-if="~~product.type === 2">
-              <tree-select v-model="image.variant_index" :options="productVariables"/>
+              <tree-select v-model="image.variant_index" :options="productVariables" :clearable="true"/>
             </div>
             <div class="relative">
               <vs-button radius class="absolute" size="small" color="danger" type="gradient" icon="delete" @click.native="product.images.splice(index , 1)"/>
               <img :src="image.link" :alt="image.link">
+              <vs-radio v-if="!Number.isInteger(image.variant_index)" v-model="product.default_image" :vs-value="image.id">عکس پیشفرض</vs-radio>
             </div>
           </vs-card>
         </div>
@@ -270,7 +271,8 @@ export default {
       this.product.variants.forEach((v, k) => {
         variables.push({
           id: k,
-          label: `${this.product.variantGroup.name} ${(this.product.variantGroup.attributes.find(att => att.id === v.attribute_id) || {label: ''}).label}`
+          label: `${this.product.variantGroup.name} ${(this.product.variantGroup.attributes.find(att => att.id === v.attribute_id) || {label: ''}).label}`,
+          isDisabled: !!this.product.images.find(image => k === image.variant_index),
         })
       })
       return variables
@@ -285,8 +287,6 @@ export default {
         return
       }
       this.$validator.validateAll().then(validated => {
-        console.log(this.product.images.find(f => (typeof f.variant_index === 'undefined'
-          || f.variant_index === null || f.variant_index === "")))
         if (!this.product.images.length) {
           this.$vs.notify({
             title: "باید حداقل یک عکس انتخاب کنید",

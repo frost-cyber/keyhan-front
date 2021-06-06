@@ -55,11 +55,16 @@ export default {
       }
     }
     product.images = []
-    product.files.forEach(f => product.images.push({
-      id:f.id,
-      link:f.link,
-      variant_index:null
-    }))
+    product.files.forEach(f => {
+      if (f.pivot.default){
+        product.default_image = f.id
+      }
+      product.images.push({
+        id:f.id,
+        link:f.link,
+        variant_index:null
+      })
+    })
 
     product.variants.forEach((v , i ) => {
       v.files.forEach(f => product.images.push({
