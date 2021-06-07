@@ -2,7 +2,7 @@
   <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.name">
 
     <div class="text-right leading-tight hidden sm:block">
-      <p class="font-semibold">{{ activeUserInfo.name + '' + activeUserInfo.last_name}}</p>
+      <p class="font-semibold">{{ activeUserInfo.name + ' ' + (activeUserInfo.last_name||'')}}</p>
     </div>
 
     <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -15,8 +15,10 @@
         <ul style="min-width: 9rem">
 
           <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
-            <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Profile</span>
+            <nuxt-link :to="{name:'admin-profile'}">
+              <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
+              <span class="ml-2">Profile</span>
+            </nuxt-link>
           </li>
 
           <vs-divider class="m-1" />
