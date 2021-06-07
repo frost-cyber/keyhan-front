@@ -181,6 +181,39 @@ export default [
         ]
       }
     ],
+  },
+
+  {
+    header:'کاربران',
+    icon: 'FileTextIcon',
+    i18n: 'Others',
+    items:[
+      {
+        name: 'کاربران',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/users/',
+            name: 'لیست',
+          },
+        ]
+      },
+      {
+        name: 'ادمین',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/admins/',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/admins/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
+
+    ],
   }
 ]
 
