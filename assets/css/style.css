@@ -221,16 +221,16 @@ a , li , img , div ,
 .product-row .item-product:hover{
   transform: translateY(-5px);
 }
-.vs-button.save-product:hover ,
-.vs-button.save-product:active ,
-.vs-button.save-product:focus {
-  background: transparent !important;
-}
-.vs-button.save-product:hover i ,
-.vs-button.save-product:active i ,
-.vs-button.save-product:focus i  {
-  color: #EF4444 !important;
-}
+/*.vs-button.save-product:hover ,*/
+/*.vs-button.save-product:active ,*/
+/*.vs-button.save-product:focus {*/
+/*  background: transparent !important;*/
+/*}*/
+/*.vs-button.save-product:hover i ,*/
+/*.vs-button.save-product:active i ,*/
+/*.vs-button.save-product:focus i  {*/
+/*  color: #EF4444 !important;*/
+/*}*/
 .vs-button.save-product .vs-button-backgroundx{
   opacity: 0 !important;
 }

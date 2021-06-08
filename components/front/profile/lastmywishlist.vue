@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     deleteWishlist(slug) {
-      this.$store.dispatch('profile/deleteProductFromWishlist', slug).then(res => {
+      this.$store.dispatch('profile/toggleWishlist', slug).then(res => {
         if (res.data == 'Deatached') {
           this.wishlist.forEach((product, index) => {
             if (product.slug === slug) {

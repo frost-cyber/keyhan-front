@@ -110,14 +110,14 @@ export default {
       pagination: {
         total: 0
       },
-      selectedBrands:[],
+      selectedBrands: [],
       query2: {}
     };
   },
   name: "index",
   fetch() {
     this.getProducts()
-    this.$store.dispatch('storeCategory/getCategories').then(res=>this.$store.commit('storeCategory/SET_CATEGORIES' , res.data))
+    this.$store.dispatch('storeCategory/getCategories').then(res => this.$store.commit('storeCategory/SET_CATEGORIES', res.data))
     this.getBrands()
     // this.$nextTick(() => {
     //   this.$nuxt.$loading.start()
@@ -190,11 +190,12 @@ export default {
               return (variant.selling_price < bestVariant.selling_price) && variant.inventory !== 0 ? variant : bestVariant
             })
             this.products.push({
+              id: product.id,
               name: product.name,
               slug: product.slug,
               type: product.type,
               description: product.description,
-              thumbnail: product.files.find(f=>f.pivot.default).link,
+              thumbnail: product.files.find(f => f.pivot.default).link,
               inventory: variant.inventory,
               discounted_price: variant.discounted_price,
               selling_price: variant.selling_price,

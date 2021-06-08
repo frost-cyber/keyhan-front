@@ -67,7 +67,7 @@ export const actions = {
   async updateProfile({commit, state}, user) {
     return this.$apiClient.patch(`api/profile/update`, user)
   },
-  deleteProductFromWishlist({commit,state},product){
+  toggleWishlist({commit,state},product){
     return this.$apiClient.get(`api/products/${product}/toggle_withlist`)
   },
   async updatePassword({commit, state}, password) {

@@ -8,7 +8,7 @@
                class="item-product col-span-6 md:col-span-6 lg:col-span-3 border border-cool-100 rounded-lg hover:shadow-xl">
             <vs-tooltip text="حذف" position="right">
               <vs-button class="save-product relative block" color="#EF4444" type="flat"
-                         @click="deleteProduct(product.slug)" icon-pack="fal" icon=" fa-bookmark"></vs-button>
+                         @click.native="deleteProduct(product.slug)" icon-pack="fal" icon=" fa-bookmark"></vs-button>
             </vs-tooltip>
             <div class="img-product">
               <nuxt-link class="img-thum" :to="{name:'products-slug',params:{slug:product.slug}}">
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     deleteProduct(slug) {
-      this.$store.dispatch('profile/deleteProductFromWishlist', slug).then(res => {
+      this.$store.dispatch('profile/toggleWishlist', slug).then(res => {
         if (res.data == 'Deatached') {
           this.$emit('delete_product')
         }

@@ -23,7 +23,7 @@
                   </li>
                 </vs-breadcrumb>
               </div>
-              <vs-button class="save-product save-product-d top-7" color="#D1D5DB" type="flat" icon-pack="fal"
+              <vs-button class="save-product save-product-d top-7" :color="isWishlist?'#EF4444':'#D1D5DB'" type="flat" icon-pack="fal" @click.native="toggleWishList"
                          icon=" fa-bookmark"></vs-button>
               <div class="feature-img">
                 <video class="rounded-lg mt-3" width="100%" controls>
@@ -230,7 +230,7 @@
                   <div class="breadcumb text-sm mb-2">
                     <vs-breadcrumb color="#eee" :items="breadcrumbItems"/>
                   </div>
-                  <vs-button class="save-product save-product-s" color="#D1D5DB" type="flat" icon-pack="fal"
+                  <vs-button class="save-product save-product-s" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled"  icon-pack="fal" @click.native="toggleWishList"
                              icon=" fa-bookmark"></vs-button>
                   <div class="gallery-product ltr">
                     <carousel v-if="images.length" :navText="['','']" :items="1" :autoplayHoverPause="true"
@@ -520,6 +520,9 @@ export default {
     }
   },
   computed: {
+    isWishlist() {
+      return  this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+    },
     breadcrumbItems() {
       let breadcrumb = [
         {title: 'صفحه اصلی', url: '/'},
@@ -569,6 +572,11 @@ export default {
     }
   },
   methods: {
+    toggleWishList(){
+      this.$store.dispatch('profile/toggleWishlist',this.product.slug).then(res=>{
+        this.$auth.fetchUser()
+      })
+    },
     addToCart() {
       this.$store.dispatch('cart/addToCart',this.cart).then(res => {
         this.$vs.notify({

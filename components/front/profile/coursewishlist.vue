@@ -5,7 +5,7 @@
       <div class="grid grid-cols-12 gap-5 px-3 pb-10 pt-3">
           <template v-for="(course,index) in courseWishlist">
             <div :key="index" class="item-course col-span-6 md:col-span-6 lg:col-span-3 border border-cool-100 rounded-lg hover:shadow-xl relative overflow-hidden">
-              <vs-button class="save-product" color="#EF4444" type="flat" icon-pack="fal" icon=" fa-bookmark" @click="deleteCourse(course.slug)"></vs-button>
+              <vs-button class="save-product" color="#EF4444" type="flat" icon-pack="fal" icon=" fa-bookmark" @click.native="deleteCourse(course.slug)"></vs-button>
               <div class="img-course">
                 <nuxt-link  class="img-thum" :to="{name:'products-slug',params:{slug:course.slug}}">
                   <img :src="course.files[0].link" alt=""/>
@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     deleteCourse(slug){
-      this.$store.dispatch('profile/deleteProductFromWishlist',slug).then(res=>{
+      this.$store.dispatch('profile/toggleWishlist',slug).then(res=>{
         if(res.data == 'Deatached'){
           this.$emit('delete_course')
         }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isVirtual" class="item-course border border-cool-100 rounded-lg hover:shadow-xl mb-10 mt-2 relative">
-      <vs-button class="save-product" color="#D1D5DB" type="flat" icon-pack="fal" icon="fa-bookmark"></vs-button>
+      <vs-button class="save-product" :color="isWishlist ?'#EF4444':'#D1D5DB'" type="filled" icon-pack="fal" icon="fa-bookmark" @click.native="toggleWishList"></vs-button>
       <div class="img-course">
         <nuxt-link class="img-thum" :to="{name:'products-slug' , params:{slug:product.slug}}">
           <img :src="product.thumbnail || require('@/assets/img/product/02.png')" :alt="product.name"/>
@@ -22,7 +22,7 @@
     </div>
     <div v-else class="item-pro border border-cool-100 rounded-lg p-2 relative block">
       <div class="saving absolute z-10">
-        <vs-button class="save-product" color="#D1D5DB" type="flat" icon-pack="fal" icon=" fa-bookmark"></vs-button>
+        <vs-button class="save-product" :color="isWishlist ?'#EF4444'  :'#D1D5DB'" type="filled" icon-pack="fal" icon="fa-bookmark" @click.native="toggleWishList"></vs-button>
       </div>
       <div class="img-product mb-4">
         <nuxt-link class="img-thum" :to="{name:'products-slug' , params:{slug:product.slug}}">
@@ -42,10 +42,10 @@
       <div v-else-if="product.discounted_price > 0 && product.selling_price >=0" class="price-product px-4 mt-2 h-16 ltr">
         <div class="price-old">
         <span class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-full">
-          {{ ~~((product.selling_price - product.discounted_price) / (product.selling_price/100))}}%
+          {{ ~~((product.selling_price - product.discounted_price) / (product.selling_price / 100)) }}%
         </span>
           <del class="value-old text-sm text-cool-400 line-through mx-1">
-            {{  product.selling_price }}
+            {{ product.selling_price }}
           </del>
         </div>
         <div class="price-new">
@@ -80,10 +80,22 @@ export default {
     }
   },
   computed: {
-    isVirtual(){
+    isVirtual() {
       return ~~this.product.type === 3
+    },
+    isWishlist() {
+      return this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+    },
+
+  },
+  methods: {
+    toggleWishList() {
+      this.$store.dispatch('profile/toggleWishlist', this.product.slug).then(res => {
+        this.$auth.fetchUser()
+      })
     }
   }
+
 }
 </script>
 
