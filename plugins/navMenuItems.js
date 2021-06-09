@@ -28,6 +28,12 @@ export default [
   //   i18n: "Email",
   // },
   {
+    name:'داشبورد',
+    url:'/admin/',
+    icon:'PackageIcon',
+
+  },
+  {
     header: 'فروشگاه',
     icon: 'PackageIcon',
     i18n: 'Apps',
@@ -141,6 +147,7 @@ export default [
       },
     ]
   },
+
   {
     header: 'سایت',
     icon: 'FileTextIcon',
