@@ -31,7 +31,7 @@
 
           <!-- Logo -->
           <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center pl-4" to="/">
-            <logo class="w-full fill-current text-primary" :class="{'mr-4':!$vs.rtl , 'ml-4':$vs.rtl }" />
+            <logo class="w-full fill-current text-primary" :class="{'mr-14':!$vs.rtl , 'ml-14':$vs.rtl }" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
           </NuxtLink>
           <!-- /Logo -->
@@ -44,7 +44,7 @@
             </template>
 
             <!-- Toggle Buttons -->
-            <template v-else-if="!showCloseButton && !verticalNavMenuItemsMin">
+            <template v-else-if="!showCloseButton && !verticalNavMenuItemsMin && false">
               <feather-icon
                 id="btnVNavMenuMinToggler"
                 class="mr-0 cursor-pointer"
@@ -342,5 +342,5 @@ export default {
 
 
 <style lang="scss">
-@import "@/assets/scss/vuexy/components/verticalNavMenu.scss"
+@import "~/assets/scss/vuexy/components/verticalNavMenu.scss"
 </style>
