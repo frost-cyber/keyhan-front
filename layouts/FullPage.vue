@@ -11,6 +11,11 @@ import themeConfig from '@/plugins/themeConfig.js'
 
 export default {
   name:'FullPage',
+  head:{
+    htmlAttrs:{
+      dir: 'rtl'
+    },
+  },
   data() {
     return {
       vueAppClasses: []
