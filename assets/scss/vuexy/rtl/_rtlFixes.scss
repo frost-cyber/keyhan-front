@@ -44,30 +44,30 @@
   }
 
 
-  .con-vs-dropdown--menu {
-    transform: translateX(-100%);
-  }
+  //.con-vs-dropdown--menu {
+  //  transform: translateX(-100%);
+  //}
 
-  .vx-navbar-dropdown {
-
-    &.dropdownx-enter,
-    &.dropdownx-leave-to {
-      transform: translateY(8px) !important;
-    }
-
-    @media (max-width: 500px) {
-      &.dropdown-custom {
-        &.con-vs-dropdown--menu {
-          transform: translateX(100%);
-        }
-
-        &.dropdownx-enter,
-        &.dropdownx-leave-to {
-          transform: translate(100%,8px) !important;
-        }
-      }
-    }
-  }
+  //.vx-navbar-dropdown {
+  //
+  //  &.dropdownx-enter,
+  //  &.dropdownx-leave-to {
+  //    transform: translateY(8px) !important;
+  //  }
+  //
+  //  @media (max-width: 500px) {
+  //    &.dropdown-custom {
+  //      &.con-vs-dropdown--menu {
+  //        transform: translateX(-100%);
+  //      }
+  //
+  //      &.dropdownx-enter,
+  //      &.dropdownx-leave-to {
+  //        transform: translate(-100%,8px) !important;
+  //      }
+  //    }
+  //  }
+  //}
 
 
   /////////////////////////////////////////////////////////

@@ -82,7 +82,6 @@ export default {
         // Disable a plugin by passing false as value
         // tailwindcss :require('tailwindcss'),
         autoprefixer: require('autoprefixer'),
-        'postcss-rtl': require('postcss-rtl'),
       },
       preset: {
         // Change the postcss-preset-env settings

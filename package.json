@@ -43,7 +43,6 @@
     "autoprefixer": "9",
     "fibers": "^5.0.0",
     "postcss": "7",
-    "postcss-rtl": "^1.7.3",
     "sass": "1.32.13",
     "sass-loader": "10"
   },

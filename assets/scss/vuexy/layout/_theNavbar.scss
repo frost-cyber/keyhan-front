@@ -102,7 +102,7 @@
     //   .vx-auto-suggest {
     //     .auto-suggest-suggestions-list {
     //       width: calc(100% - 2rem) !important;
-    //       margin-left: 1rem;
+    //       margin-right: 1rem;
     //     }
     //   }
     // }
@@ -124,7 +124,7 @@
       .vx-auto-suggest {
         .auto-suggest-suggestions-list {
           width: calc(100% - 2rem) !important;
-          margin-left: 1rem;
+          margin-right: 1rem;
         }
       }
     }
@@ -157,7 +157,7 @@
       // .vx-auto-suggest {
       //   .auto-suggest-suggestions-list {
       //     width: calc(100% - 2rem) !important;
-      //     margin-left: 1rem;
+      //     margin-right: 1rem;
       //   }
       // }
     }
@@ -191,7 +191,7 @@
 
     .vs-input--icon.feather {
       top: 32% !important;
-      left: 0.8rem;
+      right: 0.8rem;
     }
   }
 
@@ -284,7 +284,7 @@
 
   @media screen and (max-width: 364px) {
     width: 95vw;
-    left: 90vw !important;
+    right: 90vw !important;
 
     .vs-dropdown--menu--after {
       display: none;
@@ -311,7 +311,7 @@
   // Full width notification in mobile devices
   @media screen and (max-width: 500px) {
     width: 95vw;
-    left: 97.5vw !important;
+    right: 97.5vw !important;
 
     .vs-dropdown--menu--after {
       display: none;

@@ -18,13 +18,13 @@
   }
 
   :not(:last-child) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   :not(:first-child) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
 
@@ -74,10 +74,10 @@
 
 .con-vs-chip {
   &.number {
-    padding-right: unset;
+    padding-left: unset;
     min-height: 20px;
     min-width: 20px;
-    margin-right: 0;
+    margin-left: 0;
 
     .vs-chip--text {
       margin-left: unset;
@@ -267,7 +267,7 @@
 
   .vs-dropdown--menu--after {
     background: rgba(var(--vs-primary), 1) !important;
-    right: 1.6rem !important;
+    left: 1.6rem !important;
   }
 }
 
@@ -334,17 +334,17 @@
 
 .sidebar-spacer {
   width: calc(100% - 260px);
-  margin-left: 260px;
+  margin-right: 260px;
 }
 
 .sidebar-spacer-with-margin {
   width: calc(100% - 260px - 2.2rem);
-  margin-left: calc(260px + 2.2rem);
+  margin-right: calc(260px + 2.2rem);
 }
 
 .sidebar-spacer--wide {
   width: calc(100% - 400px);
-  margin-left: 400px;
+  margin-right: 400px;
 }
 
 .background-absolute {
@@ -363,7 +363,7 @@
 .full-vs-sidebar {
   .vs-sidebar {
     max-width: calc(100% - 260px);
-    margin-left: 260px;
+    margin-right: 260px;
   }
 }
 
@@ -371,7 +371,7 @@
   .full-vs-sidebar {
     .vs-sidebar {
       max-width: 100%;
-      margin-left: 0;
+      margin-right: 0;
     }
   }
 }

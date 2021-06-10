@@ -30,7 +30,7 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center pl-4" to="/">
+          <NuxtLink tag="div" class="vx-logo cursor-pointer flex items-center pr-4" to="/">
             <logo class="w-full fill-current text-primary" :class="{'mr-14':!$vs.rtl , 'ml-14':$vs.rtl }" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
           </NuxtLink>
@@ -83,7 +83,7 @@
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
                   <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ item.name }}</span>
-                  <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
+                  <vs-chip class="mr-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
@@ -342,5 +342,9 @@ export default {
 
 
 <style lang="scss">
-@import "~/assets/scss/vuexy/components/verticalNavMenu.scss"
+.ps__rail-y{
+  left: 0 !important;
+  right:unset !important;
+}
+@import "~assets/scss/vuexy/components/verticalNavMenu.scss";
 </style>

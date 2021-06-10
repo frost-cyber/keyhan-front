@@ -13,21 +13,18 @@
 
       <vs-dropdown-menu class="vx-navbar-dropdown">
         <ul style="min-width: 9rem">
-
           <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white">
             <nuxt-link :to="{name:'admin-profile'}">
               <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-              <span class="ml-2">Profile</span>
+              <span class="mr-2">پروفایل</span>
             </nuxt-link>
           </li>
-
           <vs-divider class="m-1" />
-
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
             @click="logout">
             <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">خروج</span>
+            <span class="mr-2">خروج</span>
           </li>
         </ul>
       </vs-dropdown-menu>

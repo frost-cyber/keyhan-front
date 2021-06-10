@@ -7,8 +7,6 @@
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
-
-
 <template>
   <div
     class  = "vs-sidebar-group"
@@ -31,17 +29,17 @@
             :svgClasses = "{ 'w-3 h-3' : this.groupIndex % 1 != 0 }" />
 
           <!-- Group Name -->
-          <span v-show="!verticalNavMenuItemsMin" class="truncate mr-3 select-none">{{ group.name }}</span>
+          <span v-show="!verticalNavMenuItemsMin" class="truncate ml-3 select-none">{{ group.name }}</span>
 
           <!-- Group Tag -->
-          <vs-chip class="ml-auto mr-4" :color="group.tagColor" v-if="group.tag && !verticalNavMenuItemsMin">{{ group.tag }}</vs-chip>
+          <vs-chip class="mr-auto ml-4" :color="group.tagColor" v-if="group.tag && !verticalNavMenuItemsMin">{{ group.tag }}</vs-chip>
         </span>
 
         <!-- Group Collapse Icon -->
         <feather-icon
           v-show     = "!verticalNavMenuItemsMin"
           :class     = "[{'rotate90' : openItems}, 'feather-grp-header-arrow']"
-          :icon       = "$vs.rtl ? 'ChevronLeftIcon' : 'ChevronRightIcon'"
+          :icon       = "!$vs.rtl ? 'ChevronLeftIcon' : 'ChevronRightIcon'"
           svg-classes= "w-4 h-4" />
 
         <!-- Group Tooltip -->
@@ -72,7 +70,7 @@
             :slug   = "groupItem.slug"
             :target = "groupItem.target">
               <span class="truncate">{{ groupItem.name }}</span>
-              <vs-chip class="ml-auto" :color="groupItem.tagColor" v-if="groupItem.tag">{{ groupItem.tag }}</vs-chip>
+              <vs-chip class="mr-auto" :color="groupItem.tagColor" v-if="groupItem.tag">{{ groupItem.tag }}</vs-chip>
           </v-nav-menu-item>
 
         </li>
@@ -80,8 +78,6 @@
       <!-- /Group Items -->
   </div>
 </template>
-
-
 <script>
 import VNavMenuItem from './VerticalNavMenuItem.vue'
 
@@ -232,8 +228,6 @@ export default {
 }
 
 </script>
-
-
 <style lang="scss">
-@import "@/assets/scss/vuexy/components/verticalNavMenuGroup.scss"
+@import "~assets/scss/vuexy/components/verticalNavMenuGroup.scss";
 </style>
