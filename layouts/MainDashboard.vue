@@ -3,18 +3,12 @@
     <v-nav-menu :navMenuItems="navMenuItems" parent=".layout--main"/>
     <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
       <div id="content-overlay"/>
-
       <!-- Navbar -->
       <template>
-        <the-navbar-vertical
-          :navbarColor="navbarColor"
-          :class="[{'text-white' : isNavbarDark  && !isThemeDark},{'text-base'  : !isNavbarDark && isThemeDark}]"
-        />
+        <the-navbar-vertical :navbarColor="navbarColor" :class="[{'text-white' : isNavbarDark  && !isThemeDark},{'text-base'  : !isNavbarDark && isThemeDark}]" />
       </template>
       <!-- /Navbar -->
-
       <div class="content-wrapper">
-
         <div class="router-view">
           <div class="router-content">
 
@@ -29,7 +23,7 @@
                 <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route" :isRTL="$vs.rtl"/>
 
               </div>
-              <div v-else-if="/^\/admin(\/.*)$/i.test(this.$route.path)">
+              <div v-else-if="/^\/admin(\/.+)$/i.test($route.path)">
                 <NuxtLink to=".">
                   <feather-icon icon="ArrowRightIcon"/>
                 </NuxtLink>
@@ -236,8 +230,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~assets/scss/main.scss";
+@import "~assets/scss/main.scss";
 </style>
 <style>
-  @import "~assets/css/main.css";
+@import "~assets/css/main.css";
 </style>

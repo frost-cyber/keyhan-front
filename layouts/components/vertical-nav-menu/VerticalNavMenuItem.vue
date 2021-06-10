@@ -42,7 +42,15 @@ export default {
   },
   computed: {
     activeLink() {
-      return !!((this.to === this.$route.path || this.$route.meta.parent === this.slug) && this.to)
+      return !!(( this.removeEndSlash(this.to) === this.removeEndSlash(this.$route.path) || this.$route.meta.parent === this.slug) && this.to)
+    }
+  },
+  methods: {
+    removeEndSlash(url){
+      if (typeof url !== "string"){
+        return url
+      }
+      return url.slice(0,url.length-(~~url.endsWith("/")))
     }
   }
 }
