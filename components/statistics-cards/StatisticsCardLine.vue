@@ -92,8 +92,11 @@ export default{
   methods: {
     getHex (color) {
       if (_color.isColor(color)) {
-        let rgb  = window.getComputedStyle(document.documentElement).getPropertyValue(`--vs-${color}`)
-        rgb = rgb.split(',')
+	let rgb = '255,255,255'
+        if (typeof window !== 'undefined') {
+           rgb  = window.getComputedStyle(document.documentElement).getPropertyValue(`--vs-${color}`)
+        }
+	rgb = rgb.split(',')
         return `#${  ((1 << 24) + (Number(rgb[0]) << 16) + (Number(rgb[1]) << 8) + Number(rgb[2])).toString(16).slice(1)}`
       }
       return color

@@ -1,7 +1,7 @@
 import axios from 'axios'
 export default function (context , injector) {
   const apiClient  = context.$axios.create({
-    baseURL: 'http://'+ (process.env.BASE_URL.replace(/^http[s]?:\/\// , '') || "server.keyhan.p"),
+    baseURL: process.env.BASE_URL || "server.keyhan.p",
     withCredentials: true,
   })
   async function getCSRF(request){

@@ -55,7 +55,7 @@ export default {
     strategies: {
       'laravelSanctum': {
         provider: 'laravel/sanctum',
-        url: 'http://server.keyhan.p'
+        url: process.env.BASE_URL
       },
     },
     redirect: {

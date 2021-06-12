@@ -24,13 +24,17 @@
 </template>
 
 <script>
-import '@/assets/css/style.css' ;//tailwind
-import '@/assets/css/fontawesome.min.css' //fontawesome
 export default {
-  name: "Auth"
+  name: "Auth",
+  head:{
+    htmlAttrs:{
+      dir:'rtl',
+    },
+  },
 }
 </script>
 
-<style scoped>
-
+<style>
+  @import "~assets/css/style.css";
 </style>
+
