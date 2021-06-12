@@ -219,6 +219,20 @@ export default [
           },
         ]
       },
+      {
+        name: 'نقش',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/roles/',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/roles/create',
+            name: 'ایجاد',
+          },
+        ]
+      },
 
     ],
   }
