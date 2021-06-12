@@ -15,7 +15,7 @@
           </div>
           <div class="col-span-12 md:col-span-5 lg:col-span-6 my-auto text-center md:text-left sign">
             <div class="btnlogin inline-block ml-3" v-if="!this.$auth.loggedIn">
-              <nuxt-link class="btn-border" :to="{name:'Auth'}">ورود به حساب کاربری</nuxt-link>
+              <nuxt-link class="btn-border" :to="{name:'auth'}">ورود به حساب کاربری</nuxt-link>
             </div>
             <div class="btnlogin inline-block ml-3" v-else>
               <button class="btn-border" @click.prevent="$auth.logout('laravelSanctum')">خروج از حساب کاربری</button>

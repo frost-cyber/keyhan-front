@@ -59,7 +59,7 @@ export default {
       },
     },
     redirect: {
-      login: '/auth/checkusername',
+      login: '/auth',
       logout: '/',
       callback: '/api/login',
       home: '/'

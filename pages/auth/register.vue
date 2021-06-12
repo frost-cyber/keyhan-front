@@ -34,7 +34,6 @@ export default {
         }
       }).catch(error => {
         if (error.response.status === 422) {
-          console.error(error.response)
           this.$vs.notify({
             title: 'خطا!!',
             time: 2000,

@@ -25,7 +25,7 @@ export default {
     checkVerifyCode() {
       this.$apiClient.post('api/auth/check.verify.code', {username: this.username, verifyCode: this.verifyCode}).then(response => {
         if (response.status === 200){
-          this.$router.push({name: 'Auth-register', query: {username: JSON.parse(response.config.data).username}})
+          this.$router.push({name: 'auth-register', query: {username: JSON.parse(response.config.data).username}})
         }
         if (response.status === 204){
           this.$vs.notify({
@@ -47,7 +47,7 @@ export default {
             icon: 'query_builder'
           })
           setTimeout(() => {
-            this.$router.push({name: 'Auth-checkUsername'})
+            this.$router.push({name: 'auth'})
           }, 3500)
         }
         if (error.response.status ===  422) {
@@ -81,7 +81,7 @@ export default {
             icon: 'query_builder'
           })
           setTimeout(() => {
-            this.$router.push({name: 'Auth-checkUsername'})
+            this.$router.push({name: 'auth'})
           }, 3500)
         }
       })

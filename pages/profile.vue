@@ -25,6 +25,7 @@ import profileside from "~/components/front/profile/profile";
 export default {
   name: "profile",
   layout:"Main",
+  middleware:'auth',
   components:{
     profileside
   },

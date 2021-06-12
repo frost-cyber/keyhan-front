@@ -3,7 +3,7 @@
     <h3 class="font-bold text-cool-700 text-lg">ورود/ ثبت نام</h3>
     <p class="text-sm text-cool-500 font-thin mt-3"> شماره موبایل یا پست الکترونیک خود را وارد کنید </p>
     <form @submit.prevent="checkUsername">
-      <vs-input class="contactform mt-6" placeholder="شماره همراه یا ایمیل" size="large" v-model="username" />
+      <vs-input class="contactform mt-6" placeholder="شماره همراه یا ایمیل" size="large" v-model="username"/>
       <vs-button class="mt-5 mx-auto block" @click.native="checkUsername" color="#F97316" type="filled">ورود به حساب کاربری</vs-button>
     </form>
     <p class="text-xs text-cool-500 font-thin mt-8 text-center">با ورود و یا ثبت نام در وبسایت ما شما شرایط و قوانین استفاده از سرویس های سایت ما و قوانین حریم خصوصی آن را می‌پذیرید. </p>
@@ -12,8 +12,8 @@
 
 <script>
 export default {
-  name: "checkUsername",
-  middleware:'auth',
+  name: "index",
+  middleware: 'auth',
   auth: 'guest',
   data() {
     return {
@@ -24,20 +24,18 @@ export default {
     checkUsername() {
       this.$apiClient.post('api/auth/check.username', {username: this.username}).then(response => {
         if (response.status === 200 && response.data.status) {
-          this.$router.push({name: 'Auth-login', query: {username: JSON.parse(response.config.data).username}})
+          this.$router.push({name: 'auth-login', query: {username: JSON.parse(response.config.data).username}})
         }
         if (response.status === 200 && !response.data.status) {
-
-          this.$router.push({name: 'Auth-verifyCode', query: {username: JSON.parse(response.config.data).username}})
+          this.$router.push({name: 'auth-verifyCode', query: {username: JSON.parse(response.config.data).username}})
         }
       }).catch(error => {
-        if (error.response.status === 422){
-          console.error(error.response)
+        if (error.response.status === 422) {
           this.$vs.notify({
-            title:'خطا!!',
-            time:2000,
-            text:error.response.data.errors.username[0],
-            color:'danger'
+            title: 'خطا!!',
+            time: 2000,
+            text: error.response.data.errors.username[0],
+            color: 'danger'
           })
         }
       })
@@ -45,7 +43,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
