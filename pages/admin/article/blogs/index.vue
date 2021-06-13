@@ -12,10 +12,10 @@
         <tbody>
         <vs-tr :data="tr" :key="index" v-for="(tr, index) in data">
           <vs-td >
-            <div class="w-full">
-              <img v-if="image" :src="tr.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" style="width: 20%">
-            </div>
-            </vs-td>
+            <p>
+              <img width="100px" :src="tr.thumbnail.link || require('@/assets/images/portrait/small/avatar-s-20.jpg')" >
+            </p>
+          </vs-td>
           <vs-td>
             <p class="">{{ tr.title }}</p>
           </vs-td>

@@ -29,9 +29,15 @@
             <span class="text-danger text-sm" v-show="errors.has('email')">{{ errors.first('email') }}</span>
           </div>
         </div>
-        <vs-button color="success" @click.native="saveAdmin">ذخیره</vs-button>
+        <div class="vx-row mb-6">
+          <div class="vx-col sm:w-1/3 w-full">
+            <label class="w-full">نقش</label>
+          </div>
+          <div class="vx-col sm:w-2/3 w-full">
+            <tree-select v-model="admin.role" :options="roles"  name="role"/>
+          </div>
+        </div>
       </vs-card>
-
     </div>
     <div class="vx-col sm:w-1/3">
       <vs-card hover="true">
@@ -61,7 +67,6 @@
             <vs-input name="mobile" v-validate="'required'" v-model="admin.mobile" data-vv-as="تلفن همراه"/>
             <span class="text-danger text-sm" v-show="errors.has('mobile')">{{ errors.first('mobile') }}</span>
           </div>
-
         </div>
         <div class="vx-row mb-6">
           <div class="vx-col sm:w-1/3 w-full">
@@ -70,9 +75,7 @@
           <div class="vx-col sm:w-2/3 w-full">
             <vs-input v-model="admin.password" name="password"  type="password" data-vv-as="رمز عبور"/>
             <span class="text-danger text-sm" v-show="errors.has('password')">{{ errors.first('password') }}</span>
-
           </div>
-
         </div>
       </vs-card>
     </div>
@@ -85,9 +88,8 @@
 
           </div>
         </div>
-
+        <vs-button color="success" @click.native="saveAdmin">ذخیره</vs-button>
       </vs-card>
-
     </div>
 
   </div>
@@ -100,7 +102,7 @@ export default {
   props:{
     admin:{
       required : true
-    }
+    },
   },
   watch: {
     '$store.state.admin.errors': {
@@ -122,6 +124,11 @@ export default {
     }
   },
   methods:{
+    getRoles(){
+      this.$store.dispatch('role/getRoles').then(res=>{
+        this.$store.commit('role/SET_ROLES',res.data)
+      })
+    },
     selectFile(){
       let input = document.createElement('input')
       input.type='file'
@@ -149,6 +156,21 @@ export default {
         }
       })
     }
+  },
+  fetch() {
+    this.getRoles()
+  },
+  computed:{
+    roles() {
+      let roles = []
+      for (let role of this.$store.getters['role/getRoles']) {
+        roles.push({
+          id: role.id,
+          label: role.name,
+        })
+      }
+      return roles
+    },
   }
 }
 </script>

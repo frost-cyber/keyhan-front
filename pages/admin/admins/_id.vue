@@ -47,7 +47,6 @@ export default {
  async getAdmin(){
      await this.$store.dispatch('admin/getAdmin',this.$route.params.id);
       this.admin=this.$store.getters['admin/getAdmin'];
-
     },
 
   },

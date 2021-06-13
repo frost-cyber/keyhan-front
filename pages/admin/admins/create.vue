@@ -11,7 +11,8 @@ export default {
     return {
       admin: {
         avatar: {}
-      }
+      },
+      role:{}
     }
   },
   components: {
