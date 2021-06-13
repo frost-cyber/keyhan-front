@@ -28,9 +28,10 @@
         <vs-input label="لینک" class="w-full" v-model="banner.link"/>
       </div>
     </vs-card>
-    <vs-card class="col-span-3">
+    <vs-card class="col-span-6">
+      <h2>دسته ها</h2>
       <div class="grid grid-cols-6 gap-2">
-        <div class="col-span-2" v-for="(category , index) in options.categories" :key="index">
+        <div class="col-span-1" v-for="(category , index) in options.categories" :key="index">
           <img class="w-full" :src="category.src || require('@/assets/images/Flag_of_None.png')" @click="selectFile('HomeCategoryImage' , (data)=> category.src = data.link)">
           <tree-select v-model="category.slug" :options="categories" label="دسته" :normalizer="normalizer"/>
           <vs-input label="عکس" class="w-full" v-model="category.src"/>
@@ -38,12 +39,13 @@
         </div>
       </div>
     </vs-card>
-    <vs-card class="col-span-3">
+    <vs-card class="col-span-6">
+      <h2>برند ها</h2>
       <div class="grid grid-cols-6 gap-2">
-        <div class="col-span-2" v-for="(brand , index) in options.brands" :key="index">
-          <img class="w-full" :src="brand.src || require('@/assets/images/Flag_of_None.png')" @click="selectFile('HomeBrandImage' , (data)=> brand.src = data.link)">
-          <tree-select v-model="brand.slug" :options="brands" label="دسته" :normalizer="normalizer"/>
-          <vs-input label="عکس" class="w-full" v-model="brand.src"/>
+        <div class="col-span-1" v-for="(brand , index) in options.brands" :key="index">
+          <img class="w-full" :src="brand.src || require('@/assets/images/Flag_of_None.png')">
+          <tree-select v-model="brand.slug" @input="(s)=> brand.src = (brands.find((b)=>b.slug ===s) || {logo:{link:''}}).logo.link " :options="brands" label="دسته" :normalizer="normalizer"/>
+          <vs-input label="عکس" class="w-full" v-model="brand.src" v-if="false"/>
           <vs-input label="متن جایگزین" class="w-full" v-model="brand.alt"/>
         </div>
       </div>
