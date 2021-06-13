@@ -21,6 +21,16 @@ export const actions = {
       }
     })
   },
+  HomeSliderBannerImage({commit}, file) {
+    let fileData = new FormData
+    fileData.append('file', file)
+    let data = null
+    return this.$apiClient.post('api/files/upload?for=HomeSliderBannerImage', fileData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
   HomeCategoryImage({commit}, file) {
     let fileData = new FormData
     fileData.append('file', file)
