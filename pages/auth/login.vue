@@ -4,7 +4,8 @@
       <h3 class="font-bold text-cool-700 text-lg">رمز عبور را وارد کنید</h3>
       <p class="text-sm text-cool-500 font-thin mt-3"> برای ورود به حساب کاربری رمز عبور خود را وارد کنید</p>
       <form @submit.prevent="loginAction">
-        <vs-input label="کلمه عبور" v-model="login.password" class="contactform mt-6" placeholder="رمز عبور ارسال شده را وارد کنید" size="large" icon-pack="fal" icon="fa-eye" icon-after="true"/>
+        <vs-input class="contactform mt-6" size="large" v-on:icon-click="switchVisibility" :icon-after="true" icon-pack="fa"  placeholder="رمز عبور ارسال شده را وارد کنید"
+                  :icon="login.passwordField === 'password' ?'fa-eye' : 'fa-eye-slash'" label="کلمه عبور" :type="login.passwordField" v-model="login.password"></vs-input>
         <vs-button class="mt-5 mx-auto block" color="#F97316" type="filled" @click.native="loginAction"> برو بــعــدی</vs-button>
       </form>
       <div class="fp-link mt-5" v-if="false">
@@ -25,10 +26,15 @@ export default {
       login: {
         username: '',
         password: '',
+        passwordField: 'password'
+
       }
     }
   },
   methods: {
+    switchVisibility() {
+      this.login.passwordField = this.login.passwordField === 'password' ? 'text' : 'password'
+    },
     loginAction() {
       this.$auth.login({data: this.login})
     }
