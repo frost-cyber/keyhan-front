@@ -118,6 +118,11 @@ export default {
       return this.$store.getters['settings/getFooter']
     }
   },
+  async fetch() {
+    await this.$store.dispatch('settings/getFooter').then(res => {
+      this.$store.commit('settings/SET_FOOTER', res.options)
+    })
+  },
   methods: {
     backToTop() {
       let interval = setInterval(() => {

@@ -26,7 +26,7 @@
                   <i class="fal fa-shopping-cart text-xl text-cool-400 relative top-1"></i>
                 </span>
               </nuxt-link>
-              <span class="num-cart absolute font-fd">{{cartCountItems}}</span>
+              <span class="num-cart absolute font-fd">{{ cartCountItems }}</span>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@
           <div class="hidden md:block md:col-span-12 lg:col-span-10">
             <div class="btn-collaps inline-block">
               <nuxt-link class="md:px-2 lg:px-6 py-2 bg-cool-600 text-ff rounded-lg md:text-xs lg:text-base" :to="{name:'products'}">
-                دسته بندی ها<i class="mr-2 text-cool-50 fal fa-bars"></i >
+                دسته بندی ها<i class="mr-2 text-cool-50 fal fa-bars"></i>
               </nuxt-link>
               <div class="mega-araea shadow-lg text-sm text-cool-700 rounded-lg top-8 border border-cool-100 bg-ff z-10 " v-if="categories.length">
                 <vs-tabs :color="colorx" position="left">
@@ -82,13 +82,13 @@
                         </nuxt-link>
                       </div>
                       <div class="item-level-two inline-block md:w-6/12 lg:w-2/12 mt-4" v-for="(categorySec , categorySecIndex) in categoryMain.children_recursive" :key="categorySecIndex">
-                        <nuxt-link class="block" :to="{ name: 'products' , query:{category:categorySec.slug}}" >{{ categorySec.name }}</nuxt-link>
+                        <nuxt-link class="block" :to="{ name: 'products' , query:{category:categorySec.slug}}">{{ categorySec.name }}</nuxt-link>
                         <div class="item-level-three block" v-if="categorySec.children_recursive.length">
                           <template v-for="(categoryThree, categoryThreeIndex) in categorySec.children_recursive">
                             <nuxt-link class="block font-thin text-sm my-1" :to="{ name: 'products' , query:{category:categoryThree.slug}}" :key="categoryThreeIndex">{{ categoryThree.name }}</nuxt-link>
                           </template>
                         </div>
-                      </div >
+                      </div>
                     </div>
                   </vs-tab>
                 </vs-tabs>
@@ -101,7 +101,7 @@
                 </li>
                 <li v-for="(page,index) in setting.navbar.pages" :key="index">
                   <nuxt-link :to="{name:'slug',params:{slug:page.slug}}" class="text-cool-800 hover:text-orange-600 ">
-                    {{page.title}}
+                    {{ page.title }}
                   </nuxt-link>
                 </li>
                 <li>
@@ -117,7 +117,7 @@
           </div>
           <div class="lg:col-span-2 lg:text-left">
             <figure>
-              <span class="font-thin text-cool-600">{{setting.navbar.phone}}</span>
+              <span class="font-thin text-cool-600">{{ setting.navbar.phone }}</span>
               <i class="fal fa-phone mr-2 text-xl text-cool-600"></i>
             </figure>
           </div>
@@ -135,24 +135,25 @@ export default {
       colorx: "rgb(249 115 22)",
     };
   },
- async fetch(){
-    await this.$store.dispatch('cart/currentCart',{withCount:['productVariants']}).then(r=>{
-      this.$store.commit('cart/SET_CURRENT_CART',r.data)
+  async fetch() {
+    await this.$store.dispatch('settings/getHeader').then(res => {
+        this.$store.commit('settings/SET_HEADER', res.options)
     })
+    this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
+      this.$store.commit('cart/SET_CURRENT_CART', r.data)
+    })
+    this.$store.dispatch('storeCategory/getCategories', {
+      with: ['childrenRecursive'],
+      parent: null,
+    }).then(res => this.categories = res.data)
   },
   computed: {
     setting() {
       return this.$store.getters['settings/getHeader']
     },
-    cartCountItems(){
+    cartCountItems() {
       return this.$store.getters['cart/currentCartCountItems']
     }
-  },
-  created() {
-    this.$store.dispatch('storeCategory/getCategories', {
-      with: ['childrenRecursive'],
-      parent: null,
-    }).then(res => this.categories = res.data)
   },
 };
 </script>
