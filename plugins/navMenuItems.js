@@ -102,6 +102,7 @@ export default [
       },
     ]
   },
+
   {
     header: 'وبلاگ',
     icon: 'FileTextIcon',
@@ -165,11 +166,6 @@ export default [
             url: '/admin/settings/home',
             name: 'صفحه اصلی',
           },
-          {
-            url: '/admin/settings/advice',
-            name: 'درخواست مشاوره',
-          },
-
         ]
 
       },
@@ -186,9 +182,26 @@ export default [
             name: 'ایجاد',
           }
         ]
-      }
+      },
+      {
+        name: 'فرم ها',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/forms/customizations',
+            name: 'سفارشی سازی',
+          },
+          {
+            url: '/admin/forms/advice',
+            name: 'درخواست مشاوره',
+          },
+
+        ]
+
+      },
     ],
   },
+
 
   {
     header:'کاربران',

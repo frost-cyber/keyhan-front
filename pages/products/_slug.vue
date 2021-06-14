@@ -62,8 +62,8 @@
                   <p class="text-sm text-cool-700 font-thin float-right">امتیاز <span>4</span> از <span>60</span> رای
                   </p>
                   <div class="star-area float-left text-cool-400"><i class="fal fa-star "></i><i
-                    class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
-                    class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i></div>
+                      class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
+                      class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i></div>
                 </div>
               </div>
               <div class="sidebar-product rounded-lg border border-cool-200 p-5 mt-4 relative">
@@ -151,14 +151,14 @@
                             placeholder="Search" v-model="value1"/>
                   <div class="social-btn text-center mt-3">
                     <a
-                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                      href=""><i class="fab fa-whatsapp "></i></a>
+                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                        href=""><i class="fab fa-whatsapp "></i></a>
                     <a
-                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                      href=""><i class="fab fa-instagram "></i></a>
+                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                        href=""><i class="fab fa-instagram "></i></a>
                     <a
-                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                      href=""><i class="fal fa-paper-plane "></i></a>
+                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                        href=""><i class="fal fa-paper-plane "></i></a>
 
                   </div>
                 </div>
@@ -177,7 +177,7 @@
             <div class="grid grid-cols-2 gap-30">
               <div class="col-span-2">
                 <h3
-                  class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
+                    class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
                   نظرات شما
                 </h3>
               </div>
@@ -230,13 +230,15 @@
                   <div class="breadcumb text-sm mb-2">
                     <vs-breadcrumb color="#eee" :items="breadcrumbItems"/>
                   </div>
-                  <vs-button class="save-product save-product-s" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled"  icon-pack="fal" @click.native="toggleWishList"
+                  <vs-button class="save-product save-product-s" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled" icon-pack="fal" @click.native="toggleWishList"
                              icon=" fa-bookmark"></vs-button>
                   <div class="gallery-product ltr">
-                    <carousel v-if="images.length" :navText="['','']" :items="1" :autoplayHoverPause="true"
-                              :autoplay="false" :nav="true" :margin="30" :loop="false" :dots="false">
-                      <img v-for="image in images" :src="image.src"/>
-                    </carousel>
+                    <client-only>
+                      <carousel v-if="images.length" :navText="['','']" :items="1" :autoplayHoverPause="true"
+                                :autoplay="false" :nav="true" :margin="30" :loop="false" :dots="false">
+                        <img v-for="image in images" :src="image.src"/>
+                      </carousel>
+                    </client-only>
                   </div>  <!--slider -->
                 </div>
                 <div class="col-span-11 md:col-span-6 lg:col-span-6">
@@ -294,7 +296,7 @@
                   </div>
                 </div>
                 <div
-                  class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
+                    class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
                 </div>
                 <div class="col-span-11 md:col-span-11 lg:col-span-11">
                   <div class="tab-area">
@@ -304,12 +306,12 @@
                           <div class="grid grid-cols-5 gap-3">
                             <template v-for="(attributeGroup , index) in product.attributes">
                               <div
-                                class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black"
-                                :key="index">
+                                  class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black"
+                                  :key="index">
                                 {{ attributeGroup.name }}
                               </div>
                               <div
-                                class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
+                                  class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
                                 {{
                                   attributeGroup.attributes.reduce((values, attribute) => {
                                     values.push(attribute.value);
@@ -359,7 +361,7 @@
                                   </div>
                                 </form>
                                 <div
-                                  class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
+                                    class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
                                   <div class="col-span-4">
                                     <h3>
                                       امتیاز خودتان را در مورد این محصول ثبت کنید
@@ -398,15 +400,23 @@
                       <vs-popup class="customize-popup" title="فرم زیر را پر کنید با شما تماس میگیریم"
                                 :active.sync="popupActive" icon-pack="fal" icon-close="fa-times">
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                          labore
-                          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                          nisi ut
-                          aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                          esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                          in
-                          culpa qui officia deserunt mollit anim id est laborum.
+                        <div class="grid grid-cols-2 gap-2">
+                              <div class="col-span-1">
+                                <span>نام:</span>
+                                <vs-input name="name" v-model="customization.name"/>
+                              </div>
+                              <div class="col-span-1">
+                                <span>تماس:</span>
+                                <vs-input name="call" v-model="customization.contact"/>
+                              </div>
+                              <div class="col-span-2">
+                                <span>توضیحات:</span>
+                                <vs-textarea name="discription" v-model="customization.discription"/>
+                              </div>
+                        <div class="col-span-1">
+                          <vs-button color="success" @click.native="saveCustomization">ارسال</vs-button>
+                        </div>
+                        </div>
                         </p>
                       </vs-popup>
                     </div>
@@ -502,6 +512,9 @@ export default {
   },
   data() {
     return {
+      customization:{
+
+      },
       product: {},
       popupActive: false,
       activeVariant: 0,
@@ -510,7 +523,7 @@ export default {
         quantity: 1,
         product_variant: '',
         product: '',
-        increment:true,
+        increment: true,
       },
       comment: {
         name: '',
@@ -521,7 +534,7 @@ export default {
   },
   computed: {
     isWishlist() {
-      return  this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+      return this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
     },
     breadcrumbItems() {
       let breadcrumb = [
@@ -537,12 +550,12 @@ export default {
       }
 
       breadcrumb.push(
-        {
-          title: this.product.name || null,
-          url: '',
-          active: true,
-          disabled: true,
-        }
+          {
+            title: this.product.name || null,
+            url: '',
+            active: true,
+            disabled: true,
+          }
       )
       return breadcrumb
     },
@@ -550,7 +563,7 @@ export default {
       let images = []
       if (this.product.files && this.product.variants) {
         this.product.files.forEach(file => {
-          if (file.pivot.default){
+          if (file.pivot.default) {
             images.unshift({src: file.link, alt: this.product.name})
             return
           }
@@ -572,21 +585,21 @@ export default {
     }
   },
   methods: {
-    toggleWishList(){
-      this.$store.dispatch('profile/toggleWishlist',this.product.slug).then(res=>{
+    toggleWishList() {
+      this.$store.dispatch('profile/toggleWishlist', this.product.slug).then(res => {
         this.$auth.fetchUser()
       })
     },
     addToCart() {
-      this.$store.dispatch('cart/addToCart',this.cart).then(res => {
+      this.$store.dispatch('cart/addToCart', this.cart).then(res => {
         this.$vs.notify({
-          title:'با موفقیت به سبد خرید اضافه شد',
-          possitions:'bottom-right',
-          color:'success'
+          title: 'با موفقیت به سبد خرید اضافه شد',
+          possitions: 'bottom-right',
+          color: 'success'
 
         })
-        this.$store.dispatch('cart/currentCart',{withCount:['productVariants']}).then(r=>{
-          this.$store.commit('cart/SET_CURRENT_CART',r.data)
+        this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
+          this.$store.commit('cart/SET_CURRENT_CART', r.data)
 
         })
       }).catch(error => {
@@ -595,7 +608,7 @@ export default {
             title: "با خطا مواجه شده است",
             time: 2000,
             color: "danger",
-            text:error.response.data,
+            text: error.response.data,
             position: "bottom-right",
             icon: 'check_box',
           })
@@ -644,8 +657,49 @@ export default {
         })
       })
     },
+    saveCustomization(){
+      this.customization.product_id = this.product.id
+      this.$store.dispatch('form/saveCustomization',this.customization).then(res=>{
+        if (res.status === 200) {
+          this.$vs.notify({
+            title: 'درخواست شما با موفقیت ثبت گردید',
+            time: 2000,
+            color: "success",
+            position: "bottom-right",
+            icon: 'check_box',
+          })
+          this.popupActive = false
+          this.customization = {}
+        }
+
+      }).catch(error => {
+        if (error.response.status === 422) {
+          this.$vs.notify({
+            title: 'نظر شما با خطا گردید',
+            text: 'خطا های زیر را رفع کنید.',
+            time: 3000,
+            color: "danger",
+            position: "bottom-right",
+            icon: 'check_box',
+          })
+          Object.entries(error.response.data.errors).forEach((error, i) => {
+            setTimeout(() => {
+              this.$vs.notify({
+                title: 'خطا!!!',
+                text: error[1][0],
+                time: 3500,
+                color: "danger",
+                position: "bottom-right",
+                icon: 'check_box',
+              })
+            }, 500 * (i + 1))
+          })
+        }
+      })
+      }
+    }
   }
-}
+
 </script>
 
 <style scoped>
