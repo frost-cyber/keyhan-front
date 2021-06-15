@@ -15,6 +15,7 @@ export default {
         variantGroup: {},
         variants: [],
         images: [],
+        meta:{},
       },
       disabled: false,
     }

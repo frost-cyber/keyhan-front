@@ -142,6 +142,25 @@
           </vs-collapse-item>
         </vs-collapse>
       </tab-content>
+      <tab-content title="SEO" :before-change="()=>validateStep('step6')">
+        <form data-vv-scope="step6">
+        <vs-card>
+          <div slot="header">
+            <h4>متاتگ های محصول</h4>
+          </div>
+          <div class="grid grid-cols-6 gap-5">
+            <div class="row-start-1 col-span-3">
+              <vs-input class="w-full" label="کلید واژه ها" v-model="product.meta.keywords" v-validate="'required'" name="keywords" data-vv-as="کلید واژه ها"/>
+              <span class="text-danger text-sm" v-if="errors.has('step6.keywords')">{{ errors.first('step6.keywords') }}</span>
+            </div>
+            <div class="row-start-2 row-end-4 col-span-3">
+              <vs-textarea label="توضیحات" v-model="product.meta.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-if="errors.has('step6.description')">{{ errors.first('step6.description') }}</span>
+            </div>
+          </div>
+        </vs-card>
+        </form>
+      </tab-content>
     </form-wizard>
   </vs-card>
 </template>
