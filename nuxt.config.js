@@ -59,7 +59,7 @@ export default {
       },
     },
     redirect: {
-      login: process.env.MAINTENANCE ? '/' : '/auth',
+      login: (process.env.MAINTENANCE ? '/' : '/auth'),
       logout: '/',
       callback: '/api/login',
       home: '/'
