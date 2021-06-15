@@ -26,6 +26,7 @@
 <script>
 export default {
   name: "Auth",
+  middleware: process.env.MAINTENANCE ?  ['auth', 'isAdmin'] : [],
   head:{
     htmlAttrs:{
       dir:'rtl',

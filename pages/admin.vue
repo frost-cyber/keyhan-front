@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  middleware:'',
+  middleware:['auth' , 'isAdmin'],
   name: "admin",
   layout: "MainDashboard"
 }
