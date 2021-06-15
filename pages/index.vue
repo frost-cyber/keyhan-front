@@ -144,8 +144,8 @@ export default {
       this.$store.commit('settings/SET_HOME', res.options)
     })
     await this.$store.dispatch('products/getProducts', {
-      categories: this.$store.getters['settings/getHome'].productsRecommended.categories,
-      products: this.$store.getters['settings/getHome'].productsRecommended.products,
+      // categories: this.$store.getters['settings/getHome'].productsRecommended.categories,
+      // products: this.$store.getters['settings/getHome'].productsRecommended.products,
       limit: 4,
       latest: true,
       with: ['files', 'variants']
