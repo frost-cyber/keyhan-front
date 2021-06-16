@@ -15,6 +15,7 @@
       let article = $cloneObject(store.getters["article/getArticle"])
       article.categories = article.categories[0]??null
       return {
+        meta:{},
         article: article,
         disabled: false,
       }

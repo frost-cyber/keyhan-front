@@ -42,6 +42,7 @@
           return{
             article:{
               thumbnail:{},
+              meta:{},
             },
             categories:[{
               id:'',

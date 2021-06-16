@@ -38,31 +38,46 @@
               <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>
 
             </div>
-            <div class="w-full m-5">
-              <img class="articleImage"  :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile">
-              <vs-row vs-justify="flex-start">
-                  <vs-button  @click.native="article.thumbnail = {}" color="danger"> حذف عکس</vs-button>
-              </vs-row>
           </div>
+          <div class="w-full m-5">
+            <img class="articleImage" :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile"/>
+            <vs-row vs-justify="flex-start">
+              <vs-button @click.native="article.thumbnail = {}" color="danger"> حذف عکس</vs-button>
+            </vs-row>
+          </div>
+        </vs-card>
+        <vs-card>
+          <h3>متا تگ ها</h3>
+          <div class="vx-row mb-6">
+            <div class="vx-col sm:w-3/3 w-full">
+              <span>کلید واژه ها:</span>
+            </div>
+            <div class="vx-col sm:w-3/3 w-full">
+              <vs-input class="w-full" v-model="article.meta.keywords" v-validate="'required'" name="keywords" data-vv-as="کلید واژه ها"/>
+              <span class="text-danger text-sm" v-if="errors.has('step6.keywords')">{{ errors.first('step6.keywords') }}</span>
+            </div>
+          </div>
+          <div class="vx-row mb-6">
+            <div class="vx-col sm:w-3/3 w-full">
+              <span>توضیحات:</span>
+            </div>
+            <div class="vx-col sm:w-3/3 w-full">
+              <vs-textarea v-model="article.meta.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-if="errors.has('step6.description')">{{ errors.first('step6.description') }}</span>
+            </div>
           </div>
         </vs-card>
       </div>
       <div class="vx-col sm:w-2/3">
         <vs-card hover="true">
           <div class="vx-row mb-6">
-            <div class="vx-col sm:w-2/3 w-full">
-              <span>عنوان</span>
-            </div>
             <div class="vx-col sm:w-3/3 w-full">
+              <span>عنوان</span>
               <vs-input class="w-full" v-model="article.title" v-validate="'required'" name="title" data-vv-as="عنوان مطلب"/>
               <span class="text-danger text-sm" v-show="errors.has('title')">{{ errors.first('title') }}</span>
             </div>
-          </div>
-          <div class="vx-row mb-6">
-            <div class="vx-col sm:w-2/3 w-full">
-              <span>نشانک:</span>
-            </div>
             <div class="vx-col sm:w-3/3 w-full">
+              <span>نشانک:</span>
               <vs-input class="w-full" v-model="article.slug" v-validate="'required'" name="slug" data-vv-as="نشانک "/>
               <br>
               <span class="text-danger text-sm" v-show="errors.has('slug')">{{ errors.first('slug') }}</span>
@@ -94,124 +109,123 @@
 </template>
 
 <script>
-  import vSelect from 'vue-select'
-  import Editor from "~/components/admin/Editor";
+import vSelect from 'vue-select'
+import Editor from "~/components/admin/Editor";
 
-  export default {
-    name: "save-article",
-    components: {
-      Editor,
-      'v-select': vSelect
+export default {
+  name: "save-article",
+  components: {
+    Editor,
+    'v-select': vSelect
+  },
+  props: {
+    article: {
+      required: true,
     },
-    props: {
-      article: {
-        required: true,
-      },
-      disable: {
-        type: Boolean,
-        default: false
+    disable: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      tags: [],
+      active: 0,
+
+      categories: [],
+      status: [
+        {code: 'active', label: 'فعال'},
+        {code: 'deactive', label: 'غیرفعال'}
+      ]
+    }
+  },
+  watch: {
+    '$store.state.article.errors': {
+      deep: false,
+      handler(errors) {
+        Object.entries(errors).forEach(error => {
+          // let name = error[0].split('.')
+          // if (name.length === 1) {
+          //   name = name[0]
+          // } else {
+          //   name = `${name[2]}[${name[1]}]`
+          // }
+          // this.errors.add({
+          //   field: name,
+          //   msg: error[1][0]
+          // })
+        })
+      }
+    }
+  },
+  computed: {
+    category: {
+      get() {
+        let index = this.categories.length
+        let category = []
+        for (let i = 0; i < index; i++) {
+          category.push(this.categories[i].name)
+        }
+        return category
       }
     },
-    data() {
-      return {
-        tags: [],
-        active: 0,
-
-        categories: [],
-        status: [
-          {code: 'active', label: 'فعال'},
-          {code: 'deactive', label: 'غیرفعال'}
-        ]
-      }
+  },
+  methods: {
+    selectFile() {
+      let input = document.createElement('input')
+      input.type = 'file'
+      input.onchange = this.uploadFile
+      input.click()
     },
-    watch: {
-      '$store.state.article.errors': {
-        deep: false,
-        handler(errors) {
-          Object.entries(errors).forEach(error => {
-            let name = error[0].split('.')
-            if (name.length === 1) {
-              name = name[0]
-            } else {
-              name = `${name[2]}[${name[1]}]`
-            }
-            this.errors.add({
-              field: name,
-              msg: error[1][0]
-            })
+    async uploadFile(event) {
+      let file = event.target.files[0]
+      await this.$store.dispatch('files/uploadArticleImage', file).then(res => {
+        this.article.thumbnail = res.data
+      }).catch(error => {
+        if (error.response.status === 422) {
+          this.$vs.notify({
+            title: 'درخواست شما با خطا مواجه شد',
+            text: error.response.data.errors.file[0],
+            color: 'danger',
           })
         }
+      })
+    },
+    successUpload(event) {
+      let response = (JSON.parse(event.currentTarget.response))
+      this.article.image_id = response.uploaded.id
+      this.$vs.notify({color: 'success', title: 'با موفقیت آپلود شد'})
+    },
+    saveArticle() {
+      if (this.disable) {
+        return
       }
-    },
-    computed: {
-      category: {
-        get() {
-          let index = this.categories.length
-          let category = []
-          for (let i = 0; i < index; i++) {
-            category.push(this.categories[i].name)
-          }
-          return category
+      this.$validator.validateAll().then(validated => {
+        if (validated) {
+          this.$emit('save-article')
         }
-      },
+      })
     },
-    methods: {
-      selectFile(){
-        let input = document.createElement('input')
-        input.type='file'
-        input.onchange = this.uploadFile
-        input.click()
-      },
-      async uploadFile(event){
-        let file = event.target.files[0]
-        await this.$store.dispatch('files/uploadArticleImage' , file).then(res=>{
-          this.article.thumbnail = res.data
-        }).catch(error=>{
-          if(error.response.status === 422){
-            this.$vs.notify({
-              title : 'درخواست شما با خطا مواجه شد',
-              text : error.response.data.errors.file[0],
-              color : 'danger',
-            })
-          }
-        })
-      },
-      successUpload(event) {
-        let response = (JSON.parse(event.currentTarget.response))
-        this.article.image_id = response.uploaded.id
-        this.$vs.notify({color: 'success', title: 'با موفقیت آپلود شد'})
-      },
-      saveArticle() {
-        if (this.disable) {
-          return
-        }
-        this.$validator.validateAll().then(validated => {
-          if (validated) {
-            this.$store.commit('article/SET_ARTICLE', this.article)
-            this.$emit('save-article')
-          }
-        })
-      },
-    },
-    async created() {
-      await this.$store.dispatch('articleCategory/getCategories')
-      this.categories = this.$store.getters['articleCategory/getCategories']
-      // let index = categories.length
-      // this.categories = []
-      // for (let i = 0; i < index; i++) {
-      //   this.categories.push({code:categories[i].id , label: categories[i].name})
-      // }
-    },
-    mounted() {
-      this.tags = this.$store.getters['article/getTags']
-    }
+  },
+  async created() {
+    await this.$store.dispatch('articleCategory/getCategories')
+    this.categories = this.$store.getters['articleCategory/getCategories']
+    // let index = categories.length
+    // this.categories = []
+    // for (let i = 0; i < index; i++) {
+    //   this.categories.push({code:categories[i].id , label: categories[i].name})
+    // }
+  },
+  mounted() {
+    this.tags = this.$store.getters['article/getTags']
   }
+}
 </script>
 <style scoped>
-  .articleImage {
-    border: 2px dashed #636363;
-    height: 200px;
-    width: 100%;
+.articleImage {
+  border: 2px dashed #636363;
+  height: 200px;
+  width: 100%;
 
-  }
+}
 </style>
