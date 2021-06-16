@@ -36,6 +36,8 @@ export default {
               username: this.username,
               password: this.password,
             }
+          }).then(res => {
+            this.$router.push({name:'auth-wellcome'})
           })
         }
       }).catch(error => {
