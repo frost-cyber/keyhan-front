@@ -58,12 +58,14 @@ export default {
     },
     color:{
       default: 'warning'
-    }
+    },
+    repliedComment: {
+      required:true
+    },
   },
   data() {
     return {
       currentPage: 1,
-      repliedComment:null
     }
   },
   computed: {
@@ -113,7 +115,6 @@ export default {
   },
   methods:{
     commentReply(id){
-      this.repliedComment=id
       this.$emit('comment_reply',id)
 
     }
