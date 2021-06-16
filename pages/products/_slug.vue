@@ -403,15 +403,18 @@
                         <div class="grid grid-cols-2 gap-2">
                               <div class="col-span-1">
                                 <span>نام:</span>
-                                <vs-input name="name" v-model="customization.name"/>
+                                <vs-input name="name"  v-validate="'required'"  v-model="customization.name"  data-vv-as="نام"/>
+                                <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
                               </div>
                               <div class="col-span-1">
                                 <span>تماس:</span>
-                                <vs-input name="call" v-model="customization.contact"/>
+                                <vs-input name="contact"  v-validate="'required'"  v-model="customization.contact"  data-vv-as="شماره تماس"/>
+                                <span class="text-danger text-sm" v-show="errors.has('contact')">{{ errors.first('contact') }}</span>
                               </div>
                               <div class="col-span-2">
                                 <span>توضیحات:</span>
-                                <vs-textarea name="discription" v-model="customization.discription"/>
+                                <vs-textarea name="discription"  v-validate="'required'" v-model="customization.discription"  data-vv-as="توضیحات"/>
+                                <span class="text-danger text-sm" v-show="errors.has('discription')">{{ errors.first('discription') }}</span>
                               </div>
                         <div class="col-span-1">
                           <vs-button color="success" @click.native="saveCustomization">ارسال</vs-button>
@@ -530,6 +533,25 @@ export default {
         email: '',
         body: '',
       },
+    }
+  },
+  watch: {
+    '$store.state.form.errors': {
+      deep: false,
+      handler(errors) {
+        Object.entries(errors).forEach(error => {
+          let name = error[0].split('.')
+          if (name.length === 1) {
+            name = name[0]
+          } else {
+            name = `${name[2]}[${name[1]}]`
+          }
+          this.errors.add({
+            field: name,
+            msg: error[1][0]
+          })
+        })
+      }
     }
   },
   computed: {
@@ -658,45 +680,32 @@ export default {
       })
     },
     saveCustomization(){
-      this.customization.product_id = this.product.id
-      this.$store.dispatch('form/saveCustomization',this.customization).then(res=>{
-        if (res.status === 200) {
-          this.$vs.notify({
-            title: 'درخواست شما با موفقیت ثبت گردید',
-            time: 2000,
-            color: "success",
-            position: "bottom-right",
-            icon: 'check_box',
-          })
-          this.popupActive = false
-          this.customization = {}
-        }
+      this.$validator.validateAll().then(response=>{
+        if(!response) return 0;
+        this.customization.product_id = this.product.id
+        this.$store.dispatch('form/saveCustomization',this.customization).then(response=>{
+          if (response.status === 200) {
+            this.$vs.notify({
+              title: 'درخواست شما با موفقیت ثبت گردید',
+              time: 2000,
+              color: "success",
+              position: "bottom-right",
+              icon: 'check_box',
+            })
+            this.popupActive = false
+            this.customization = {}
+          }
 
-      }).catch(error => {
-        if (error.response.status === 422) {
-          this.$vs.notify({
-            title: 'نظر شما با خطا گردید',
-            text: 'خطا های زیر را رفع کنید.',
-            time: 3000,
-            color: "danger",
-            position: "bottom-right",
-            icon: 'check_box',
-          })
-          Object.entries(error.response.data.errors).forEach((error, i) => {
-            setTimeout(() => {
-              this.$vs.notify({
-                title: 'خطا!!!',
-                text: error[1][0],
-                time: 3500,
-                color: "danger",
-                position: "bottom-right",
-                icon: 'check_box',
-              })
-            }, 500 * (i + 1))
-          })
-        }
+        }).catch(error => {
+          this.disabled = false
+          if (error.response && error.response.status === 422) {
+            console.log(error.response)
+            this.$store.commit('form/SET_ERRORS', error.response.data.errors)
+          }
+        })
       })
       }
+
     }
   }
 
