@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-4 gap-3">
-    <vs-card class="col-span-1">
+  <div class="grid grid-cols-6 gap-2">
+    <vs-card class="col-span-2">
       <div>
         <vs-input class="w-full" v-model="post.name" name="name" data-vv-as="نام" v-validate="'required'" label="نام"/>
         <span class="text-danger text-sm" v-if="errors.has('name')">{{ errors.first('name') }}</span>
@@ -11,44 +11,45 @@
       </div>
       <div>
         <span>استان</span>
-        <tree-select  class="w-full" :options="ostan" :normalizer="(val)=>{return {label:val.name , id:val.id}}"
+        <tree-select class="w-full" :options="ostan" :normalizer="(val)=>{return {label:val.name , id:val.id}}"
                      v-model="post.states" name="states" data-vv-as="استان ها" v-validate="'required'" multiple/>
         <span class="text-danger text-sm" v-if="errors.has('states')">{{ errors.first('states') }}</span>
       </div>
     </vs-card>
-    <vs-card class="col-span-3">
-      <div class="grid grid-cols-3">
-        <vs-input label="از"/>
-        <vs-input label="تا"/>
-        <vs-input label="قیمت"/>
+    <vs-card class="col-span-4">
+      <vs-button @click.native="post.weight.push({start:null,end:null,price:null})">افزودن</vs-button>
+      <div class="grid grid-cols-4 " v-for="(w,index) in post.weight" :key="index">
+        <vs-input class="lg:w-3/4" label="از" v-model="w.start"/>
+        <vs-input class="lg:w-3/4" label="تا" v-model="w.end"/>
+        <vs-input class="lg:w-3/4" label="قیمت" v-model="w.price"/>
+        <div>
+          <vs-button class="mt-5 mr-5 lg:w-3/4" color="danger" icon="delete" @click.native="post.weight.splice(index , 1)">حذف</vs-button>
+        </div>
       </div>
-      <vs-divider/>
-      <div class="grid grid-cols-3">
-        <vs-input label="از"/>
-        <vs-input label="تا"/>
-        <vs-input label="قیمت"/>
-      </div>
-    </vs-card>
 
+      <vs-divider/>
+      <vs-button color="success" @click.native="savePost">ذخیره</vs-button>
+    </vs-card>
   </div>
 </template>
 
 <script>
 import treeSelect from '@riophae/vue-treeselect'
+
 export default {
-  name: "SavePost",
-  props:{
-    post:{
-      required:true
+  name: "save_post",
+  props: {
+    post: {
+      required: true
     }
   },
-  computed:{
-    ostan(){
+  computed: {
+    ostan() {
       return this.$store.getters['address/getOstans']
     },
-    cities(){
+    cities() {
       return this.$store.getters['address/getCities']
-    let cities = this.$store.getters['address/getCities']
+      let cities = this.$store.getters['address/getCities']
       // cities.forEach(city=>{
       //   if(){
       //
@@ -56,8 +57,17 @@ export default {
       // })
     },
   },
-  components:{
+  components: {
     treeSelect
+  },
+  methods: {
+    savePost() {
+      this.$validator.validateAll().then(validated => {
+        if (validated) {
+          this.$emit('save_post')
+        }
+      })
+    }
   }
 }
 </script>
