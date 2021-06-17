@@ -199,6 +199,22 @@ export default [
         ]
 
       },
+      {
+        name: 'پست',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/posts',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/posts/create',
+            name: 'ایجاد',
+          },
+
+        ]
+
+      },
     ],
   },
 
