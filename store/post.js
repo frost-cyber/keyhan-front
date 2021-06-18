@@ -19,6 +19,13 @@ export const actions={
     async storePost({commit , state}, post) {
         return this.$apiClient.post('api/posts', post)
     },
+    getPosts({} , query = null){
+      let url = 'api/posts'
+      if (query){
+        url += "?"+ this.$createQuery(query).substr(1)
+      }
+      return this.$apiClient.get(url)
+    }
 
 }
 export const getters={
