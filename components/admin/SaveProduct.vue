@@ -18,7 +18,7 @@
             </div>
             <div class="col-span-2">
               <label class="w-full">دسته ها</label>
-              <tree-select v-model="product.categories" :options="categories" multiple :normalizer="normalizer" v-validate="'required'" name="categories" data-vv-as="دسته"/>
+              <tree-select v-model="product.categories" :options="categories" :flat="true" multiple :normalizer="normalizer" v-validate="'required'" name="categories" data-vv-as="دسته"/>
               <span class="text-danger text-sm" v-show="errors.has('step1.categories')">{{ errors.first('step1.categories') }}</span>
             </div>
             <div class="col-span-6 row-start-2 row-end-5">
