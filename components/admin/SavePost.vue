@@ -6,13 +6,13 @@
         <span class="text-danger text-sm" v-if="errors.has('name')">{{ errors.first('name') }}</span>
       </div>
       <div>
-        <vs-input class="w-full" v-model="post.is_free" name="is_free" data-vv-as="رایگان" v-validate="'required'" label="رایگان"/>
+        <vs-input class="w-full" v-model="post.is_free" name="is_free" data-vv-as="رایگان" label="رایگان"/>
         <span class="text-danger text-sm" v-if="errors.has('is_free')">{{ errors.first('is_free') }}</span>
       </div>
       <div>
         <span>استان</span>
         <tree-select class="w-full" :options="ostan" :normalizer="(val)=>{return {label:val.name , id:val.id}}"
-                     v-model="post.states" name="states" data-vv-as="استان ها" v-validate="'required'" multiple/>
+                     v-model="post.states" name="states" data-vv-as="استان ها"  multiple/>
         <span class="text-danger text-sm" v-if="errors.has('states')">{{ errors.first('states') }}</span>
       </div>
     </vs-card>
