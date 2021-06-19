@@ -18,10 +18,19 @@
     </vs-card>
     <vs-card class="col-span-4">
       <vs-button @click.native="post.weight.push({start:null,end:null,price:null})">افزودن</vs-button>
-      <div class="grid grid-cols-4 " v-for="(w,index) in post.weight" :key="index">
-        <vs-input class="lg:w-3/4" label="از" v-model="w.start"/>
-        <vs-input class="lg:w-3/4" label="تا" v-model="w.end"/>
-        <vs-input class="lg:w-3/4" label="قیمت" v-model="w.price"/>
+      <div class="grid grid-cols-4 gap-3" v-for="(w,index) in post.weight" :key="index" >
+       <div>
+         <vs-input class="w-full" v-validate="'required'" :name="'start.'+index" label="از" v-model="w.start" data-vv-as=" شروع"/>
+         <span class="text-danger text-sm" v-if="errors.has('start.'+index)">{{ errors.first('start.'+index) }}</span>
+       </div>
+        <div>
+          <vs-input class="w-full" v-validate="'required'" :name="'end.'+index" label="تا" v-model="w.end" data-vv-as="پایان"/>
+          <span class="text-danger text-sm" v-if="errors.has('end.'+index)">{{ errors.first('end.'+index) }}</span>
+        </div>
+       <div>
+         <vs-input class="w-full"  v-validate="'required'" label="قیمت" :name="'price.'+index" v-model="w.price" data-vv-as="قیمت"/>
+         <span class="text-danger text-sm" v-if="errors.has('price.'+index)">{{ errors.first('price.'+index) }}</span>
+       </div>
         <div>
           <vs-button class="mt-5 mr-5 lg:w-3/4" color="danger" icon="delete" @click.native="post.weight.splice(index , 1)">حذف</vs-button>
         </div>
@@ -57,10 +66,31 @@ export default {
       // })
     },
   },
+  watch: {
+    '$store.state.post.errors': {
+      deep: false,
+      handler(errors) {
+        Object.entries(errors).forEach(error => {
+
+          let name = error[0].split('.')
+          if (name.length === 1) {
+            name = name[0]
+          } else {
+            name = `${name[2]}.${name[1]}`
+          }
+          this.errors.add({
+            field: name,
+            msg: error[1][0]
+          })
+        })
+      }
+    }
+  },
   components: {
     treeSelect
   },
   methods: {
+
     savePost() {
       this.$validator.validateAll().then(validated => {
         if (validated) {
