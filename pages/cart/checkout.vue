@@ -13,14 +13,18 @@
               </h3>
             </div>
             <div class="checkout-area rounded-lg border border-cool-200 px-5 pb-6">
-              <div class="add-address bg-cool-300 rounded-lg m-auto text-center p-5 mt-5" @click.prevent="popupActive=!popupActive">
+              <div class="add-address bg-cool-300 rounded-lg m-auto text-center p-5 mt-5"
+                   @click.prevent="popupActive=!popupActive">
                 <i class="fal fa-map-marker-plus text-9xl text-cool-500"></i>
                 <h3 class="mt-3 text-cool-500 font-bold">افزودن آدرس جدید</h3>
               </div>
-              <save-address :currentAddress="currentAddress" :titlePopup="titlePopup" :popupActive="popupActive" @close="close" @saveAddress="saveAddress"/>
+              <save-address :currentAddress="currentAddress" :titlePopup="titlePopup" :popupActive="popupActive"
+                            @close="close" @saveAddress="saveAddress"/>
               <div class="addreses grid grid-cols-12 gap-5 md:gap-30 mt-5">
                 <div class="col-span-12 md:col-span-4" v-for="(address,index) in addresses" :key="index">
-                  <vs-button class="block-btn text-right text-sm w-full" color="#4B5563" @click.native="setAddress(address.id)" :type="address.id == cart.address_id ?'filled':'border'">
+                  <vs-button class="block-btn text-right text-sm w-full" color="#4B5563"
+                             @click.native="setAddress(address.id)"
+                             :type="address.id == cart.address_id ?'filled':'border'">
                     <div class="name">{{ address.name }}</div>
                     <div class="address"> {{ state.find(s => s.id == address.state).name }} -
                       {{ cities.find(c => c.id == address.city).name }}- {{ address.address }}
@@ -56,7 +60,8 @@
                   <h4 class="text-cool-600 text-sm font-normal text-right mt-0.5 mb-4">
                     کد تخفیف
                   </h4>
-                  <vs-input class="w-full max-w-full" size="default" placeholder=" کد تخفیف را وارد کنید " v-model="value1"/>
+                  <vs-input class="w-full max-w-full" size="default" placeholder=" کد تخفیف را وارد کنید "
+                            v-model="value1"/>
                   <vs-button color="#9CA3AF" type="filled">اعمال تخفیف</vs-button>
                 </div>
               </template>
@@ -91,7 +96,7 @@ import {cities, ostan} from '@/plugins/cities'
 export default {
   data() {
     return {
-      weights:[],
+      weights: [],
       currentAddress: {},
       addresses: [],
       popupActive: false,
@@ -101,12 +106,19 @@ export default {
       cart: {product_variants: []},
     };
   },
+  watch: {
+    'cart.address_id': {
+      deep: true,
+      handler() {
+        this.getWeights();
+      },
+    },
+  },
   computed: {
-    postPrice(){
-      if (!this.weights) return -1
-      let totalWeight = this.cart.product_variants.reduce((sum , variant) => sum + variant.weight , 0)
-      let weight = (this.weights.find(w => (w.start <= totalWeight) && ( totalWeight <= w.end) )||{price:0}).price
-      return totalWeight * weight
+    postPrice() {
+      if (!this.weights.length) return -1
+      let totalWeight = this.cart.product_variants.reduce((sum, variant) => sum + (variant.weight * variant.pivot.quantity), 0)
+      return (this.weights.find(w => (w.start <= totalWeight) && (totalWeight <= w.end)) || {price: 0}).price
     },
     sumDiscount() {
       let sum = 0
@@ -117,13 +129,13 @@ export default {
     },
   },
   methods: {
-    getWeights(){
-      if (["" , null , undefined].includes(this.cart.address_id)){
+    getWeights() {
+      if (["", null, undefined].includes(this.cart.address_id)) {
         return -1
       }
       let address = this.addresses.find(Address => Address.id === this.cart.address_id)
       this.$store.dispatch('post/getPosts' , { state : address.state}).then(res => {
-        this.weights = res.data[0].weight
+        this.weights = (res.data[0] || {weight:[]}).weight
       })
     },
     setAddress(id) {
@@ -196,5 +208,5 @@ export default {
   components: {
     saveAddress
   },
-};
+}
 </script>
