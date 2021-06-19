@@ -102,6 +102,7 @@
               <vs-input label="قیمت فروش کلی" v-model="variant['wholesale_price']" class="col-span-2 w-full"/>
               <vs-input label="کمترین مقدار خرید برای قیمت عمده" v-model="variant['minimum_wholesale']" class="col-span-2 w-full"/>
               <vs-input label="موجودی" v-model="variant['inventory']" class="col-span-2 w-full"/>
+              <vs-input label="وزن" v-model="variant['weight']" class="col-span-2 w-full"/>
               <vs-input label="واحد" v-model="variant['unit']" class="col-span-2 w-full"/>
             </div>
           </vs-collapse-item>
