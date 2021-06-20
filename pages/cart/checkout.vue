@@ -74,9 +74,9 @@
             <div class="sidebar-product rounded-lg border border-cool-200 p-5 mt-5 relative">
               <h3 class="font-bold text-cool-700 mb-4">انتخاب روش پرداخت</h3>
               <div class="pay-model text-right">
-                <vs-radio class="mb-2" color="#f97416" v-model="radios1" vs-value="HEX">درگاه بانک ملت</vs-radio>
-                <vs-radio class="mb-2" color="#f97416" v-model="radios2" vs-value="HEX">درگاه بانک پاسارگاد</vs-radio>
-                <vs-radio class="mb-2" color="#f97416" v-model="radios3" vs-value="HEX">درگاه زرین پال</vs-radio>
+                <vs-radio class="mb-2" color="#f97416" v-model="payment" vs-value="HEX">درگاه بانک ملت</vs-radio>
+                <vs-radio class="mb-2" color="#f97416" v-model="payment" vs-value="HEX">درگاه بانک پاسارگاد</vs-radio>
+                <vs-radio class="mb-2" color="#f97416" v-model="payment" vs-value="HEX">درگاه زرین پال</vs-radio>
 
               </div>
               <div class="cart-btn block-btn mt-8">
@@ -104,6 +104,7 @@ export default {
       state: ostan,
       cities: cities,
       cart: {product_variants: []},
+      payment:''
     };
   },
   watch: {
@@ -169,8 +170,8 @@ export default {
       }
       this.popupActive = !this.popupActive
     },
-    getAddresses() {
-      this.$store.dispatch('address/getAddress').then(res => {
+    async getAddresses() {
+     await this.$store.dispatch('address/getAddress').then(res => {
         if (res.status === 200) {
           this.addresses = res.data
         }
@@ -193,17 +194,18 @@ export default {
       })
       return
     },
-    getCurrentCart() {
-      this.$store.dispatch('cart/currentCart', {with: ['productVariants.product.files', 'productVariants.attribute']}).then(r => {
+    async getCurrentCart() {
+      await this.$store.dispatch('cart/currentCart', {with: ['productVariants.product.files', 'productVariants.attribute']}).then(r => {
 
         this.cart = r.data
       })
     }
 
   },
-  fetch() {
-    this.getAddresses()
-    this.getCurrentCart()
+ async fetch() {
+   await this.getAddresses()
+    await this.getCurrentCart()
+  await this.getWeights()
   },
   components: {
     saveAddress

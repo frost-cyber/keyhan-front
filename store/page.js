@@ -20,7 +20,11 @@ export const actions={
     return this.$apiClient.put(`api/pages/${page.id}`,page)
   },
   getPages({},query=null){
-    return this.$apiClient.get(`api/pages`)
+    let url = 'api/pages'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.get(url)
   },
   async deletePage({}, page) {
     return this.$apiClient.delete(`api/pages/${page.id}`)

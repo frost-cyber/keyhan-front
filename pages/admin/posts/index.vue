@@ -14,7 +14,8 @@
           </vs-td>
           <vs-td>
             <p>
-              <strong v-for="(s , i) in tr.states" :key="i">{{ ostans.find(o=>o.id == s).name  + (i != tr.states.length-1 ? " , " : "")  }}</strong>
+              <strong  v-for="(s , i) in tr.states" :key="i">{{ ostans.find(o=>o.id == s).name  + (i != tr.states.length-1 ? " , " : "")  }}</strong>
+              <strong v-if="!tr.states.length">----</strong>
             </p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">

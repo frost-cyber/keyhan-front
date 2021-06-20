@@ -73,7 +73,7 @@
                   </li>
                 </vs-breadcrumb>
               </div>
-              <div class="des-single mt-3 text-sm text-cool-600 h-28 overflow-hidden row-start-3 row-end-6">
+              <div class="des-single mt-3 text-sm text-cool-600 h-28 overflow-hidden row-start-3 row-end-6 break-all">
                 {{article.description}}
               </div>
               <div class="info-box bg-cool-100 p-2 mt-5 rounded-lg row-start-6 ">
@@ -107,7 +107,7 @@
       <div class="container mx-auto">
         <div class="grid grid-cols-12 md:gap-4 lg:gap-30">
           <div class="col-span-12 md:col-span-9 ">
-            <div class="content-box p-4 rounded-lg border border-cool-100 text-cool-600 font-normal text-sm md:text-base" v-html="article.body"></div>
+            <div class="content-box p-4 rounded-lg border border-cool-100 text-cool-600 font-normal text-sm md:text-base break-all" v-html="article.body"></div>
             <div class="btntocomment mt-5 text-center">
               <vs-button color="#4B5563" type="border">در بحث و گفتگو در رابطه با این مطلب شرکت کنید</vs-button>
             </div>
@@ -208,20 +208,6 @@
         } while (category.parent_id != null || category.id !== cats[0].id)
         return cats
       },
-      // relatedPosts() {
-      //   let articles = []
-      //   let category = this.article.categories[0].id
-      //   let length = this.articles.length
-      //   for (let i = 0; i < length; i++) {
-      //     this.articles[i].categories[0].id
-      //     if (category === this.articles[i].categories[0].id){
-      //       articles.push(this.articles[i])
-      //     }
-      //     console.log(articles)
-      //   }
-      //   return articles
-      //
-      // },
     },
     components: {
       Comments,
