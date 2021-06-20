@@ -17,7 +17,6 @@ export const actions={
     if(query){
       url += "?" + this.$createQuery(query).substr(1)
     }
-    console.log(url)
     return this.$apiClient.get(url)
   },
   deleteProductFromCart({},id){

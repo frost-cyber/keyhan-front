@@ -37,7 +37,6 @@ export default {
       }).catch(error => {
         this.disabled = false
         if (error.response && error.response.status === 422) {
-          console.log(error.response)
           this.$store.commit('post/SET_ERRORS', error.response.data.errors)
         }
       })

@@ -22,7 +22,6 @@ export const state=()=>({
 export const mutations={
   SET_ERRORS(state, errors) {
     state.errors = errors
-    console.log(state.errors)
   },
   DELETE_ADDRESS(state, address) {
     if (typeof address == "object" && typeof address.id !== "undefined") {

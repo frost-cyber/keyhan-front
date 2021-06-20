@@ -39,10 +39,6 @@ export default {
     }
   },
   computed: {
-    states() {
-      console.log(this.ostans)
-      return 0
-    },
     ostans() {
       return this.$store.getters['address/getOstans']
     }

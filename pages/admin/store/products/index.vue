@@ -45,10 +45,6 @@ export default {
     })
   },
   methods:{
-    log(x){
-      console.log(this.$createQuery(x))
-      return false
-    },
     deleteProduct(product){
       this.$store.dispatch('products/deleteProduct' , product ).then(res =>{
         if(res.status  === 200){

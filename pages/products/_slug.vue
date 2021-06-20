@@ -637,9 +637,6 @@ export default {
         }
       })
     },
-    log(x) {
-      console.log(x)
-    },
     saveComment() {
       this.$validator.validateAll('comment').then(res => {
         if (!res) return 0;
@@ -699,7 +696,6 @@ export default {
         }).catch(error => {
           this.disabled = false
           if (error.response && error.response.status === 422) {
-            console.log(error.response)
             this.$store.commit('form/SET_ERRORS', error.response.data.errors)
           }
         })
