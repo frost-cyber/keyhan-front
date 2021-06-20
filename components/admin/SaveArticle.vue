@@ -53,8 +53,8 @@
               <span>کلید واژه ها:</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <vs-input class="w-full" v-model="article.meta.keywords" v-validate="'required'" name="keywords" data-vv-as="کلید واژه ها"/>
-              <span class="text-danger text-sm" v-if="errors.has('step6.keywords')">{{ errors.first('step6.keywords') }}</span>
+              <vs-input class="w-full" v-model="article.meta.keywords" v-validate="'required'" name="meta.keywords" data-vv-as="کلید واژه ها"/>
+              <span class="text-danger text-sm" v-if="errors.has('meta.keywords')">{{ errors.first('meta.keywords') }}</span>
             </div>
           </div>
           <div class="vx-row mb-6">
@@ -62,8 +62,8 @@
               <span>توضیحات:</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <vs-textarea v-model="article.meta.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
-              <span class="text-danger text-sm" v-if="errors.has('step6.description')">{{ errors.first('step6.description') }}</span>
+              <vs-textarea v-model="article.meta.description" v-validate="'required'" name="meta.description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-if="errors.has('meta.description')">{{ errors.first('meta.description') }}</span>
             </div>
           </div>
         </vs-card>
@@ -144,16 +144,16 @@ export default {
       deep: false,
       handler(errors) {
         Object.entries(errors).forEach(error => {
-          // let name = error[0].split('.')
-          // if (name.length === 1) {
-          //   name = name[0]
-          // } else {
-          //   name = `${name[2]}[${name[1]}]`
-          // }
-          // this.errors.add({
-          //   field: name,
-          //   msg: error[1][0]
-          // })
+          let name = error[0].split('.')
+          if (name.length === 1) {
+            name = name[0]
+          } else {
+            name = `${name[2]}[${name[1]}]`
+          }
+          this.errors.add({
+            field: name,
+            msg: error[1][0]
+          })
         })
       }
     }
