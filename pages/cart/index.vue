@@ -178,6 +178,11 @@
 <script>
 
 export default {
+  middleware({store , redirect}){
+    if (store.getters['cart/currentCartCountItems'] === 0){
+      redirect('/')
+    }
+  },
   data() {
     return {
       number1: 1,
