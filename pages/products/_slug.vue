@@ -484,13 +484,11 @@
 </template>
 
 <script>
-import carousel from "vue-owl-carousel";
 import comments from "~/components/front/comments";
 
 export default {
   name: "slug",
   components: {
-    carousel,
     comments,
   },
   async fetch() {
@@ -556,7 +554,7 @@ export default {
   },
   computed: {
     isWishlist() {
-      return this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+      return ((this.$auth.user || {}).products_wishlist||[]).some(wish => wish === this.product.id)
     },
     breadcrumbItems() {
       let breadcrumb = [
