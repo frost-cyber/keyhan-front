@@ -100,6 +100,16 @@ export default [
           },
         ]
       },
+      {
+        name:'سبدهای خرید',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/carts',
+            name: 'لیست',
+          },
+        ]
+      }
     ]
   },
 

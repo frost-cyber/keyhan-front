@@ -19,6 +19,20 @@ export const actions={
     }
     return this.$apiClient.get(url)
   },
+  getCart({commit},cartId,query=null){
+    let url = `api/carts/${cartId}`
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.get(url)
+  },
+  getCarts({commit},query=null){
+    let url = 'api/carts'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.get(url)
+  },
   deleteProductFromCart({},id){
     return this.$apiClient.get(`api/carts/currentCart/${id}`)
   },
