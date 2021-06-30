@@ -498,7 +498,7 @@ export default {
     })
     let product = this.$cloneObject(this.$store.getters['products/getProduct'])
     product.attributes = [];
-    this.$store.getters['products/getProduct'].attributes.forEach(attribute => {
+    (this.$store.getters['products/getProduct'].attributes||[]).forEach(attribute => {
       let attGroup = product.attributes.find(att => att.name === attribute.name);
       if (!attGroup) {
         attGroup = {name: attribute.name, attributes: []}
@@ -556,7 +556,7 @@ export default {
       let breadcrumb = [
         {title: 'صفحه اصلی', url: '/'},
       ]
-      let category = this.product.categories ? this.product.categories[0] : null
+      let category = (this.product.categories||[null])[0]
       while (category) {
         breadcrumb.push({
           title: category.name,
@@ -594,7 +594,7 @@ export default {
       return images
     },
     variantData() {
-      let variant = this.product.variants[this.activeVariant]
+      let variant = (this.product.variants||[{}])[this.activeVariant]
       this.cart.product = this.product.id
       this.cart.product_variant = variant.id
       return variant
