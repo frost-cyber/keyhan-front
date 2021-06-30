@@ -4,9 +4,8 @@
     <vs-list>
       <vs-list-item title="نام">{{cart.user.name}}</vs-list-item>
       <vs-list-item title="ایمیل">{{cart.user.email}}</vs-list-item>
-      <vs-list-item title="آدرس">{{cart.address.address}}-
-        {{ cities.find(c => c.id == cart.address.city).name }}-
-        {{ this.state.find(c => c.id == cart.address.state).name }}
+      <vs-list-item title="آدرس">
+        {{ state.find(c => c.id == cart.address.state).name }}-{{ cities.find(c => c.id == cart.address.city).name }}-{{cart.address.address}}
       </vs-list-item>
     </vs-list>
     <div class="col-span-3">
@@ -137,12 +136,6 @@
 
       <span class="text-sm font-bold text-blue-500 mx-1 float-left">{{ sumDiscount }}</span>
     </div>
-    <div class="cart-btn block-btn mt-4">
-      <nuxt-link :to="{name:'cart-checkout'}">
-        <vs-button color="var(--cart)">ادامه فرآیند خرید</vs-button>
-      </nuxt-link>
-    </div>
-
   </div>
 </vs-card>
 </template>
