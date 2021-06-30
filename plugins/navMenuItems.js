@@ -109,6 +109,16 @@ export default [
             name: 'لیست',
           },
         ]
+      },
+      {
+        name:'سفارشات',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/orders',
+            name: 'لیست',
+          },
+        ]
       }
     ]
   },
