@@ -56,9 +56,10 @@ export const mutations={
   },
 }
 export const actions={
-  async getTags({commit}){
-    const tags = await this.$apiClient.get('api/tags')
-    commit('SET_TAGS',tags.data)
+  getTags({commit}){
+    this.$apiClient.get('api/tags').then(res =>{
+      commit('SET_TAGS',res.data)
+    } )
   },
   async getArticles({commit},query=null) {
     let url = 'api/articles'
