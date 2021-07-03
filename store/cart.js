@@ -36,6 +36,23 @@ export const actions={
   deleteProductFromCart({},id){
     return this.$apiClient.get(`api/carts/currentCart/${id}`)
   },
+  payCart(){
+    return this.$apiClient.get('api/orders/payCart')
+  },
+  redirectUserToGetWay({},url,method,data){
+    let form = document.createElement('form')
+    form.action = url
+    form.method = method
+    document.body.append(form)
+    for(let i in data){
+      let input = document.createElement('input')
+      input.name = i
+      input.type ='hidden'
+      input.value = data[i]
+      form.append(input)
+    }
+    form.submit()
+  }
 
 }
 export const getters={
