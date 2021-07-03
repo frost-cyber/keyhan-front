@@ -94,6 +94,7 @@ import saveAddress from '@/components/front/profile/saveAddress'
 import {cities, ostan} from '@/plugins/cities'
 
 export default {
+  middleware:['auth'],
   data() {
     return {
       weights: [],

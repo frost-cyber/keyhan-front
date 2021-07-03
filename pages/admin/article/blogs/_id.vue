@@ -10,10 +10,11 @@
   export default {
     name: "update",
     components: {SaveArticle},
-    async asyncData({params , store,$cloneObject}) {
+    async asyncData({params , store,$cloneObject,$jalaali}) {
       await store.dispatch('article/getArticle', params.id)
       let article = $cloneObject(store.getters["article/getArticle"])
-      article.categories = article.categories[0]??null
+      article.published_at = $jalaali(article.published_at).format('jYYYY/jMM/jDD')
+      article.categories = article.categories.map(z=>z.id)
       return {
         meta:{},
         article: article,
@@ -23,7 +24,9 @@
     methods: {
       saveArticle() {
         this.disabled = true
-        this.$store.dispatch('article/updateArticle', this.article).then((response) => {
+        let article = this.$cloneObject(this.article)
+        article.published_at = this.$jalaali(article.published_at, 'jYYYY/jMM/jDD').format('YYYY/MM/DD')
+        this.$store.dispatch('article/updateArticle', article).then((response) => {
           if (response.status === 200) {
             this.$vs.notify({
               title: "با موفقیت مقاله آپدیت شد",

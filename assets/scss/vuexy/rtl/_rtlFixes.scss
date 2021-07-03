@@ -111,5 +111,10 @@
 .vue-form-wizard .wizard-progress-bar {
   float: right !important;
 }
-
+.vue-form-wizard .wizard-card-footer .wizard-footer-left {
+  float: right;
+}
+.vue-form-wizard .wizard-card-footer .wizard-footer-right {
+  float: left;
+}
 /*! rtl:end:ignore */

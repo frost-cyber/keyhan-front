@@ -10,8 +10,8 @@
                   <h4 class="mb-4">صفحه ورود کارکنان</h4>
                 </div>
                 <div>
-                  <vs-input name="email" icon-no-border icon="icon icon-user" icon-pack="feather" label-placeholder="ایمیل" v-model="admin.username" class="w-full"/>
-                  <vs-input type="password" name="password" icon-no-border icon="icon icon-lock" icon-pack="feather" label-placeholder="پسسورد" v-model="admin.password" class="w-full mt-6"/>
+                  <vs-input name="email" icon-no-border icon="icon icon-user" :icon-after="true" icon-pack="feather" label-placeholder="ایمیل" v-model="admin.username" class="w-full"/>
+                  <vs-input type="password" name="password" icon-no-border icon="icon icon-lock" :icon-after="true" icon-pack="feather" label-placeholder="پسسورد" v-model="admin.password" class="w-full mt-6"/>
                   <div class="flex flex-wrap justify-between my-5" v-if="false">
                     <router-link to="">Forgot Password?</router-link>
                   </div>
