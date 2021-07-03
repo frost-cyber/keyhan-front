@@ -51,8 +51,8 @@
                   </nuxt-link>
                 </div>
                 <div class="des-course px-4 pb-4 h-15 overflow-hidden ">
-                  <p class="hidden md:block text-xs text-cool-600 font-thin text-right">
-                    {{ article.description.substring(0, 250) + "..." }}
+                  <p class="hidden md:block text-xs text-cool-600 font-thin text-right break-all">
+                    {{ article.description.substring(0,200) + (article.description.length >200 ? "..." :" ") }}
                   </p>
                 </div>
               </article>
@@ -108,6 +108,7 @@ export default {
     getArticles() {
       let q = this.$cloneObject(this.$route.query)
       q.with = ['thumbnail']
+      q.status = 'active'
       q.pagination = true
 
       this.$store.dispatch('article/getArticles', q).then(res => {

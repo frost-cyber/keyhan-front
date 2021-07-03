@@ -218,7 +218,7 @@ export default {
     saveAdvice() {
       this.$validator.validateAll('advice').then(res => {
         if (!res) return
-        this.$store.dispatch('settings/storeAdvice', this.advice).then((response) => {
+        this.$store.dispatch('form/storeAdvice', this.advice).then((response) => {
           if (response.status === 200) {
             this.$vs.notify({
               title: " درخواست با موفقیت ثبت شد",

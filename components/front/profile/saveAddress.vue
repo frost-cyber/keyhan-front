@@ -99,7 +99,6 @@ export default {
     '$store.state.address.errors': {
       deep: true,
       handler(errors) {
-        console.log(errors)
         Object.entries(errors).forEach(error => {
           let name = error[0].split('.')
           if (name.length === 1) {
