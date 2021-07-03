@@ -15,7 +15,9 @@
       methods:{
         saveArticle() {
           this.disabled = true
-          this.$store.dispatch('article/storeArticle', this.article).then((response) => {
+          let article = this.$cloneObject(this.article)
+          article.published_at = this.$jalaali(article.published_at, 'jYYYY/jMM/jDD').format('YYYY/MM/DD')
+          this.$store.dispatch('article/storeArticle', article).then((response) => {
             if (response.status === 200) {
               this.$vs.notify({
                 title: " مقاله با موفقیت ساخته شد",

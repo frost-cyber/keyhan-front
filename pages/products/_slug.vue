@@ -62,8 +62,8 @@
                   <p class="text-sm text-cool-700 font-thin float-right">امتیاز <span>4</span> از <span>60</span> رای
                   </p>
                   <div class="star-area float-left text-cool-400"><i class="fal fa-star "></i><i
-                      class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
-                      class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i></div>
+                    class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i><i
+                    class="fal fa-star text-orange-500"></i><i class="fal fa-star text-orange-500"></i></div>
                 </div>
               </div>
               <div class="sidebar-product rounded-lg border border-cool-200 p-5 mt-4 relative">
@@ -151,14 +151,14 @@
                             placeholder="Search" v-model="value1"/>
                   <div class="social-btn text-center mt-3">
                     <a
-                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                        href=""><i class="fab fa-whatsapp "></i></a>
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fab fa-whatsapp "></i></a>
                     <a
-                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                        href=""><i class="fab fa-instagram "></i></a>
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fab fa-instagram "></i></a>
                     <a
-                        class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
-                        href=""><i class="fal fa-paper-plane "></i></a>
+                      class="mx-0.5 text-xl p-1.5 w-9 h-9 text-center rounded-lg text-cool-400 border border-cool-400 inline-block"
+                      href=""><i class="fal fa-paper-plane "></i></a>
 
                   </div>
                 </div>
@@ -177,7 +177,7 @@
             <div class="grid grid-cols-2 gap-30">
               <div class="col-span-2">
                 <h3
-                    class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
+                  class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 ">
                   نظرات شما
                 </h3>
               </div>
@@ -200,15 +200,15 @@
                   </div>
                   <div class="col-span-4 text-center lg:col-span-1">
                     <span class="starRating ml-2">
-                        <input id="rating5" type="radio" name="rating" value="5">
+                        <input type="radio" name="rating" value="5">
                         <label for="rating5">5</label>
-                        <input id="rating4" type="radio" name="rating" value="4">
+                        <input type="radio" name="rating" value="4">
                         <label for="rating4">4</label>
-                        <input id="rating3" type="radio" name="rating" value="3">
+                        <input type="radio" name="rating" value="3">
                         <label for="rating3">3</label>
-                        <input id="rating2" type="radio" name="rating" value="2">
+                        <input type="radio" name="rating" value="2">
                         <label for="rating2">2</label>
-                        <input id="rating1" type="radio" name="rating" value="1">
+                        <input type="radio" name="rating" value="1">
                         <label for="rating1">1</label>
                     </span>
                   </div>
@@ -296,7 +296,7 @@
                   </div>
                 </div>
                 <div
-                    class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
+                  class="sidebar-product md:hidden col-span-full lg:hidden rounded-lg border border-cool-200 p-3 lg:mt-14">
                 </div>
                 <div class="col-span-11 md:col-span-11 lg:col-span-11">
                   <div class="tab-area">
@@ -306,12 +306,12 @@
                           <div class="grid grid-cols-5 gap-3">
                             <template v-for="(attributeGroup , index) in product.attributes">
                               <div
-                                  class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black"
-                                  :key="index">
+                                class="col-span-2 md:col-span-1 bg-cool-100 px-2 py-2 text-cool-700 text-center rounded-sm text-xs md:text-sm font-black"
+                                :key="index">
                                 {{ attributeGroup.name }}
                               </div>
                               <div
-                                  class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
+                                class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
                                 {{
                                   attributeGroup.attributes.reduce((values, attribute) => {
                                     values.push(attribute.value);
@@ -361,7 +361,7 @@
                                   </div>
                                 </form>
                                 <div
-                                    class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
+                                  class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
                                   <div class="col-span-4">
                                     <h3>
                                       امتیاز خودتان را در مورد این محصول ثبت کنید
@@ -399,28 +399,26 @@
                       </vs-button>
                       <vs-popup class="customize-popup" title="فرم زیر را پر کنید با شما تماس میگیریم"
                                 :active.sync="popupActive" icon-pack="fal" icon-close="fa-times">
-                        <p>
                         <div class="grid grid-cols-2 gap-2">
-                              <div class="col-span-1">
-                                <span>نام:</span>
-                                <vs-input name="name"  v-validate="'required'"  v-model="customization.name"  data-vv-as="نام"/>
-                                <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
-                              </div>
-                              <div class="col-span-1">
-                                <span>تماس:</span>
-                                <vs-input name="contact"  v-validate="'required'"  v-model="customization.contact"  data-vv-as="شماره تماس"/>
-                                <span class="text-danger text-sm" v-show="errors.has('contact')">{{ errors.first('contact') }}</span>
-                              </div>
-                              <div class="col-span-2">
-                                <span>توضیحات:</span>
-                                <vs-textarea name="discription"  v-validate="'required'" v-model="customization.discription"  data-vv-as="توضیحات"/>
-                                <span class="text-danger text-sm" v-show="errors.has('discription')">{{ errors.first('discription') }}</span>
-                              </div>
-                        <div class="col-span-1">
-                          <vs-button color="success" @click.native="saveCustomization">ارسال</vs-button>
+                          <div class="col-span-1">
+                            <span>نام:</span>
+                            <vs-input name="name" v-validate="'required'" v-model="customization.name" data-vv-as="نام"/>
+                            <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                          </div>
+                          <div class="col-span-1">
+                            <span>تماس:</span>
+                            <vs-input name="contact" v-validate="'required'" v-model="customization.contact" data-vv-as="شماره تماس"/>
+                            <span class="text-danger text-sm" v-show="errors.has('contact')">{{ errors.first('contact') }}</span>
+                          </div>
+                          <div class="col-span-2">
+                            <span>توضیحات:</span>
+                            <vs-textarea name="discription" v-validate="'required'" v-model="customization.discription" data-vv-as="توضیحات"/>
+                            <span class="text-danger text-sm" v-show="errors.has('discription')">{{ errors.first('discription') }}</span>
+                          </div>
+                          <div class="col-span-1">
+                            <vs-button color="success" @click.native="saveCustomization">ارسال</vs-button>
+                          </div>
                         </div>
-                        </div>
-                        </p>
                       </vs-popup>
                     </div>
                     <div class="grantee mt-2 pb-2 border-cool-300 border-dashed border-b-1" v-if="product.customFiled1">
@@ -484,13 +482,11 @@
 </template>
 
 <script>
-import carousel from "vue-owl-carousel";
 import comments from "~/components/front/comments";
 
 export default {
   name: "slug",
   components: {
-    carousel,
     comments,
   },
   async fetch() {
@@ -502,7 +498,7 @@ export default {
     })
     let product = this.$cloneObject(this.$store.getters['products/getProduct'])
     product.attributes = [];
-    this.$store.getters['products/getProduct'].attributes.forEach(attribute => {
+    (this.$store.getters['products/getProduct'].attributes||[]).forEach(attribute => {
       let attGroup = product.attributes.find(att => att.name === attribute.name);
       if (!attGroup) {
         attGroup = {name: attribute.name, attributes: []}
@@ -515,9 +511,7 @@ export default {
   },
   data() {
     return {
-      customization:{
-
-      },
+      customization: {},
       product: {},
       popupActive: false,
       activeVariant: 0,
@@ -556,13 +550,13 @@ export default {
   },
   computed: {
     isWishlist() {
-      return this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+      return ((this.$auth.user || {}).products_wishlist || []).some(wish => wish === this.product.id)
     },
     breadcrumbItems() {
       let breadcrumb = [
         {title: 'صفحه اصلی', url: '/'},
       ]
-      let category = this.product.categories ? this.product.categories[0] : null
+      let category = (this.product.categories||[null])[0]
       while (category) {
         breadcrumb.push({
           title: category.name,
@@ -572,12 +566,12 @@ export default {
       }
 
       breadcrumb.push(
-          {
-            title: this.product.name || null,
-            url: '',
-            active: true,
-            disabled: true,
-          }
+        {
+          title: this.product.name || null,
+          url: '',
+          active: true,
+          disabled: true,
+        }
       )
       return breadcrumb
     },
@@ -600,7 +594,7 @@ export default {
       return images
     },
     variantData() {
-      let variant = this.product.variants[this.activeVariant]
+      let variant = (this.product.variants||[{}])[this.activeVariant]
       this.cart.product = this.product.id
       this.cart.product_variant = variant.id
       return variant
@@ -679,11 +673,11 @@ export default {
         })
       })
     },
-    saveCustomization(){
-      this.$validator.validateAll().then(response=>{
-        if(!response) return 0;
+    saveCustomization() {
+      this.$validator.validateAll().then(response => {
+        if (!response) return 0;
         this.customization.product_id = this.product.id
-        this.$store.dispatch('form/saveCustomization',this.customization).then(response=>{
+        this.$store.dispatch('form/saveCustomization', this.customization).then(response => {
           if (response.status === 200) {
             this.$vs.notify({
               title: 'درخواست شما با موفقیت ثبت گردید',
@@ -704,10 +698,10 @@ export default {
           }
         })
       })
-      }
-
     }
+
   }
+}
 
 </script>
 

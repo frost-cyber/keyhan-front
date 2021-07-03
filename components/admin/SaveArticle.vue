@@ -11,10 +11,8 @@
               <span>دسته:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <v-select :closeOnSelect="true" label="name" v-validate="'required'" name="category" @input="log" v-model="article.categories" :options="categories" data-vv-as="دسته"
-                        :dir="$vs.rtl ? 'rtl' : 'ltr'"/>
+              <tree-select  label="name" v-validate="'required'" name="category" :normalizer="normalizer"  v-model="article.categories" :options="categories" data-vv-as="دسته"/>
               <span class="text-danger text-sm" v-show="errors.has('category')">{{ errors.first('category') }}</span>
-
             </div>
           </div>
           <div class="vx-row mb-6">
@@ -39,6 +37,18 @@
 
             </div>
           </div>
+          <div class="vx-row mb-6">
+            <div class="vx-col sm:w-1/3 w-full">
+              <span>تاریخ انتشار مطلب:</span>
+            </div>
+            <div class="vx-col sm:w-2/3 w-full">
+              <div class="mt-2">
+                <persion-date class="w-full" v-model="article.published_at" style="width:100%" v-validate="'required'" name="published_at" data-vv-as="تاریخ انتشار"/>
+                <span class="text-danger text-sm" v-show="errors.has('published_at')">{{ errors.first('published_at') }}</span>
+              </div>
+
+            </div>
+          </div>
           <div class="w-full m-5">
             <img class="articleImage" :src="article.thumbnail.link||require('@/assets/images/Flag_of_None.png')" @click="selectFile"/>
             <vs-row vs-justify="flex-start">
@@ -53,8 +63,8 @@
               <span>کلید واژه ها:</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <vs-input class="w-full" v-model="article.meta.keywords" v-validate="'required'" name="keywords" data-vv-as="کلید واژه ها"/>
-              <span class="text-danger text-sm" v-if="errors.has('step6.keywords')">{{ errors.first('step6.keywords') }}</span>
+              <vs-input class="w-full" v-model="article.meta.keywords" v-validate="'required'" name="meta.keywords" data-vv-as="کلید واژه ها"/>
+              <span class="text-danger text-sm" v-if="errors.has('meta.keywords')">{{ errors.first('meta.keywords') }}</span>
             </div>
           </div>
           <div class="vx-row mb-6">
@@ -62,8 +72,8 @@
               <span>توضیحات:</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <vs-textarea v-model="article.meta.description" v-validate="'required'" name="description" data-vv-as="توضیحات"/>
-              <span class="text-danger text-sm" v-if="errors.has('step6.description')">{{ errors.first('step6.description') }}</span>
+              <vs-textarea v-model="article.meta.description" v-validate="'required'" name="meta.description" data-vv-as="توضیحات"/>
+              <span class="text-danger text-sm" v-if="errors.has('meta.description')">{{ errors.first('meta.description') }}</span>
             </div>
           </div>
         </vs-card>
@@ -77,7 +87,7 @@
               <span class="text-danger text-sm" v-show="errors.has('title')">{{ errors.first('title') }}</span>
             </div>
             <div class="vx-col sm:w-3/3 w-full">
-              <span>نشانک:</span>
+              <span>نامک:</span>
               <vs-input class="w-full" v-model="article.slug" v-validate="'required'" name="slug" data-vv-as="نشانک "/>
               <br>
               <span class="text-danger text-sm" v-show="errors.has('slug')">{{ errors.first('slug') }}</span>
@@ -110,12 +120,34 @@
 
 <script>
 import vSelect from 'vue-select'
+import PersionDate from 'vue-persian-datetime-picker'
 import Editor from "~/components/admin/Editor";
+function createTree(cats, disabled, id = null) {
+  let catsFiltered = cats.filter(cat => cat.parent_id === id)
+
+  catsFiltered.forEach(cat => {
+    let disabledCat = 0
+    if (!isNaN(disabled) && disabled > 0 && cat.id === disabled) {
+      disabledCat = -1
+    }
+
+    if (!isNaN(disabledCat) && disabledCat === -1) {
+      cat.isDisabled = true
+    }
+
+    let children = createTree(cats, disabled, cat.id)
+    if (children.length) {
+      cat.children = children
+    }
+  })
+  return catsFiltered
+}
 
 export default {
   name: "save-article",
   components: {
     Editor,
+    PersionDate,
     'v-select': vSelect
   },
   props: {
@@ -129,10 +161,7 @@ export default {
   },
   data() {
     return {
-      tags: [],
       active: 0,
-
-      categories: [],
       status: [
         {code: 'active', label: 'فعال'},
         {code: 'deactive', label: 'غیرفعال'}
@@ -144,33 +173,36 @@ export default {
       deep: false,
       handler(errors) {
         Object.entries(errors).forEach(error => {
-          // let name = error[0].split('.')
-          // if (name.length === 1) {
-          //   name = name[0]
-          // } else {
-          //   name = `${name[2]}[${name[1]}]`
-          // }
-          // this.errors.add({
-          //   field: name,
-          //   msg: error[1][0]
-          // })
+          let name = error[0].split('.')
+          if (name.length === 1) {
+            name = name[0]
+          } else {
+            name = `${name[2]}[${name[1]}]`
+          }
+          this.errors.add({
+            field: name,
+            msg: error[1][0]
+          })
         })
       }
     }
   },
   computed: {
-    category: {
-      get() {
-        let index = this.categories.length
-        let category = []
-        for (let i = 0; i < index; i++) {
-          category.push(this.categories[i].name)
-        }
-        return category
-      }
+    tags(){
+      return this.$store.getters['article/getTags']
+    },
+    categories() {
+      return createTree(this.$store.getters['articleCategory/getCategories'], false)
     },
   },
   methods: {
+    normalizer(cat) {
+      return {
+        id: cat.id,
+        label: cat.name,
+        children: cat.children,
+      }
+    },
     selectFile() {
       let input = document.createElement('input')
       input.type = 'file'
@@ -207,18 +239,10 @@ export default {
       })
     },
   },
-  async created() {
-    await this.$store.dispatch('articleCategory/getCategories')
-    this.categories = this.$store.getters['articleCategory/getCategories']
-    // let index = categories.length
-    // this.categories = []
-    // for (let i = 0; i < index; i++) {
-    //   this.categories.push({code:categories[i].id , label: categories[i].name})
-    // }
+  fetch() {
+    this.$store.dispatch('article/getTags')
+    this.$store.dispatch('articleCategory/getCategories')
   },
-  mounted() {
-    this.tags = this.$store.getters['article/getTags']
-  }
 }
 </script>
 <style scoped>

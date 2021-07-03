@@ -84,7 +84,7 @@ export default {
       return ~~this.product.type === 3
     },
     isWishlist() {
-      return this.$auth.user.products_wishlist.some(wish => wish === this.product.id)
+      return ((this.$auth.user || {products_wishlist: []}).products_wishlist || []).some(wish => wish === this.product.id)
     },
 
   },
