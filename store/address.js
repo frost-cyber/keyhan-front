@@ -22,7 +22,6 @@ export const state=()=>({
 export const mutations={
   SET_ERRORS(state, errors) {
     state.errors = errors
-    console.log(state.errors)
   },
   DELETE_ADDRESS(state, address) {
     if (typeof address == "object" && typeof address.id !== "undefined") {
@@ -54,6 +53,17 @@ export const actions={
   updateAddress({commit},address){
     let url='api/profile/address/'+address.id
     return this.$apiClient.put(url,address)
+  },
+   getState({state:{ostan}},id){
+     return  ostan.find(z=>~~z.id === ~~id).name
+  },
+   getCity({state:{cities}},id){
+     return  cities.find(q=>~~q.id === ~~id).name
+  },
+  async getFullAddress({dispatch},address){
+     let state= await dispatch('getState',address.state)
+    let city = await dispatch('getCity',address.city)
+     return `${state} - ${city} - ${address.address}`;
   }
 }
 export const getters={

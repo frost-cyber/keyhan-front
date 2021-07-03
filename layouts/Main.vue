@@ -29,7 +29,7 @@ export default {
   },
   computed:{
     SHOWMAINTENANCE(){
-      return this.MAINTENANCE && !this.$auth.user && !this.$auth.user.is_admin
+      return this.MAINTENANCE && !this.$auth.user && !(this.$auth.user||{}).is_admin
     }
   },
   components: {

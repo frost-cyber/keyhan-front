@@ -96,7 +96,7 @@ export default {
   fetch() {
     this.$store.dispatch('settings/getHeader').then(res => this.header = res.options)
     this.$store.dispatch('settings/getFooter').then(res => this.footer = res.options)
-    this.$store.dispatch('page/getPages').then(res => this.pages = res.data)
+    this.$store.dispatch('page/getPages',{status:'active'}).then(res => this.pages = res.data)
   },
   methods:{
     selectFile(action , setter){

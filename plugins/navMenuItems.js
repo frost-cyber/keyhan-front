@@ -100,6 +100,26 @@ export default [
           },
         ]
       },
+      {
+        name:'سبدهای خرید',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/carts',
+            name: 'لیست',
+          },
+        ]
+      },
+      {
+        name:'سفارشات',
+        icon: 'ShoppingCartIcon',
+        submenu: [
+          {
+            url: '/admin/orders',
+            name: 'لیست',
+          },
+        ]
+      }
     ]
   },
 
@@ -194,6 +214,22 @@ export default [
           {
             url: '/admin/forms/advice',
             name: 'درخواست مشاوره',
+          },
+
+        ]
+
+      },
+      {
+        name: 'پست',
+        icon: 'FileTextIcon',
+        submenu: [
+          {
+            url: '/admin/posts',
+            name: 'لیست',
+          },
+          {
+            url: '/admin/posts/create',
+            name: 'ایجاد',
           },
 
         ]

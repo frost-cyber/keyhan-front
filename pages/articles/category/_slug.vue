@@ -108,6 +108,7 @@ export default {
     getArticles() {
       let q = this.$cloneObject(this.$route.query)
       q.with = ['thumbnail']
+      q.status ='active'
       q.pagination = ' '
       q.category = this.$route.params.slug
       this.$store.dispatch('article/getArticles',q).then(res => {

@@ -46,21 +46,6 @@ export const mutations = {
 }
 
 export const actions = {
-  async getAdvices({commit}, query = null) {
-    let url = 'api/advices'
-    if (query) {
-      url += "?" + this.$createQuery(query).substr(1)
-    }
-    const advices = await this.$apiClient.get(url)
-    commit('SET_USERS', advices.data)
-    return this.$apiClient.get(url)
-  },
-  storeAdvice({commit , state}, advice) {
-    return this.$apiClient.post('api/advices', advice)
-  },
-  async deleteAdvice({commit , state}, advice) {
-    return this.$apiClient.delete(`api/advices/${advice.id}`)
-  },
  getHeader({}){
    return this.$apiClient.$get('api/settings/header')
  },
@@ -79,9 +64,7 @@ export const actions = {
  updateHome({} , home){
    return this.$apiClient.$put('api/settings/home' , home)
  },
-  async toggleCheck({commit},adviceId){
-    return  this.$apiClient.put(`api/advices/${adviceId}/toggleCheck`)
-  },
+
 }
 
 export const getters = {

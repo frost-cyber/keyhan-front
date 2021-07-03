@@ -127,7 +127,6 @@ export default {
         }
       }).catch(errors => {
         if (errors.response.status == 422) {
-          console.log(errors.response.data)
           this.$store.commit('address/SET_ERRORS', errors.response.data.errors)
         }
       })
