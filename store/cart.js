@@ -39,6 +39,13 @@ export const actions={
   payCart(){
     return this.$apiClient.get('api/orders/payCart')
   },
+  checkPay({},query){
+    let url ='api/orders/checkPayment'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.get(url)
+  },
   redirectUserToGetWay({},url,method,data){
     let form = document.createElement('form')
     form.action = url
