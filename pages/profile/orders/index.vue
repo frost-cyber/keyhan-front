@@ -29,7 +29,7 @@
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
         <h5 class="block lg:hidden mb-2">شماره سفارش</h5>
         <a href="">
-          <span class="text-cool-500 text-sm font-thin">{{order.order_number}}</span>
+          <span class="text-cool-500 text-sm font-thin">{{ order.order_number }}</span>
         </a>
       </div>
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
@@ -38,15 +38,15 @@
       </div>
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
         <h5 class="block lg:hidden mb-2">وضعیت تحویل</h5>
-        <span class="border-blue-500 border text-blue-500 py-1 px-3 text-xs rounded-lg bg-blue-100">{{order.shipments[0].status}}</span>
+        <span class="border-blue-500 border text-blue-500 py-1 px-3 text-xs rounded-lg bg-blue-100">{{ order.shipments[0].status }}</span>
       </div>
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
         <h5 class="block lg:hidden mb-2">مبلغ</h5>
-        <span class="text-cool-700 text-sm font-thin">{{order.total_price | currency}}</span>
+        <span class="text-cool-700 text-sm font-thin">{{ order.total_price | currency }}</span>
       </div>
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
         <h5 class="block lg:hidden mb-2">عملیات پرداخت</h5>
-        <span class="text-green-500 py-1 px-3 text-xs rounded-lg">{{order.payments[0].status}}</span>
+        <span class="text-green-500 py-1 px-3 text-xs rounded-lg">{{ order.payments[0].status }}</span>
       </div>
       <div class="col-span-6 md:col-span-4 lg:col-span-2">
         <h5 class="block lg:hidden mb-2">جزئیات</h5>
@@ -58,30 +58,47 @@
     </div>
 
     <div class="paganition profile mt-10 mx-auto">
-      <vs-pagination :total="5" icon-pack="fal" prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="currentx"></vs-pagination>
+      <vs-pagination :total="pagination.last_page" icon-pack="fal" prev-icon="fa-arrow-right" next-icon="fa-arrow-left" :color="colorx" v-model="pagination.current_page"></vs-pagination>
     </div>
   </div>
 
 </template>
 <script>
 export default {
-name:"allOrder",
-  data(){
-  return{
-    orders:[],
-  }
+  name: "index",
+  data() {
+    return {
+      orders: [],
+      pagination: {
+        last_page: 1,
+        current_page: 1
+      },
+    }
   },
-  methods:{
-    getOrders(){
-      this.$store.dispatch('order/getOrders',{user:this.$auth.user.id,with:['payments','shipments']}).then(res=>{
-        if(res.status ===200){
-          this.orders = res.data
+  watch: {
+    'pagination.current_page'() {
+      this.getOrders()
+    }
+  },
+  methods: {
+    getOrders() {
+      let query = {
+        user: this.$auth.user.id,
+        with: ['payments', 'shipments'],
+        paginate: true,
+        page: this.pagination.current_page,
+        sort : '-created_at'
+      }
+      this.$store.dispatch('order/getOrders', query).then(res => {
+        if (res.status === 200) {
+          this.orders = res.data.data
+          this.pagination = res.data
         }
       })
     }
   },
   fetch() {
-  this.getOrders()
+    this.getOrders()
   }
 }
 </script>
