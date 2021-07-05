@@ -38,7 +38,7 @@
     <div class="grid grid-cols-12 gap-30 mt-5">
       <div class="right-dash col-span-12 lg:col-span-6 ">
         <div class="list-item rounded-lg border border-cool-200 p-3">
-          <mywishlist :wishlist="wishlist" />
+          <mywishlist :wishlist="wishlist"/>
         </div>
         <div class="list-item rounded-lg border border-cool-200 p-3 mt-5">
           <mycourse/>
@@ -56,13 +56,14 @@
 import Mywishlist from "~/components/front/profile/lastmywishlist";
 import Myorder from "~/components/front/profile/lastmyorder";
 import Mycourse from "~/components/front/profile/lastmycourse";
+
 export default {
-  name:'index',
+  name: 'index',
   data() {
     return {
-      number1:1,
-      colorx:'#F97316',
-      wishlist:[],
+      number1: 1,
+      colorx: '#F97316',
+      wishlist: [],
 
     };
   },
@@ -71,15 +72,15 @@ export default {
     Myorder,
     Mywishlist
   },
-  fetch(){
+  fetch() {
     this.lastWishlist()
   },
-  methods:{
-    lastWishlist(){
-      this.$store.dispatch('profile/getLastWishlist').then(res => {
+  methods: {
+    lastWishlist() {
+      this.$store.dispatch('profile/getProductWishlist', {limit: 3}).then(res => {
         if (res.status === 200) {
           this.wishlist = res.data
-          this.$store.commit('profile/SET_PRODUCTS',this.$cloneObject(res.data))
+          this.$store.commit('profile/SET_PRODUCTS', this.$cloneObject(res.data))
         }
 
       })
