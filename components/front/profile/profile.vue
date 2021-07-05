@@ -31,7 +31,7 @@
           <a href="">
             <figure>
               <i class="fal fa-sign-out text-cool-400 text-lg"></i>
-              <h6 class="text-cool-500 text-xs font-thin pt-1 m-0">خروج از حساب</h6>
+              <h6 class="text-cool-500 text-xs font-thin pt-1 m-0" @click.prevent="$auth.logout('laravelSanctum')">خروج از حساب</h6>
             </figure>
           </a>
         </div>

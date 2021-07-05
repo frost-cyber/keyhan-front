@@ -90,7 +90,7 @@
                         <h5>تعداد: </h5>
                       </div>
                       <div class=" text-center m-auto px-2">
-                        <vs-input-number :min="1" @input="changeQuantity($event , variant)" class="ltr md:left-5 lg:left-0" color="var(--dd)"
+                        <vs-input-number :min="1" :max="variant.inventory" @input="changeQuantity($event , variant)" class="ltr md:left-5 lg:left-0" color="var(--dd)"
                                          icon-pack="fal" icon-dec="fa-minus" icon-inc="fa-plus" v-model="variant.pivot.quantity"/>
                       </div>
                     </div>
@@ -236,6 +236,7 @@ export default {
               this.cart.product_variants.splice(index, 1)
             }
             this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
+              this.cart = this.$cloneObject(r.data)
               this.$store.commit('cart/SET_CURRENT_CART', r.data)
             })
           })
@@ -247,17 +248,18 @@ export default {
         }
       })
     },
-    changeQuantity(vale, variant) {
+    addTOCart(quantity,variant){
       this.$store.dispatch('cart/addToCart', {
         product: variant.product.id,
         product_variant: variant.id,
-        quantity: vale
+        quantity: quantity
       }).then(res => {
-        this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
-          this.$store.commit('cart/SET_CURRENT_CART', r.data)
-        })
+
+
       }).catch(error => {
         if (error.response.status === 400) {
+          this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
+            this.$store.commit('cart/SET_CURRENT_CART', r.data)})
           this.$vs.notify({
             title: "با خطا مواجه شده است",
             time: 2000,
@@ -268,6 +270,11 @@ export default {
           })
         }
       })
+    },
+    changeQuantity(val, variant, i) {
+      clearTimeout(variant.timeoutID)
+      this.$set(variant,'timeoutID' ,setTimeout(this.addTOCart,1000,val,variant))
+      this.$set(variant,'timeoutID' ,setTimeout(this.addTOCart,1000,val,variant))
     },
     getCurrentCart() {
       this.$store.dispatch('cart/currentCart', {with: ['productVariants.product.files', 'productVariants.attribute']}).then(r => {

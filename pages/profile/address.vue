@@ -108,6 +108,7 @@ export default {
             })
             this.getAddresses()
             this.popupActive = false
+            this.currentAddress = {}
           }
         }).catch(errors => {
           if (errors.response.status == 422) {
@@ -124,6 +125,7 @@ export default {
           })
           this.getAddresses()
           this.popupActive = false
+          this.currentAddress = {}
         }
       }).catch(errors => {
         if (errors.response.status == 422) {
