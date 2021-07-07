@@ -314,7 +314,7 @@
                                 class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
                                 {{
                                   attributeGroup.attributes.reduce((values, attribute) => {
-                                    values.push(attribute.value);
+                                    values.push(~~attribute.type === 4 ? attribute.pivot.value :attribute.value);
                                     return values
                                   }, []).join(' , ')
                                 }}

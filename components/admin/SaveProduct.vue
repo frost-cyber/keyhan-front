@@ -70,7 +70,7 @@
           <div class="grid grid-cols-12 gap-5">
             <template v-for="(attributeGroup , index) in product.attributes">
               <div class="col-span-2">
-                <vs-button icon="delete" @click.native="product.attributes.splice(index, 1)"/>
+                <vs-button icon="delete" @click.native="deleteAttribute(index)"/>
               </div>
               <div class="col-span-5">
                 <tree-select v-model="attributeGroup.name" :options="groupAttributes" @input="attributeValues(index , attributeGroup.name)" v-validate="'required'" :name="`attributeGroup[${index}]`"
@@ -78,11 +78,12 @@
                 <span class="text-danger text-sm" v-show="errors.has(`step2.attributeGroup[${index}]`)">{{ errors.first(`step2.attributeGroup[${index}]`) }}</span>
               </div>
               <div class="col-span-5">
-                <tree-select v-model="attributeGroup.attributes" multiple :options="attributeGroup.atts" v-validate="'required'" :name="`attributes[${index}]`" data-vv-as="مقدار"/>
+                <vs-input class="w-full" v-model="attributeGroup.value" v-validate="'required'" :name="`attributes[${index}]`" data-vv-as="مقدار" v-if="~~attributeGroup.type === 4"/>
+                <tree-select v-model="attributeGroup.attributes" multiple :options="attributeGroup.atts" v-validate="'required'" :name="`attributes[${index}]`" data-vv-as="مقدار" v-else/>
                 <span class="text-danger text-sm" v-show="errors.has(`step2.attributes[${index}]`)">{{ errors.first(`step2.attributes[${index}]`) }}</span>
               </div>
             </template>
-            <vs-button color="primary" class="col-span-2" @click.native="groupAttributes.length ?product.attributes.push({name : null ,attributes:[],atts:[]}):null">افزودن ویژگی</vs-button>
+            <vs-button color="primary" class="col-span-2" @click.native="groupAttributes.length > product.attributes.length ?product.attributes.push({name : null ,attributes:[],atts:[],type:null,value:null}):null">افزودن ویژگی</vs-button>
           </div>
         </form>
       </tab-content>
@@ -302,6 +303,14 @@ export default {
     },
   },
   methods: {
+    deleteAttribute(index){
+      let attributeGroups = this.$cloneObject(this.product.attributes)
+      this.product.attributes=[]
+      setTimeout(()=>{
+        attributeGroups.splice(index, 1)
+        this.product.attributes=this.$cloneObject(attributeGroups)
+      } ,0)
+    },
     saveProduct() {
       if (this.disable) {
         return
@@ -374,8 +383,14 @@ export default {
     },
     attributeValues(index, id) {
       id = id || null
+      let attribute = (this.$store.getters['attribute/getAttributes'].find(a => a.name === id)||{})
       this.product.attributes[index].atts = this.normalizeAttributes(id)
+      this.product.attributes[index].type = attribute.type
+      this.product.attributes[index].value = ''
       this.product.attributes[index].attributes = []
+      if (~~attribute.type === 4 ){
+        this.product.attributes[index].attributes = [attribute.id]
+      }
     },
     variableValues(id) {
       if (id) {
