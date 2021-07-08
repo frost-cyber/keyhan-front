@@ -11,13 +11,17 @@
             </div>
           </div>
           <div class="col-span-12 md:col-span-5 lg:col-span-5 font-fd my-auto mr-0 lg:mr-5 search">
-            <vs-input color="#F97316" icon-after="true" icon-pack="fal" icon="fa-search" placeholder="جستجو ..." :icon-no-border="false" v-model="value1"/>
+            <vs-input color="#F97316" icon-after="true" icon-pack="fal" icon="fa-search" placeholder="جستجو ..." :icon-no-border="false" @icon-click="doSearch" @keydown.enter="doSearch"
+                      v-model="search.keyword"/>
           </div>
           <div class="col-span-12 md:col-span-5 lg:col-span-6 my-auto text-center md:text-left sign">
             <div class="btnlogin inline-block ml-3" v-if="!this.$auth.loggedIn">
               <nuxt-link class="btn-border" :to="{name:'auth'}">ورود به حساب کاربری</nuxt-link>
             </div>
             <div class="btnlogin inline-block ml-3" v-else>
+              <nuxt-link :to="{name:'profile'}">
+                <button class="btn-border">حساب کاربری</button>
+              </nuxt-link>
               <button class="btn-border" @click.prevent="$auth.logout('laravelSanctum')">خروج از حساب کاربری</button>
             </div>
             <div class=" btncart inline-block relative">
@@ -85,7 +89,10 @@
                         <nuxt-link class="block" :to="{ name: 'products' , query:{category:categorySec.slug}}">{{ categorySec.name }}</nuxt-link>
                         <div class="item-level-three block" v-if="categorySec.children_recursive.length">
                           <template v-for="(categoryThree, categoryThreeIndex) in categorySec.children_recursive">
-                            <nuxt-link class="block font-thin text-sm my-1" :to="{ name: 'products' , query:{category:categoryThree.slug}}" :key="categoryThreeIndex">{{ categoryThree.name }}</nuxt-link>
+                            <nuxt-link class="block font-thin text-sm my-1" :to="{ name: 'products' , query:{category:categoryThree.slug}}" :key="categoryThreeIndex">{{
+                                categoryThree.name
+                              }}
+                            </nuxt-link>
                           </template>
                         </div>
                       </div>
@@ -124,12 +131,26 @@
         </div>
       </div>
     </section>
+    <vs-popup :title="`نتایج جستجوی ( ${search.keyword} )`" :active.sync="search.showResult">
+      <nuxt-link :to="{name:'products-slug' , params:{slug:product.slug}}" v-for="(product,index) in search.results" :key="index">
+        <div class="grid gap-1 grid-cols-6">
+          <img class="col-span-1 row-start-1 row-end-4" :src="product.files[0].link">
+          <h2 class="col-span-5 row-start-1">{{product.name}}</h2>
+          <p class="col-span-5 row-start-2 row-end-4">{{product.description}}</p>
+        </div>
+      </nuxt-link>
+    </vs-popup>
   </header>
 </template>
 <script>
 export default {
   data() {
     return {
+      search: {
+        showResult: false,
+        results: [],
+        keyword: ''
+      },
       value1: "",
       categories: [],
       colorx: "rgb(249 115 22)",
@@ -137,7 +158,7 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('settings/getHeader').then(res => {
-        this.$store.commit('settings/SET_HEADER', res.options)
+      this.$store.commit('settings/SET_HEADER', res.options)
     })
     this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
       this.$store.commit('cart/SET_CURRENT_CART', r.data)
@@ -155,6 +176,13 @@ export default {
       return this.$store.getters['cart/currentCartCountItems']
     }
   },
+  methods: {
+    async doSearch() {
+      await this.$store.dispatch('products/getProducts', {search:this.search.keyword,with:'files'})
+      this.search.results = this.$store.getters['products/getProducts']
+      this.search.showResult = true
+    }
+  }
 };
 </script>
 <style>
