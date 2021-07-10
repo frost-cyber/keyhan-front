@@ -128,8 +128,7 @@
       <div class="container mx-auto">
         <div class=" grid grid-cols-2 gap-30">
           <div class="col-span-2">
-            <h3
-              class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 "
+            <h3 class="title-border relative text-xl font-black text-cool-800 inline-block border-b-2 border-cool-600 pb-2 pl-5 "
             >
               مطالب مرتبط
             </h3>
@@ -137,7 +136,7 @@
         </div>
       </div>
     </section>
-    <article-slider :articles="articles"/>
+    <article-slider :articles="getArticles"/>
     <section class="title-section mt-24 mb-3 relative">
       <div class="container mx-auto">
         <div class="grid grid-cols-2 gap-30">
@@ -208,6 +207,15 @@
         } while (category.parent_id != null || category.id !== cats[0].id)
         return cats
       },
+      getArticles(){
+        let list=[]
+        this.articles.forEach(article=>{
+          if(article.id != this.article.id){
+             list.push(article)
+          }
+        })
+        return list
+      }
     },
     components: {
       Comments,
