@@ -7,56 +7,70 @@
             <div class="col-span-12 md:col-span-8 lg:col-span-9 relative">
               <div class="title-single md:mt-12 text-center">
                 <h1 class="text-lg font-bold text-cool-600">
-                  آموزش نصب کلید و پریزهای لمسی در ویلاها
+                  {{ product.name }}
                 </h1>
               </div>
               <div class="breadcumb text-sm text-center m-auto">
-                <vs-breadcrumb color="#eee">
-                  <li>
-                    <a href="#" title="Home">صفحه اصلی</a><span class="vs-breadcrum--separator">/</span>
-                  </li>
-                  <li>
-                    <a href="#" title="blogcat">محصولات</a><span class="vs-breadcrum--separator">/</span>
-                  </li>
-                  <li>
-                    <a href="#" title="bargh">برق صنعتی</a>
-                  </li>
-                </vs-breadcrumb>
+                <vs-breadcrumb color="#eee" :items="breadcrumbItems"/>
               </div>
-              <vs-button class="save-product save-product-d top-7" :color="isWishlist?'#EF4444':'#D1D5DB'" type="flat" icon-pack="fal" @click.native="toggleWishList"
+              <vs-button class="save-product save-product-d top-7" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled"
+                         icon-pack="fal" @click.native="toggleWishList"
                          icon=" fa-bookmark"></vs-button>
               <div class="feature-img">
-                <video class="rounded-lg mt-3" width="100%" controls>
-                  <source src="" type="video/mp4">
-                  Your browser does not support HTML video.
-                </video>
-                <!--اگر ویدئو نداشت <img class="w-full rounded-lg mt-3" src="@/assets/img/product/02.png" alt=""> -->
+                <!--                <video class="rounded-lg mt-3" width="100%" controls>-->
+                <!--                  <source src="" type="video/mp4">-->
+                <!--                  Your browser does not support HTML video.-->
+                <!--                </video>-->
+                <img class="w-full rounded-lg mt-3" :src=" product.files[0].link||'@/assets/img/product/02.png'" alt="">
               </div>
-              <div class="content-box rounded-lg border border-cool-200 p-5 mt-5 text-cool-700 text-base">
+              <div class="content-box rounded-lg border border-cool-200 p-5 mt-5 text-cool-700 text-base"
+                   v-html="product.review">
                 <!--  content          -->
               </div>
             </div>
             <div class="col-span-12 md:col-span-4 lg:col-span-3">
               <div class="sidebar-product circle rounded-lg border border-cool-200 p-5 lg:mt-14 relative">
-                <div class="price-product py-3 h-16 text-left ">
+                <div class="grantee mt-2 pb-2 border-cool-300 border-dashed border-b-1" v-if="product.customFiled1">
+                  <figure>
+                    <i class="fal fa-check-square ml-3 text-blue-500 text-base"></i>
+                    <span class="text-sm text-cool-600 font-thin">{{ product.customFiled1 }}</span>
+                  </figure>
+                </div>
+                <div class="send mt-2 pb-2 border-cool-300 border-dashed border-b-1" v-if="product.customFiled2">
+                  <figure>
+                    <i class="fal fa-check-square ml-3 text-blue-500 text-base"></i>
+                    <span class="text-sm text-cool-600 font-thin">>{{ product.customFiled2 }}</span>
+                  </figure>
+                </div>
+                <div class="price-product py-4 h-16 text-left ">
                   <div class="price-old ltr">
-                <span class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-xl">
-                  %5</span>
-                    <del class="value-old text-sm text-cool-400 line-through mx-1">
-                      54,000,000
+                    <span class="value-discount bg-red-600 text-cool-50 text-sm px-2 rounded-xl"
+                          v-if="variantData.discounted_price">
+                      {{
+                        '%' + ~~((variantData.selling_price - variantData.discounted_price) / (variantData.selling_price / 100))
+                      }}
+                    </span>
+                    <del class="value-old text-sm text-cool-400 line-through mx-1"
+                         v-if="variantData.discounted_price">
+                      {{ variantData.selling_price }}
                     </del>
                     <span class="value-discount text-cool-600 text-sm font-bold float-right">
-                  قیمت محصول</span>
+                      قیمت محصول
+                    </span>
                   </div>
                   <div class="price-new">
                     <div class="price-new-area relative">
-                      <span class="unit-price text-xs absolute top-1 left-0">تومان</span>
-                      <ins class="text-base font-medium ml-9">35,000,000</ins>
+                      <span class="unit-price text-xs absolute top-1 left-0">
+                        تومان
+                      </span>
+                      <ins class="text-base font-medium ml-10">
+                        {{ variantData.discounted_price || variantData.selling_price }}
+                      </ins>
                     </div>
                   </div>
                 </div>
-                <div class="addtocart block-btn my-4">
-                  <vs-button color="var(--cart)">افزودن به سبدخرید</vs-button>
+                <div class="addtocart block-btn mt-4 pb-2 border-cool-300 border-dashed border-b">
+                  <vs-button color="var(--cart)" @click="addToCart">افزودن به سبدخرید</vs-button>
                 </div>
                 <div class="vote-display h-6">
                   <p class="text-sm text-cool-700 font-thin float-right">امتیاز <span>4</span> از <span>60</span> رای
@@ -68,56 +82,14 @@
               </div>
               <div class="sidebar-product rounded-lg border border-cool-200 p-5 mt-4 relative">
                 <div class="info-downloud">
-                  <figure class="mb-3">
+                  <figure class="mb-3" v-for="(attributeGroup,index) in product.attributes" :key="index">
                     <i class="fal fa-file text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> فـایل تمرین :</span>
-                    <span class="text-cool-500 text-sm font-thin"> دارد </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-chalkboard-teacher text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> نوع دوره :</span>
-                    <span class="text-cool-500 text-sm font-thin"> غیرحضوری </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-angle-double-right text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> پیش نیاز :</span>
-                    <span class="text-cool-500 text-sm font-thin"> لیسانس برق یا کامپیوتر </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-calendar-day text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> آخرین بروزرسانی :</span>
-                    <span class="text-cool-500 text-sm font-thin"> 6 اسفند 99 </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-language text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> زبان :</span>
-                    <span class="text-cool-500 text-sm font-thin"> فارسی </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-user-edit text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> نوع فایل :</span>
-                    <span class="text-cool-500 text-sm font-thin"> کتاب </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-clock text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> مدت زمان :</span>
-                    <span class="text-cool-500 text-sm font-thin"> 2 ساعت 20 دقیقه </span>
-                  </figure>
-
-                  <figure class="mb-3">
-                    <i class="fal fa-server text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> حجم :</span>
-                    <span class="text-cool-500 text-sm font-thin"> 500 مگابایت </span>
-                  </figure>
-                  <figure class="mb-3">
-                    <i class="fal fa-download text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> روش دریافتی :</span>
-                    <span class="text-cool-500 text-sm font-thin"> دانلودی </span>
-                  </figure>
-                  <figure class="mb-0">
-                    <i class="fal fa-user-headset text-cool-400 ml-2"></i>
-                    <span class="text-cool-600 text-sm font-bold"> روش پشتیبانی :</span>
-                    <span class="text-cool-500 text-sm font-thin"> تلگرام </span>
+                    <span class="text-cool-600 text-sm font-bold"> {{ attributeGroup.name }} :</span>
+                    <span class="text-cool-500 text-sm font-thin" v-if="~~attributeGroup.attributes[0].type ===4"> {{
+                        attributeGroup.attributes[0].pivot.value
+                      }} </span>
+                    <span class="text-cool-500 text-sm font-thin"
+                          v-else> {{ attributeGroup.attributes.map(x => x.value).join(',') }} </span>
                   </figure>
                 </div>
               </div>
@@ -129,22 +101,21 @@
                   </figure>
                   <figure class=" text-cool-400 my-auto inline-block p-3 border-dashed border-r border-cool-300">
                     <i class="fal fa-folder-open text-xl ml-2"></i>
-                    <span class="text-sm font-thin relative -top-1">دانشنامه</span>
+                    <span class="text-sm font-thin relative -top-1">{{ product.categories[0].name }}</span>
                   </figure>
-
-
                 </div>
-
-
               </div>
               <div class="sidebar-product rounded-lg border border-cool-200 px-5 pt-4 pb-3 mt-4 relative">
                 <div class="category-box text-right">
                   <figure class=" text-cool-400 pb-2 border-cool-300 border-b border-dashed">
                     <i class="fal fa-list-ul text-xl ml-3"></i>
                     <span class="text-sm font-thin relative -top-1">
-                    <a class="hover:text-blue-400" href="">آموزش</a>
-                    <span> , </span>
-                    <a class="hover:text-blue-400" href="">سمینار</a>
+                      <template v-for="(category,index) in product.categories">
+                         <nuxt-link class="hover:text-blue-400" :key="index" :to="{name:'products',query:{category:category.slug}}">
+                           {{ category.name }}
+                         </nuxt-link>
+                        <span v-if="product.categories.length-1 != index"> , </span>
+                      </template>
                     </span>
                   </figure>
                   <vs-input class="mt-5 text-center m-auto block  min-w-full" icon-pack="fal" icon="fa-copy"
@@ -187,11 +158,40 @@
         <section class="comment-row">
           <div class="container mx-auto">
             <div class="grid grid-cols-12 gap-30 p-4 rounded-lg rounded-r-none border border-cool-100 text-cool-600">
-              <div class="col-span-12 md:col-span-6">
+              <div class="col-span-12 md:col-span-6" v-if="product.comments.length >=1">
+                <comments :components-data="product.comments" :repliedComment="comment.parent_id"
+                          @comment_reply="(id)=>$set(comment,'parent_id',(comment.parent_id != id ? id : ''))"
+                          color="#EF4444"/>
                 <!--            comments-->
               </div>
               <div class="col-span-12 md:col-span-6">
                 <!--            cimment form-->
+                <form data-vv-scope="comment" class="form-contact">
+                  <div v-if="(!$auth.user)">
+                    <vs-input class="contactform" placeholder="نام و نام خانوادگی"
+                              v-model="comment.name" size="small" v-validate="'required'" name="name"
+                              data-vv-as="نام"/>
+                    <span class="text-danger text-sm"
+                          v-show="errors.has('comment.name')">{{ errors.first('comment.name') }}</span>
+                    <vs-input class="contactform mt-3" placeholder="پست الکترونیک شما"
+                              v-model="comment.email" size="small" v-validate="'required'" name="email"
+                              data-vv-as="ایمیل"/>
+                    <span class="text-danger text-sm" v-show="errors.has('comment.email')">{{
+                        errors.first('comment.email')
+                      }}</span>
+                  </div>
+                  <vs-textarea class="contactform mt-3" label="دیدگـــاه شما" height="200px"
+                               v-model="comment.body" v-validate="'required'" name="body"
+                               data-vv-as="نظر"/>
+                  <span class="text-danger text-sm"
+                        v-show="errors.has('comment.body')">{{ errors.first('comment.body') }}</span>
+                  <div class="mt-3 text-sm">
+                    <vs-button color="#F97316" type="filled" @click.native="saveComment">ثبت نظـــر
+                      شما
+                    </vs-button>
+                  </div>
+                </form>
+
                 <div class="vote-area border border-cool-200 rounded-lg p-3 mt-4 grid grid-cols-4 gap-4 md:gap-30">
                   <div class="col-span-4 lg:col-span-3">
                     <h3>
@@ -230,7 +230,8 @@
                   <div class="breadcumb text-sm mb-2">
                     <vs-breadcrumb color="#eee" :items="breadcrumbItems"/>
                   </div>
-                  <vs-button class="save-product save-product-s" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled" icon-pack="fal" @click.native="toggleWishList"
+                  <vs-button class="save-product save-product-s" :color="isWishlist?'#EF4444':'#D1D5DB'" type="filled"
+                             icon-pack="fal" @click.native="toggleWishList"
                              icon=" fa-bookmark"></vs-button>
                   <div class="gallery-product ltr">
                     <client-only>
@@ -314,7 +315,7 @@
                                 class="col-span-3 md:col-span-4 bg-cool-100 px-2 py-2 text-cool-700 text-right rounded-sm text-xs md:text-sm font-thin">
                                 {{
                                   attributeGroup.attributes.reduce((values, attribute) => {
-                                    values.push(~~attribute.type === 4 ? attribute.pivot.value :attribute.value);
+                                    values.push(~~attribute.type === 4 ? attribute.pivot.value : attribute.value);
                                     return values
                                   }, []).join(' , ')
                                 }}
@@ -331,7 +332,8 @@
                           <div class="grid grid-cols-12 gap-30 text-cool-600">
                             <div class="col-span-12 md:col-span-7" v-if="product.comments.length >=1">
                               <comments :components-data="product.comments" :repliedComment="comment.parent_id"
-                                        @comment_reply="(id)=>$set(comment,'parent_id',(comment.parent_id != id ? id : ''))" color="#EF4444"/>
+                                        @comment_reply="(id)=>$set(comment,'parent_id',(comment.parent_id != id ? id : ''))"
+                                        color="#EF4444"/>
                             </div>
                             <div class="col-span-12 md:col-span-5">
                               <div>
@@ -402,18 +404,26 @@
                         <div class="grid grid-cols-2 gap-2">
                           <div class="col-span-1">
                             <span>نام:</span>
-                            <vs-input name="name" v-validate="'required'" v-model="customization.name" data-vv-as="نام"/>
-                            <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                            <vs-input name="name" v-validate="'required'" v-model="customization.name"
+                                      data-vv-as="نام"/>
+                            <span class="text-danger text-sm" v-show="errors.has('name')">{{
+                                errors.first('name')
+                              }}</span>
                           </div>
                           <div class="col-span-1">
                             <span>تماس:</span>
-                            <vs-input name="contact" v-validate="'required'" v-model="customization.contact" data-vv-as="شماره تماس"/>
-                            <span class="text-danger text-sm" v-show="errors.has('contact')">{{ errors.first('contact') }}</span>
+                            <vs-input name="contact" v-validate="'required'" v-model="customization.contact"
+                                      data-vv-as="شماره تماس"/>
+                            <span class="text-danger text-sm" v-show="errors.has('contact')">{{
+                                errors.first('contact')
+                              }}</span>
                           </div>
                           <div class="col-span-2">
                             <span>توضیحات:</span>
-                            <vs-textarea name="discription" v-validate="'required'" v-model="customization.discription" data-vv-as="توضیحات"/>
-                            <span class="text-danger text-sm" v-show="errors.has('discription')">{{ errors.first('discription') }}</span>
+                            <vs-textarea name="discription" v-validate="'required'" v-model="customization.discription"
+                                         data-vv-as="توضیحات"/>
+                            <span class="text-danger text-sm"
+                                  v-show="errors.has('discription')">{{ errors.first('discription') }}</span>
                           </div>
                           <div class="col-span-1">
                             <vs-button color="success" @click.native="saveCustomization">ارسال</vs-button>
@@ -498,7 +508,7 @@ export default {
     })
     let product = this.$cloneObject(this.$store.getters['products/getProduct'])
     product.attributes = [];
-    (this.$store.getters['products/getProduct'].attributes||[]).forEach(attribute => {
+    (this.$store.getters['products/getProduct'].attributes || []).forEach(attribute => {
       let attGroup = product.attributes.find(att => att.name === attribute.name);
       if (!attGroup) {
         attGroup = {name: attribute.name, attributes: []}
@@ -556,7 +566,7 @@ export default {
       let breadcrumb = [
         {title: 'صفحه اصلی', url: '/'},
       ]
-      let category = (this.product.categories||[null])[0]
+      let category = (this.product.categories || [null])[0]
       while (category) {
         breadcrumb.push({
           title: category.name,
@@ -594,7 +604,7 @@ export default {
       return images
     },
     variantData() {
-      let variant = (this.product.variants||[{}])[this.activeVariant]
+      let variant = (this.product.variants || [{}])[this.activeVariant]
       this.cart.product = this.product.id
       this.cart.product_variant = variant.id
       return variant

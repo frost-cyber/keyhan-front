@@ -28,7 +28,7 @@ export default {
   },
   async fetch() {
     await this.$store.dispatch('products/getProduct',{ productId : this.$route.params.id ,query : {
-        with : ['variants' , 'variants.files' , 'variants.attribute' , 'attributes' , 'brand' , 'files' , 'categories']
+        with : ['variants' , 'variants.files' , 'variants.attribute' , 'attributes' , 'brand' , 'files' ,'links', 'categories']
       }})
     await this.$store.dispatch('attribute/getAttributes')
     let attributes = this.$store.getters['attribute/getAttributes']
