@@ -4,7 +4,7 @@
       <div class="grid grid-cols-12">
         <div class="col-span-12 product-area">
           <carousel :navText="['','']" :items="5" :autoplayHoverPause="true" :autoplay="true" :nav="true" :margin="30" :loop="true" :dots="false" :responsive="carouselResponsive">
-            <product-cart v-for="(product , index ) in products" :key="index" :product="product"/>
+            <product-cart v-for="(product , index ) in productsData" :key="index" :product="product"/>
           </carousel>
         </div>
       </div>
@@ -33,6 +33,19 @@ export default {
         1254: {items: 5, nav: true},
         1470: {items: 5, nav: true}
       }
+    }
+  },
+  computed:{
+    productsData(){
+      let productsData=[]
+      while(productsData.length <10){
+        this.products.forEach(product=>{
+         if(productsData.length <10){
+           productsData.push(product)
+         }
+        })
+      }
+      return productsData
     }
   }
 }
