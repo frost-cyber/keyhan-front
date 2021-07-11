@@ -160,10 +160,10 @@ export default {
     await this.$store.dispatch('settings/getHeader').then(res => {
       this.$store.commit('settings/SET_HEADER', res.options)
     })
-    this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
+    await this.$store.dispatch('cart/currentCart', {withCount: ['productVariants']}).then(r => {
       this.$store.commit('cart/SET_CURRENT_CART', r.data)
     })
-    this.$store.dispatch('storeCategory/getCategories', {
+    await this.$store.dispatch('storeCategory/getCategories', {
       with: ['childrenRecursive'],
       parent: null,
     }).then(res => this.categories = res.data)

@@ -139,7 +139,7 @@ export default {
     courses,
     articles,
   },
-  async beforeCreate() {
+  async fetch() {
     await this.$store.dispatch('settings/getHome').then(res => {
       this.$store.commit('settings/SET_HOME', res.options)
     })
@@ -258,12 +258,10 @@ export default {
           }
         })
       })
-
     }
   },
   destroyed() {
     this.$store.commit('settings/SET_ADVICE')
-
   },
   data() {
     return {
