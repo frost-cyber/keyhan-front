@@ -44,7 +44,7 @@ export default {
       }else {
         let atts = []
         attributes.forEach(a => a.name === att.name ? atts.push({id : a.id , label:a.value}):null)
-        product.attributes.push({name: att.name , attributes:[att.id] , atts:atts})
+        product.attributes.push({name: att.name , attributes:[att.id] , atts:atts ,type:att.type , value:att.pivot.value})
       }
     })
     if (~~product.type === 2 && product.variants.length > 0){
@@ -81,9 +81,9 @@ export default {
     saveProduct() {
       this.disabled = true
       let product = this.$cloneObject(this.$store.getters['products/getProduct'])
-      let attributesProduct = {ats :product.attributes}
+      let attributesProduct = product.attributes
       product.attributes = []
-      attributesProduct.ats.forEach(ats => ats.attributes.forEach(id => product.attributes.push({id})))
+      attributesProduct.forEach(ats => ats.attributes.forEach(id => product.attributes.push({id , 'value':ats.value})))
 
       this.$store.dispatch('products/updateProduct',product).then((response) => {
         if (response.status === 200) {

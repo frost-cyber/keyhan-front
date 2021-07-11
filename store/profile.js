@@ -64,6 +64,13 @@ export const actions = {
     // commit('SET_ARTICLES', articles.data)
     return this.$apiClient.get(url)
   },
+  async getLastOrder({commit},query=null) {
+    let url = 'api/profile/lastOrder'
+    if(query){
+      url += "?" + this.$createQuery(query).substr(1)
+    }
+    return this.$apiClient.get(url)
+  },
   async updateProfile({commit, state}, user) {
     return this.$apiClient.patch(`api/profile/update`, user)
   },

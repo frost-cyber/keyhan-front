@@ -80,7 +80,7 @@
 
               </div>
               <div class="cart-btn block-btn mt-8">
-                <vs-button color="var(--cart)">پرداخت</vs-button>
+                <vs-button color="var(--cart)" @click.native="payCart">پرداخت</vs-button>
               </div>
             </div>
           </div>
@@ -131,6 +131,22 @@ export default {
     },
   },
   methods: {
+    payCart(){
+      this.$store.dispatch('cart/payCart').then(res=>{
+        if(res.data.action){
+          this.$store.dispatch('cart/redirectUserToGetWay',res.data.action,res.data.method,res.data.inputs)
+        }
+      }).catch(errors=>{
+          if(errors.response.status === 400){
+            this.$vs.notify({
+              'title':'با خطا مواجه شد',
+              'text' : errors.response.data.message,
+              'color' : 'danger',
+              'positions' : 'bottom_right'
+            })
+          }
+      })
+    },
     getWeights() {
       if (["", null, undefined].includes(this.cart.address_id)) {
         return -1

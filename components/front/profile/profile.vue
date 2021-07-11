@@ -48,7 +48,7 @@
           </nuxt-link>
         </li>
         <li class="border-b border-cool-200 border-dashed">
-          <nuxt-link :to="{name:'profile-orders-allOrderes' , params:{id:user.id}}" class="py-3 block text-cool-500 text-sm hover:text-orange-400">
+          <nuxt-link :to="{name:'profile-orders' , params:{id:user.id}}" class="py-3 block text-cool-500 text-sm hover:text-orange-400">
             <i class="fal fa-shopping-cart ml-2 text-cool-400"></i>
             <span>
                 سفارش های من

@@ -20,13 +20,14 @@
               <span>انتخاب نوع:</span>
             </div>
             <div class="vx-col sm:w-2/3 w-full">
-              <vs-select v-model="dataTemplates.attribute.type" class="w-full select-large" :disabled="!!lengthAttributes" v-validate="'required'" name="type" data-vv-as="نوع ویژکی">
+              <vs-select v-model="dataTemplates.attribute.type" class="w-full select-large" :disabled="!!lengthAttributes && ~~dataTemplates.attribute.type !== 4" v-validate="'required'" name="type"
+                         data-vv-as="نوع ویژکی" @input="changeValue">
                 <vs-select-item :key="index" :value="item.code" :text="item.label" v-for="(item,index) in types" class="w-full"/>
               </vs-select>
               <span class="text-danger text-sm" v-show="errors.has('type')">{{ errors.first('type') }}</span>
             </div>
           </div>
-          <div class="vx-row mb-6">
+          <div class="vx-row mb-6" v-if="~~dataTemplates.attribute.type !== 4">
             <div class="vx-col w-full">
               <vs-checkbox color="success" v-model="dataTemplates.attribute.is_variable" @input="changeValue">این ویژگی متغیر محصول است</vs-checkbox>
             </div>
@@ -38,7 +39,8 @@
       </div>
       <div class="vx-col sm:w-2/3">
         <vs-card hover="true">
-          <div class="vx-row mb-6">
+          <h2 class="w-full text-cool-600 text-center" v-if="~~dataTemplates.attribute.type === 4">ویژگی سفارشی مقدار نمیگیرد</h2>
+          <div class="vx-row mb-6" v-else>
             <div class="vx-col w-full mb-6">
               <vs-button class="mb-6" color="primary" :disabled="disable" type="filled" @click.native="addAttribute">افزودن ویژگی</vs-button>
               <hr>
@@ -131,12 +133,17 @@ export default {
             value: null,
             unit: null,
           },
+          type4: {
+            id: null,
+            value: ' ',
+          },
         }
       },
       types: [
         {code: 1, label: 'ساده'},
         {code: 2, label: 'رنگ'},
         {code: 3, label: 'واحد'},
+        {code: 4, label: 'سفارشی'},
       ]
     }
   },
@@ -147,7 +154,7 @@ export default {
         if (this.lengthAttributes) {
           this.dataTemplates.attribute.name = attributes[0].name
           this.dataTemplates.attribute.type = attributes[0].type
-          this.dataTemplates.attribute.is_variable = !!attributes[0].is_variable
+          this.dataTemplates.attribute.is_variable = !!(~~attributes[0].type === 4 ? false : attributes[0].is_variable)
         }
       }
     },
@@ -182,7 +189,7 @@ export default {
       this.attributes.forEach(a => {
         a.name = this.dataTemplates.attribute.name
         a.type = this.dataTemplates.attribute.type
-        a.is_variable = this.dataTemplates.attribute.is_variable
+        a.is_variable =  (~~this.dataTemplates.attribute.type === 4 ? false : this.dataTemplates.attribute.is_variable)
       })
     },
     addAttribute() {
@@ -190,7 +197,7 @@ export default {
       if (typeof item === "object") {
         item.name = this.dataTemplates.attribute.name
         item.type = this.dataTemplates.attribute.type
-        item.is_variable = this.dataTemplates.attribute.is_variable
+        item.is_variable = (~~this.dataTemplates.attribute.type === 4 ? false : this.dataTemplates.attribute.is_variable)
         item = JSON.parse(JSON.stringify(item))
         this.attributes.push(item)
       }
@@ -212,6 +219,11 @@ export default {
       }
       this.$validator.validateAll().then(validated => {
         if (validated) {
+          if (~~this.dataTemplates.attribute.type === 4) {
+            if (!this.attributes.length) {
+                this.addAttribute()
+            }
+          }
           this.$emit('save-attributes')
         }
       })
